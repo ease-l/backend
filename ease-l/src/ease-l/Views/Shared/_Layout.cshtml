@@ -29,12 +29,12 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a asp-controller="Home" asp-action="Index" class="navbar-brand">ease_l</a>
+                    <a asp-controller="Home" asp-action="Index" class="navbar-brand">Ease-L</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a asp-controller="Home" asp-action="Teams" class="navbar-brand">Teams</a></li>
-                        <li><a asp-controller="Home" asp-action="Projects" class="navbar-brand">Projects</a></li>
+                        <li><a asp-controller="Home" asp-action="About" class="navbar-brand">Projects</a></li>
+                        <li><a asp-controller="Home" asp-action="Contact" class="navbar-brand">Teams</a></li>
                     </ul>
                     @await Html.PartialAsync("_LoginPartial")
                 </div>
@@ -44,7 +44,7 @@
             @RenderBody()
             <hr />
             <footer>
-                <p>&copy; 2016 - ease_l</p>
+                <p>&copy; 2016 - Ease-L</p>
             </footer>
         </div>
 

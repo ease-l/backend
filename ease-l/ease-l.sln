@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ease-l", "src\ease-l\ease-l.xproj", "{33B780FD-8AC9-49AE-91F4-00279A63336B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DB", "DB\DB.csproj", "{4841AB80-72FD-4F53-BB68-28B111786669}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,14 @@ Global
 		{33B780FD-8AC9-49AE-91F4-00279A63336B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{33B780FD-8AC9-49AE-91F4-00279A63336B}.Release|x64.ActiveCfg = Release|Any CPU
 		{33B780FD-8AC9-49AE-91F4-00279A63336B}.Release|x64.Build.0 = Release|Any CPU
+		{4841AB80-72FD-4F53-BB68-28B111786669}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4841AB80-72FD-4F53-BB68-28B111786669}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4841AB80-72FD-4F53-BB68-28B111786669}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4841AB80-72FD-4F53-BB68-28B111786669}.Debug|x64.Build.0 = Debug|Any CPU
+		{4841AB80-72FD-4F53-BB68-28B111786669}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4841AB80-72FD-4F53-BB68-28B111786669}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4841AB80-72FD-4F53-BB68-28B111786669}.Release|x64.ActiveCfg = Release|Any CPU
+		{4841AB80-72FD-4F53-BB68-28B111786669}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

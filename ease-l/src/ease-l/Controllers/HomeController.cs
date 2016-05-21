@@ -13,14 +13,14 @@ namespace ease_l.Controllers
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult Projects()
         {
             ViewData["Message"] = "Your application description page.";
 
             return View();
         }
 
-        public IActionResult Contact()
+        public IActionResult Teams()
         {
             ViewData["Message"] = "Your contact page.";
 

@@ -21,14 +21,16 @@ namespace WebApp.Controllers
             var movies = _projectRepository.GetProjectById(id);
             return Json(movies, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
         public JsonResult AddProject(String name)
         {
             Project project = new Project();
             project.Name = name;
             _projectRepository.AddProject(project);
             var movies = new List<object>();
-            movies.Add(new { Result = "OK. Project add"});            
+            movies.Add(new { Result = "OK. Project add"});
             return Json(movies, JsonRequestBehavior.AllowGet);
         }
+        
     }
 }

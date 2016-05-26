@@ -22,13 +22,14 @@ namespace WebApp.Controllers
             var movies = _commentRepository.GetCommentById(id);
             return Json(movies, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult AddProject(String text)
+        [HttpPost]
+        public JsonResult AddComment(String text)
         {
             Comment comment = new Comment();
             comment.Text = text;
             _commentRepository.AddComment(comment);
             var movies = new List<object>();
-            movies.Add(new { Result = "OK. Project add" });
+            movies.Add(new { Result = "OK. Comment add" });
             return Json(movies, JsonRequestBehavior.AllowGet);
         }
     }

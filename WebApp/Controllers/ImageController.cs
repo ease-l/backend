@@ -22,13 +22,14 @@ namespace WebApp.Controllers
             var movies = _imageRepository.GetImageById(id);
             return Json(movies, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult AddProject(String url)
+        [HttpPost]
+        public JsonResult AddImage(String url)
         {
             Image image = new Image();
             image.Url = url;
             _imageRepository.AddImage(image);
             var movies = new List<object>();
-            movies.Add(new { Result = "OK. Project add" });
+            movies.Add(new { Result = "OK. Image add" });
             return Json(movies, JsonRequestBehavior.AllowGet);
         }
     }

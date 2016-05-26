@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace DB.Models
 {
-    public class Image
+    public class Image:BaseEntity
     {
         public List<Comment> Comments { get; set; }
-        public byte[] ImageInByte { get; set; }
+        public String Url { get; set; }
 
     }
 }

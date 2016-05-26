@@ -7,7 +7,7 @@ using MongoDB.Bson;
 
 namespace DB.Models
 {
-    public class Comment
+    public class Comment:BaseEntity
     {
         public String Text { get; set; }
     }

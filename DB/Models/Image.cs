@@ -8,7 +8,8 @@ namespace DB.Models
 {
     public class Image
     {
-        //ToDo make download image to some site
+        public List<Comment> Comments { get; set; }
         public byte[] ImageInByte { get; set; }
+
     }
 }

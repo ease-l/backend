@@ -9,7 +9,6 @@ namespace DB.Models
 {
     public class Comment
     {
-        public ObjectId UserWhoMakeComment { get; set; }
         public String Text { get; set; }
     }
 }

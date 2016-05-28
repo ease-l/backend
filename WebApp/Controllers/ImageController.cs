@@ -20,6 +20,12 @@ namespace WebApp.Controllers
         public JsonResult GetById(ObjectId id)
         {
             var movies = _imageRepository.GetImageById(id);
+            if (movies == null)
+            {
+                var result = new List<Object>();
+                result.Add(new { Result = "Bad id" });
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
             return Json(movies, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]

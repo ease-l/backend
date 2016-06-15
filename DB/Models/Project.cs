@@ -9,8 +9,8 @@ namespace DB.Models
 {
     public class Project:BaseEntity
     {
-        public List<Project> Projects { get; set; }
-        public List<Image> Images { get; set; }
-        public List<Comment> Comments { get; set; }
+        public List<ObjectId> Projects { get; set; }
+        public List<ObjectId> Images { get; set; }
+        public List<ObjectId> Comments { get; set; }
     }
 }

@@ -3,21 +3,32 @@
 }
 <ul>
     <li>@Html.ActionLink("Comments", "Index", "Comment") 
-        <p>Полный список комментариев</p></li>
+        <p>Полный список комментариев,
+           Пустой get запрос,пример
+            <code>[{"Text":"Test bla bla","Id":{"Timestamp":1466007535,"Machine":16579508,"Pid":11196,"Increment":627304,"CreationTime":"\/Date(1466007535000)\/"},"Author":{"Timestamp":0,"Machine":0,"Pid":0,"Increment":0,"CreationTime":"\/Date(0)\/"},"Version":0,"Name":null,"CreationelData":"\/Date(-62135596800000)\/"}]</code>
     <li>@Html.ActionLink("Images", "Index", "Image")
-        <p>Полный список картинок</p></li>
+        <p>Полный список картинок, 
+            Пустой get запрос, пример
+         <code>[{"Comments":null,"Url":"http://minionomaniya.ru/wp-content/uploads/2015/10/%D0%BC%D0%B8%D0%BD%D1%8C%D0%BE%D0%BD%D1%8B-%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8-%D0%B2-%D1%85%D0%BE%D1%80%D0%BE%D1%88%D0%B5%D0%BC-%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B5.jpg","Id":{"Timestamp":1466003571,"Machine":16579508,"Pid":8908,"Increment":16295338,"CreationTime":"\/Date(1466003571000)\/"},"Author":{"Timestamp":0,"Machine":0,"Pid":0,"Increment":0,"CreationTime":"\/Date(0)\/"},"Version":0,"Name":null,"CreationelData":"\/Date(-62135596800000)\/"}]</code></p></li>
     <li>@Html.ActionLink("Projects", "Index", "Project")    
-        <p>Полный список проектов</p></li>
+        <p>Полный список проектов,
+            Пустой get запрос, пример
+            <code>[{"Projects":null,"Images":null,"Comments":null,"Id":{"Timestamp":1466007085,"Machine":16579508,"Pid":7440,"Increment":16046560,"CreationTime":"\/Date(1466007085000)\/"},"Author":{"Timestamp":0,"Machine":0,"Pid":0,"Increment":0,"CreationTime":"\/Date(0)\/"},"Version":123,"Name":"Test","CreationelData":"\/Date(1464728400000)\/"}]</code></p></li>
     <li> @Html.ActionLink("Comments", "GetById", "Comment")
-        <p>Комментарий по id</p></li>
+        <p>Комментарий по id,
+           В теле objectId.toString() id(POST)</p></li>
     <li>@Html.ActionLink("Images", "GetById", "Image")
-        <p>Картинка по id</p></li>
+        <p>Картинка по id
+            В теле objectId.toString() id(POST)</p></li>
     <li>@Html.ActionLink("Projects", "GetById", "Project")
-        <p>Проект по id</p></li>
+        <p>Проект по id
+            В теле objectId.toString() id(POST)</p></li>
     <li>@Html.ActionLink("Comments", "AddComment", "Comment")
         <p>Добавить комментарий(POST)</p></li>
     <li>@Html.ActionLink("Images", "AddImage", "Image")
         <p>Добавить картинку(POST)</p></li>
     <li>@Html.ActionLink("Projects", "AddProject", "Project")
         <p>Добавить проект(POST)</p></li>
+    <li><p>Все классы реализованы согласно доске, если не сходиться то </p>
+     <a href="https://github.com/ease-l/backend/tree/feautere/DB.Models/DB/Models">вот репозиторий с их реализациями</a></li>
 </ul>

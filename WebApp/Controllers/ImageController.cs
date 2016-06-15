@@ -17,19 +17,26 @@ namespace WebApp.Controllers
             var movies = _imageRepository.GetAllImage();
             return Json(movies, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetById(ObjectId id)
+        public JsonResult GetById(String id)
         {
-            var movies = _imageRepository.GetImageById(id);
-            if (movies == null)
+            var objectId = new ObjectId(id);
+            if (objectId == null)
             {
                 var result = new List<Object>();
                 result.Add(new { Result = "Bad id" });
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
-            return Json(movies, JsonRequestBehavior.AllowGet);
+            var images = _imageRepository.GetImageById(objectId);
+            if (images == null)
+            {
+                var result = new List<Object>();
+                result.Add(new { Result = "Bad id" });
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            return Json(images, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public JsonResult AddImage(String url)
+        public JsonResult AddImage(String url,uint version, String name,DateTime creationelData)
         {
             Image image = new Image();
             image.Url = url;

@@ -17,16 +17,17 @@ namespace WebApp.Controllers
             var movies = _commentRepository.GetAllComment();
             return Json(movies, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetById(ObjectId id)
+        public JsonResult GetById(String id)
         {
-            var movies = _commentRepository.GetCommentById(id);
-            if(movies == null)
+            var objectId = new ObjectId(id);
+            if (objectId == null)
             {
                 var result = new List<Object>();
                 result.Add(new { Result = "Bad id" });
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
-            return Json(movies, JsonRequestBehavior.AllowGet);
+            var comments = _commentRepository.GetCommentById(objectId);            
+            return Json(comments, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public JsonResult AddComment(String text)

@@ -16,9 +16,16 @@ namespace WebApp.Controllers
             var movies = _projectRepository.GetAllProject();
             return Json(movies, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetById(ObjectId id)
+        public JsonResult GetById(String  id)
         {
-            var movies = _projectRepository.GetProjectById(id);
+            var objectId = new ObjectId(id);
+            if (objectId == null)
+            {
+                var result = new List<Object>();
+                result.Add(new { Result = "Bad id" });
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            var movies = _projectRepository.GetProjectById(objectId);
             if (movies == null)
             {
                 var result = new List<Object>();

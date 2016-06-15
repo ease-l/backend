@@ -26,9 +26,8 @@ namespace DB
             var connectionstring =
                 ConfigurationManager.AppSettings.Get("(MONGOHQ_URL|MONGOLAB_URI)");
             var url = new MongoUrl(connectionstring);
-            var client = new MongoClient(url);
-            var server = client.GetServer();
-            var database = server.GetDatabase(url.DatabaseName);
+            var client = new MongoClient(url);            
+            var database = client.GetDatabase(url.DatabaseName);
             return database;
             //return GetMongoClient().GetDatabase(name);
         }

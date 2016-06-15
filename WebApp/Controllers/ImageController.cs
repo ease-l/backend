@@ -14,12 +14,39 @@ namespace WebApp.Controllers
         private DB.Interfaces.IImageRepository _imageRepository = new DB.Repositories.DBImageRepository();
         public JsonResult Index()
         {
-            var movies = _imageRepository.GetAllImage();
-            return Json(movies, JsonRequestBehavior.AllowGet);
+            //var images = _imageRepository.GetAllImage();
+            //Betta data
+            var images = new List<Image>();
+            var image = new Image();
+            image.Id = new ObjectId("57617033fcfbb422ccf8a5aa");
+            image.Name = "Test";
+            image.CreationelData = new DateTime(2016, 9, 1, 0, 0, 0);
+            image.Version = 1;
+            image.Url = "http://joyreactor.cc/post/2318203";
+            images.Add(image);
+            //Betta data 
+            return Json(images, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetById(String id)
         {
-            var objectId = new ObjectId(id);
+            var objectId = new ObjectId();
+            if (!ObjectId.TryParse(id, out objectId))
+            {
+                var result = new List<Object>();
+                result.Add(new { Result = "Bad id it's not objectId" });
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            //Betta data 
+            var images1 = new List<Image>();
+            var image = new Image();
+            image.Id = objectId;
+            image.Name = "Test";
+            image.CreationelData = new DateTime(2016, 9, 1, 0, 0, 0);
+            image.Version = 1;
+            image.Url = "http://joyreactor.cc/post/2318203";
+            images1.Add(image);
+            return Json(images1, JsonRequestBehavior.AllowGet);
+            //Betta data 
             if (objectId == null)
             {
                 var result = new List<Object>();

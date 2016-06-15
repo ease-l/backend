@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
+using MongoDB;
 
 namespace DB
 {
@@ -13,18 +14,23 @@ namespace DB
     {
         public static MongoClient GetMongoClient()
         {                        
-            var dbConnectionString = System.Configuration.ConfigurationManager.AppSettings["DB"];
-            if (!String.IsNullOrEmpty(dbConnectionString))
-            {
-                return new MongoClient(dbConnectionString);
-            }
-            return new MongoClient();
+            var dbConnectionString = ConfigurationManager.AppSettings.Get("(MONGOHQ_URL|MONGOLAB_URI)");
+            var url = new MongoUrl(dbConnectionString);
+            
+            return new MongoClient(url);
             
         }
         
         public static IMongoDatabase GetMongoDatabase(String name = "mongodb")
-        {            
-            return GetMongoClient().GetDatabase(name);
+        {
+            var connectionstring =
+                ConfigurationManager.AppSettings.Get("(MONGOHQ_URL|MONGOLAB_URI)");
+            var url = new MongoUrl(connectionstring);
+            var client = new MongoClient(url);
+            var server = client.GetServer();
+            var database = server.GetDatabase(url.DatabaseName);
+            return database;
+            //return GetMongoClient().GetDatabase(name);
         }
     }
 }

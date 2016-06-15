@@ -28,10 +28,12 @@ namespace WebApp.Controllers
             return Json(movies, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public JsonResult AddProject(String name)
+        public JsonResult AddProject(String name, DateTime creationelData, uint version)
         {
             Project project = new Project();
             project.Name = name;
+            project.Version = version;
+            project.CreationelData = creationelData;
             _projectRepository.AddProject(project);
             var movies = new List<object>();
             movies.Add(new { Result = "OK. Project add"});

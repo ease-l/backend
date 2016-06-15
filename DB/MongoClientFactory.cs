@@ -16,15 +16,18 @@ namespace DB
         {                        
             var dbConnectionString = ConfigurationManager.AppSettings.Get("(MONGOHQ_URL|MONGOLAB_URI)");
             var url = new MongoUrl(dbConnectionString);
-            
-            return new MongoClient(url);
-            
+            if (!String.IsNullOrEmpty(dbConnectionString))
+            {
+                return new MongoClient(dbConnectionString);
+            }
+            return new MongoClient();
+
         }
         
         public static IMongoDatabase GetMongoDatabase(String name = "mongodb")
         {
             var connectionstring =
-                ConfigurationManager.AppSettings.Get("(MONGOHQ_URL|MONGOLAB_URI)");
+                ConfigurationManager.AppSettings.Get("DB");
             var url = new MongoUrl(connectionstring);
             var client = new MongoClient(url);            
             var database = client.GetDatabase(url.DatabaseName);

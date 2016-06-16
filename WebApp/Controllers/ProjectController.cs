@@ -18,8 +18,8 @@ namespace WebApp.Controllers
             //Betta data
             var projects = new List<Project>();
             var project = new Project();
-            project.Comments.Add(new ObjectId("57617073fcfbb422ccf8a5aa"));
-            project.Images.Add(new ObjectId("57617033fcfbb422ccf8a5aa"));
+            /*project.Comments.Add(new ObjectId("57617073fcfbb422ccf8a5aa"));
+            project.Images.Add(new ObjectId("57617033fcfbb422ccf8a5aa"));*/
             project.Id = new ObjectId("57617033fcflb422ccf8a5aa");
             project.Name = "Test";
             project.Version = 12;

@@ -22,7 +22,7 @@ namespace WebApp.Controllers
             image.Name = "Test";
             image.CreationelData = new DateTime(2016, 9, 1, 0, 0, 0);
             image.Version = 1;
-            image.Url = "http://joyreactor.cc/post/2318203";
+            image.Url = "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQm4syVfMekd8XqRYu0jOgVpMgYLiWZAjw1Te5gQqE0pwmdT9zY7nb-VOer";
             images.Add(image);
             //Betta data 
             return Json(images, JsonRequestBehavior.AllowGet);
@@ -43,7 +43,7 @@ namespace WebApp.Controllers
             image.Name = "Test";
             image.CreationelData = new DateTime(2016, 9, 1, 0, 0, 0);
             image.Version = 1;
-            image.Url = "http://joyreactor.cc/post/2318203";
+            image.Url = "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQm4syVfMekd8XqRYu0jOgVpMgYLiWZAjw1Te5gQqE0pwmdT9zY7nb-VOer";
             images1.Add(image);
             return Json(images1, JsonRequestBehavior.AllowGet);
             //Betta data 

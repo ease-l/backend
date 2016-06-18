@@ -13,19 +13,7 @@ namespace WebApp.Controllers
         private DB.Interfaces.IProjectRepository _projectRepository = new DB.Repositories.DBProjectRepository();
         public JsonResult Index()
         {
-
-            //var projects = _projectRepository.GetAllProject();
-            //Betta data
-            var projects = new List<Project>();
-            var project = new Project();
-            /*project.Comments.Add(new ObjectId("57617073fcfbb422ccf8a5aa"));
-            project.Images.Add(new ObjectId("57617033fcfbb422ccf8a5aa"));*/
-            project.Id = new ObjectId("57617073fcfbb422ccf8a5aa");
-            project.Name = "Test";
-            project.Version = 12;
-            projects.Add(project);
-            project.CreationelData = new DateTime(2016, 9, 1, 0, 0, 0);
-            //Betta data
+            var projects = _projectRepository.GetAllProject();            
             return Json(projects, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetById(String  id)
@@ -36,19 +24,7 @@ namespace WebApp.Controllers
                 var result = new List<Object>();
                 result.Add(new { Result = "Bad id it's not objectId" });
                 return Json(result, JsonRequestBehavior.AllowGet);
-            }
-            //Betta data
-            var projects = new List<Project>();
-            var project = new Project();
-            /*project.Comments.Add(new ObjectId("57617073fcfbb422ccf8a5aa"));
-            project.Images.Add(new ObjectId("57617033fcfbb422ccf8a5aa"));*/
-            project.Name = "Test";
-            project.CreationelData = new DateTime(2016, 9, 1, 0, 0, 0);
-            project.Id = objectId;
-            project.Version = 12;
-            projects.Add(project);
-            return Json(projects, JsonRequestBehavior.AllowGet);
-            //Betta data
+            }           
             if (objectId == null)
             {
                 var result = new List<Object>();
@@ -76,6 +52,59 @@ namespace WebApp.Controllers
             movies.Add(new { Result = "OK. Project add"});
             return Json(movies, JsonRequestBehavior.AllowGet);
         }
-        
+        [HttpPost]
+        public JsonResult AddProjectToProject(String sidNew, String sidRoot)
+        {
+            var idNew = new ObjectId();
+            var idRoot = new ObjectId();
+            if (!ObjectId.TryParse(sidNew, out idNew) || !ObjectId.TryParse(sidRoot, out idRoot))
+            {
+                var result = new List<Object>();
+                result.Add(new { Result = "Bad id it's not objectId" });
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            var list = new List<ObjectId>();
+            list.Add(idNew);
+            _projectRepository.AddProjectsToProject(list, idRoot);
+            var movies = new List<object>();
+            movies.Add(new { Result = "OK. Project add" });
+            return Json(movies, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult AddImageToProject(String simageId, String sprojectId)
+        {
+            var imageId = new ObjectId();
+            var projectId = new ObjectId();
+            if (!ObjectId.TryParse(simageId, out imageId) || !ObjectId.TryParse(sprojectId, out projectId))
+            {
+                var result = new List<Object>();
+                result.Add(new { Result = "Bad id it's not objectId" });
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            var list = new List<ObjectId>();
+            list.Add(imageId);
+            _projectRepository.AddImagesToProject(list,projectId);
+            var movies = new List<object>();
+            movies.Add(new { Result = "OK. Image add" });
+            return Json(movies, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult AddCommentToProject(String scommentId, String sprojectId)
+        {
+            var commentId = new ObjectId();
+            var projectId = new ObjectId();
+            if (!ObjectId.TryParse(scommentId, out commentId) || !ObjectId.TryParse(sprojectId, out projectId))
+            {
+                var result = new List<Object>();
+                result.Add(new { Result = "Bad id it's not objectId" });
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            var list = new List<ObjectId>();
+            list.Add(commentId);
+            _projectRepository.AddCommentsToProject(list, projectId);
+            var movies = new List<object>();
+            movies.Add(new { Result = "OK. Comment add" });
+            return Json(movies, JsonRequestBehavior.AllowGet);
+        }
     }
 }

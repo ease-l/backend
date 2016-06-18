@@ -19,6 +19,22 @@ namespace DB.Repositories
             var database = MongoClientFactory.GetMongoDatabase();
             _imageCollection = database.GetCollection<Image>("images");
         }
+
+        public void AddCommentToImage(List<ObjectId> newComments, ObjectId iDImage)
+        {
+            var comments = _imageCollection.AsQueryable().FirstOrDefault(i => i.Id.Equals(iDImage)).Comments;
+            if (comments == null)
+            {
+                comments = new List<ObjectId>();
+            }
+            foreach (ObjectId pId in newComments)
+            {
+                comments.Add(pId);
+            }
+            var update = Builders<Image>.Update.Set(i => i.Comments, comments);
+            _imageCollection.FindOneAndUpdate(i => i.Id.Equals(iDImage), update);
+        }
+
         public Image AddImage(Image image)
         {
             _imageCollection.InsertOne(image);

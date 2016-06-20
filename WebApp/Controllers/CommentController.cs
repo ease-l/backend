@@ -6,6 +6,7 @@ using DB.Models;
 using DB.Interfaces;
 using System.Web.Mvc;
 using MongoDB.Bson;
+using System.Configuration;
 
 namespace WebApp.Controllers
 {
@@ -44,10 +45,11 @@ namespace WebApp.Controllers
         public JsonResult Index()
         {
             //Betta data
-            /*var o = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CommentWithoutObjectId>>(@"[{""Id"":""5764fd5efcfbb421280ee61e"",""Author"":""000000000000000000000000"",""Version"":1,""Name"":""Simple comment"",""CreationelData"":""\/Date(1467320400000)\/"",""Text"":""The best comment to image in project in project""},{""Id"":""5764ff18fcfbb423487e7f1a"",""Author"":""000000000000000000000000"",""Version"":3,""Name"":""Simple comment 2"",""CreationelData"":""\/Date(1467320400000)\/"",""Text"":""The best comment to root project""}]");
-            return Json(o, JsonRequestBehavior.AllowGet);*/
+            var o = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CommentWithoutObjectId>>(@"[{""Id"":""5764fd5efcfbb421280ee61e"",""Author"":""000000000000000000000000"",""Version"":1,""Name"":""Simple comment"",""CreationelData"":""\/Date(1467320400000)\/"",""Text"":""The best comment to image in project in project""},{""Id"":""5764ff18fcfbb423487e7f1a"",""Author"":""000000000000000000000000"",""Version"":3,""Name"":""Simple comment 2"",""CreationelData"":""\/Date(1467320400000)\/"",""Text"":""The best comment to root project""}]");
+            return Json(o, JsonRequestBehavior.AllowGet);
             //Betta data
-            var comments = CommentWithoutObjectId.CommentsToCommentWithoutObjectId(_commentRepository.GetAllComment());
+            //var comments = CommentWithoutObjectId.CommentsToCommentWithoutObjectId(_commentRepository.GetAllComment());
+            var comments = ConfigurationManager.AppSettings.Get("MONGOHQ_URL");
             return Json(comments, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetById(String id)
@@ -83,7 +85,13 @@ namespace WebApp.Controllers
                 result.Add(new { Result = "Bad id" });
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
-            var comments = CommentWithoutObjectId.CommentToCommentWithoutObjectId(_commentRepository.GetCommentById(objectId));            
+            var comments = CommentWithoutObjectId.CommentToCommentWithoutObjectId(_commentRepository.GetCommentById(objectId));
+            if (comments == null)
+            {
+                var result = new List<Object>();
+                result.Add(new { Result = "Bad id" });
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
             return Json(comments, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]

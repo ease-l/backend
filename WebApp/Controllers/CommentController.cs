@@ -49,7 +49,7 @@ namespace WebApp.Controllers
             return Json(o, JsonRequestBehavior.AllowGet);*/
             //Betta data
             //var comments = CommentWithoutObjectId.CommentsToCommentWithoutObjectId(_commentRepository.GetAllComment());
-            var comments = ConfigurationManager.AppSettings;
+            var comments = ConfigurationManager.AppSettings.Get("MONGOLAB_URI");
             return Json(comments, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetById(String id)

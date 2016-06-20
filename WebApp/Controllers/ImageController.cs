@@ -107,13 +107,13 @@ namespace WebApp.Controllers
             return Json(images, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public JsonResult AddImage(String url,uint version, String name,DateTime creationelData)
+        public JsonResult AddImage(String url, String name)
         {
             Image image = new Image();
             image.Url = url;
-            image.Version = version;
+            image.Version = 1;
             image.Name = name;
-            image.CreationelData = creationelData;
+            image.CreationelData = DateTime.UtcNow;
             _imageRepository.AddImage(image);
             var movies = new List<object>();
             movies.Add(new { Result = "OK. Image add" });

@@ -14,7 +14,7 @@ namespace DB
     {
         public static MongoClient GetMongoClient()
         {                        
-            var dbConnectionString = ConfigurationManager.AppSettings.Get("(MONGOHQ_URL|MONGOLAB_URI)");
+            var dbConnectionString = ConfigurationManager.AppSettings.Get("MONGOHQ_URL");
             var url = new MongoUrl(dbConnectionString);
             if (!String.IsNullOrEmpty(dbConnectionString))
             {

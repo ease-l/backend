@@ -44,8 +44,8 @@ namespace WebApp.Controllers
         public JsonResult Index()
         {
             //Betta data
-            var o = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CommentWithoutObjectId>>(@"[{""Id"":""5764fd5efcfbb421280ee61e"",""Author"":""000000000000000000000000"",""Version"":1,""Name"":""Simple comment"",""CreationelData"":""\/Date(1467320400000)\/"",""Text"":""The best comment to image in project in project""},{""Id"":""5764ff18fcfbb423487e7f1a"",""Author"":""000000000000000000000000"",""Version"":3,""Name"":""Simple comment 2"",""CreationelData"":""\/Date(1467320400000)\/"",""Text"":""The best comment to root project""}]");
-            return Json(o, JsonRequestBehavior.AllowGet);
+            /*var o = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CommentWithoutObjectId>>(@"[{""Id"":""5764fd5efcfbb421280ee61e"",""Author"":""000000000000000000000000"",""Version"":1,""Name"":""Simple comment"",""CreationelData"":""\/Date(1467320400000)\/"",""Text"":""The best comment to image in project in project""},{""Id"":""5764ff18fcfbb423487e7f1a"",""Author"":""000000000000000000000000"",""Version"":3,""Name"":""Simple comment 2"",""CreationelData"":""\/Date(1467320400000)\/"",""Text"":""The best comment to root project""}]");
+            return Json(o, JsonRequestBehavior.AllowGet);*/
             //Betta data
             var comments = CommentWithoutObjectId.CommentsToCommentWithoutObjectId(_commentRepository.GetAllComment());
             return Json(comments, JsonRequestBehavior.AllowGet);
@@ -87,13 +87,13 @@ namespace WebApp.Controllers
             return Json(comments, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public JsonResult AddComment(String text, uint version, String name, DateTime creationelData)
+        public JsonResult AddComment(String text, String name)
         {
             Comment comment = new Comment();
             comment.Text = text;
-            comment.CreationelData = creationelData;
+            comment.CreationelData = DateTime.UtcNow;
             comment.Name = name;
-            comment.Version = version;
+            comment.Version = 1;
             _commentRepository.AddComment(comment);
             var movies = new List<object>();
             movies.Add(new { Result = "OK. Comment add" });

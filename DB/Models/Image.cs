@@ -11,6 +11,9 @@ namespace DB.Models
     {
         public List<ObjectId> Comments { get; set; }
         public String Url { get; set; }
-
+        public Image()
+        {
+            this.Comments = new List<ObjectId>();
+        }
     }
 }

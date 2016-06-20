@@ -25,14 +25,8 @@ namespace DB
         }
         
         public static IMongoDatabase GetMongoDatabase(String name = "mongodb")
-        {
-            var connectionstring =
-                ConfigurationManager.AppSettings.Get("DB");
-            var url = new MongoUrl(connectionstring);
-            var client = new MongoClient(url);            
-            var database = client.GetDatabase(url.DatabaseName);
-            return database;
-            //return GetMongoClient().GetDatabase(name);
+        {            
+            return GetMongoClient().GetDatabase(name);
         }
     }
 }

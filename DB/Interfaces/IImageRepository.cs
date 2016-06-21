@@ -13,6 +13,6 @@ namespace DB.Interfaces
         Image AddImage(Image image);
         Image GetImageById(ObjectId id);
         List<Image> GetAllImage();
-        void AddCommentToImage(List<ObjectId> newComments, ObjectId iDImage);
+        void AddCommentToImage(List<ObjectId> newComments, ObjectId idImage);
     }
 }

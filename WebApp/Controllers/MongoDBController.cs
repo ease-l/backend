@@ -217,7 +217,7 @@ namespace WebApp.Controllers
             _projectRepository.AddImagesToProject(list, idMaps);
             return View(new MongoDBViewModels
             {
-                IdRoot1 = idRootProject.ToString()
+                IdRoot = idRootProject.ToString()
             });
         }
     }

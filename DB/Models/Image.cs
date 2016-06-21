@@ -6,7 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DB.Models
-{
+{    
+    public class Image:BaseEntity
+    {
+        public List<ObjectId> Comments { get; set; }
+        public String Url { get; set; }
+        public Image()
+        {
+            this.Comments = new List<ObjectId>();
+        }
+    }
     public class ImageWithoutObjectId
     {
         public String Id { get; set; }
@@ -18,14 +27,14 @@ namespace DB.Models
         public String Url { get; set; }
         public static ImageWithoutObjectId ImageToImageWithoutObjectId(Image image)
         {
-            ImageWithoutObjectId result = new ImageWithoutObjectId();
-            result.Author = image.Author.ToString();
-            result.Url = image.Url;
-            result.Version = image.Version;
-            result.Name = image.Name;
-            result.Id = image.Id.ToString();
-            result.CreationelData = image.CreationelData;
-            result.Comments = new List<string>();
+            ImageWithoutObjectId result = new ImageWithoutObjectId {
+            Author = image.Author.ToString(),
+            Url = image.Url,
+            Version = image.Version,
+            Name = image.Name,
+            Id = image.Id.ToString(),
+            CreationelData = image.CreationelData,
+            Comments = new List<string>()};           
             if (image.Comments != null)
             {
                 foreach (ObjectId id in image.Comments)
@@ -45,13 +54,5 @@ namespace DB.Models
             return result;
         }
     }
-    public class Image:BaseEntity
-    {
-        public List<ObjectId> Comments { get; set; }
-        public String Url { get; set; }
-        public Image()
-        {
-            this.Comments = new List<ObjectId>();
-        }
-    }
 }
+

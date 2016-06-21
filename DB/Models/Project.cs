@@ -6,7 +6,19 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 
 namespace DB.Models
-{
+{    
+    public class Project:BaseEntity
+    {
+        public List<ObjectId> Projects { get; set; }
+        public List<ObjectId> Images { get; set; }
+        public List<ObjectId> Comments { get; set; }
+        public Project()
+        {
+            this.Projects = new List<ObjectId>();
+            this.Images = new List<ObjectId>();
+            this.Comments = new List<ObjectId>();
+        }
+    }
     public class ProjectWithoutObjectId
     {
         public List<String> Projects { get; set; }
@@ -28,15 +40,15 @@ namespace DB.Models
         }
         public static ProjectWithoutObjectId ProjectToProjectWithoutObjectId(Project project)
         {
-            ProjectWithoutObjectId resultProject = new ProjectWithoutObjectId();
-            resultProject.CreationelData = project.CreationelData;
-            resultProject.Author = project.Author.ToString();
-            resultProject.Id = project.Id.ToString();
-            resultProject.Name = project.Name;
-            resultProject.Version = project.Version;
-            resultProject.Comments = new List<string>();
-            resultProject.Images = new List<string>();
-            resultProject.Projects = new List<string>();
+            ProjectWithoutObjectId resultProject = new ProjectWithoutObjectId {
+               CreationelData = project.CreationelData,
+            Author = project.Author.ToString(),
+            Id = project.Id.ToString(),
+            Name = project.Name,
+            Version = project.Version,
+            Comments = new List<string>(),
+            Images = new List<string>(),
+            Projects = new List<string>()};            
             if (project.Comments != null)
             {
                 foreach (ObjectId id in project.Comments)
@@ -59,18 +71,6 @@ namespace DB.Models
                 }
             }
             return resultProject;
-        }
-    }
-    public class Project:BaseEntity
-    {
-        public List<ObjectId> Projects { get; set; }
-        public List<ObjectId> Images { get; set; }
-        public List<ObjectId> Comments { get; set; }
-        public Project()
-        {
-            this.Projects = new List<ObjectId>();
-            this.Images = new List<ObjectId>();
-            this.Comments = new List<ObjectId>();
         }
     }
 }

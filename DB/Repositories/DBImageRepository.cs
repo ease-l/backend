@@ -20,9 +20,9 @@ namespace DB.Repositories
             _imageCollection = database.GetCollection<Image>("images");
         }
 
-        public void AddCommentToImage(List<ObjectId> newComments, ObjectId iDImage)
+        public void AddCommentToImage(List<ObjectId> newComments, ObjectId idImage)
         {
-            var comments = _imageCollection.AsQueryable().FirstOrDefault(i => i.Id.Equals(iDImage)).Comments;
+            var comments = _imageCollection.AsQueryable().FirstOrDefault(i => i.Id.Equals(idImage)).Comments;
             if (comments == null)
             {
                 comments = new List<ObjectId>();
@@ -32,7 +32,7 @@ namespace DB.Repositories
                 comments.Add(pId);
             }
             var update = Builders<Image>.Update.Set(i => i.Comments, comments);
-            _imageCollection.FindOneAndUpdate(i => i.Id.Equals(iDImage), update);
+            _imageCollection.FindOneAndUpdate(i => i.Id.Equals(idImage), update);
         }
 
         public Image AddImage(Image image)

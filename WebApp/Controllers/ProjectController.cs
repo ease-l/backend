@@ -16,16 +16,16 @@ namespace WebApp.Controllers
         private DB.Interfaces.IProjectRepository _projectRepository = new DB.Repositories.DBProjectRepository();
         public JsonResult Index()
         {
-            //Betta data
+            //Beta data
             var o = JsonConvert.DeserializeObject<List<ProjectWithoutObjectId>>(@"[{ ""Projects"":[""576452b7fcfbb42694ca9c17""],""Images"":[""5764f98afcfbb40838060bd0""],""Comments"":[""5764ff18fcfbb423487e7f1a""],""Id"":""57645ae9fcfbb429a48aaef3"",""Author"":null,""Version"":129,""Name"":""TestProjectInProject"",""CreationelData"":""\/Date(1496264400000)\/""},{""Projects"":[""576452b7fcfbb42694ca9c17""],""Images"":[""5764f98afcfbb40838060bd0""],""Comments"":[""5764ff18fcfbb423487e7f1a""],""Id"":""57645ae9fcfbb429a48aaef3"",""Author"":null,""Version"":129,""Name"":""TestProjectInProject"",""CreationelData"":""\/Date(1496264400000)\/""}]");
             return Json(o, JsonRequestBehavior.AllowGet);
-            //Betta data
+            //Beta data
             var projects = ProjectWithoutObjectId.ProjectsToProjectWithoutObjectId(_projectRepository.GetAllProject());            
             return Json(projects, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetById(String  id)
         {
-            //Betta data
+            //Beta data
             if (id.Equals("576452b7fcfbb42694ca9c17"))
             {
                 var o = Newtonsoft.Json.JsonConvert.DeserializeObject<ProjectWithoutObjectId>(@"{  ""Projects"": [],  ""Images"": [    ""5764fa34fcfbb40838060bd1""  ],  ""Comments"": [],  ""Id"": ""576452b7fcfbb42694ca9c17"",  ""Author"": ""000000000000000000000000"",  ""Version"": 129,  ""Name"": ""TestProjectInProject"",  ""CreationelData"": ""/Date(1496264400000)/""}");
@@ -42,7 +42,7 @@ namespace WebApp.Controllers
                 result.Add(new { Result = "Bad id" });
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
-            //Betta data
+            //Beta data
             var objectId = new ObjectId();
             if (!ObjectId.TryParse(id, out objectId))
             {

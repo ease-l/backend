@@ -7,7 +7,6 @@ namespace WebApp.ViewModels
 {
     public class MongoDBViewModels
     {
-        public string IdRoot1 { get; set; }
-        public string IdRoot2 { get; set; }
+        public string IdRoot { get; set; }
     }
 }

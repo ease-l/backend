@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 
 namespace DB.Models
-{
+{    
+    public class Comment:BaseEntity
+    {
+        public String Text { get; set; }
+    }
     public class CommentWithoutObjectId
     {
         public String Id { get; set; }
@@ -17,13 +21,14 @@ namespace DB.Models
         public String Text { get; set; }
         public static CommentWithoutObjectId CommentToCommentWithoutObjectId(Comment comment)
         {
-            var result = new CommentWithoutObjectId();
-            result.Author = comment.Author.ToString();
-            result.CreationelData = comment.CreationelData;
-            result.Id = comment.Id.ToString();
-            result.Name = comment.Name;
-            result.Text = comment.Text;
-            result.Version = comment.Version;
+            var result = new CommentWithoutObjectId{
+                Author = comment.Author.ToString(),
+            CreationelData = comment.CreationelData,
+            Id = comment.Id.ToString(),
+            Name = comment.Name,
+            Text = comment.Text,
+            Version = comment.Version,
+        };            
             return result;
         }
         public static List<CommentWithoutObjectId> CommentsToCommentWithoutObjectId(List<Comment> comments)
@@ -35,9 +40,5 @@ namespace DB.Models
             }
             return result;
         }
-    }
-    public class Comment:BaseEntity
-    {
-        public String Text { get; set; }
     }
 }

@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<ul>
+    <li>@Html.ActionLink("Comments", "Index", "Comment") 
+        <p>Полный список комментариев</p></li>
+    <li>@Html.ActionLink("Images", "Index", "Image")
+        <p>Полный список картинок</p></li>
+    <li>@Html.ActionLink("Projects", "Image", "Project")    
+        <p>Полный список проектов</p></li>
+    <li> @Html.ActionLink("Comments", "GetById", "Comment")
+        <p>Комментарий по id</p></li>
+    <li>@Html.ActionLink("Images", "GetById", "Image")
+        <p>Картинка по id</p></li>
+    <li>@Html.ActionLink("Projects", "GetById", "Project")
+        <p>Проект по id</p></li>
+    <li>@Html.ActionLink("Comments", "AddComment", "Comment")
+        <p>Комментарий добавить(POST)</p></li>
+    <li>@Html.ActionLink("Images", "AddImage", "Image")
+        <p>Картинку добавить(POST)</p></li>
+    <li>@Html.ActionLink("Projects", "AddProject", "Project")
+        <p>Проект добавить(POST)</p</li>
+</ul>

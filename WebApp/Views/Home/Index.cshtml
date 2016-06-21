@@ -1,34 +1,68 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+
+<h1>База не работает,реализованно получение betta данных</h1>
 <ul>
     <li>
-        <h1>База не работает,реализованно получение betta данных</h1>
+        @Html.ActionLink("Demo data", "MakeData", "MongoDB")
     </li>
-    <li>@Html.ActionLink("Comments", "Index", "Comment") 
-        <p>Полный список комментариев,
-           Пустой get запрос
-    <li>@Html.ActionLink("Images", "Index", "Image")
-        <p>Полный список картинок, 
+    <li>
+        @Html.ActionLink("Comments", "Index", "Comment")
+        <p>
+            Полный список комментариев,
             Пустой get запрос
-    <li>@Html.ActionLink("Projects", "Index", "Project")    
-        <p>Полный список проектов,
+        </p>
+    </li>
+    <li>
+        @Html.ActionLink("Images", "Index", "Image")
+        <p>
+            Полный список картинок,
             Пустой get запрос
-    <li> @Html.ActionLink("Comments", "GetById", "Comment")
-        <p>Комментарий по id,
-           В теле objectId.toString() id(POST)</p></li>
-    <li>@Html.ActionLink("Images", "GetById", "Image")
-        <p>Картинка по id
-            В теле objectId.toString() id(POST)</p></li>
-    <li>@Html.ActionLink("Projects", "GetById", "Project")
-        <p>Проект по id
-            В теле objectId.toString() id(POST)</p></li>
-    <li>@Html.ActionLink("Comments", "AddComment", "Comment")
-        <p>Добавить комментарий(POST)</p></li>
-    <li>@Html.ActionLink("Images", "AddImage", "Image")
-        <p>Добавить картинку(POST)</p></li>
-    <li>@Html.ActionLink("Projects", "AddProject", "Project")
-        <p>Добавить проект(POST)</p></li>
-    <li><p>Все классы реализованы согласно доске, если не сходиться то </p>
-     <a href="https://github.com/ease-l/backend/tree/feautere/DB.Models/DB/Models">вот репозиторий с их реализациями</a></li>
+        </p>
+    </li>
+    <li>
+        @Html.ActionLink("Projects", "Index", "Project")
+        <p>
+            Полный список проектов,
+            Пустой get запрос
+        </p>
+    </li>
+    <li>
+        @Html.ActionLink("Comments", "GetById", "Comment")
+        <p>
+            Комментарий по id,
+            В теле objectId.toString() id(POST)
+        </p>
+    </li>
+    <li>
+        @Html.ActionLink("Images", "GetById", "Image")
+        <p>
+            Картинка по id
+            В теле objectId.toString() id(POST)
+        </p>
+    </li>
+    <li>
+        @Html.ActionLink("Projects", "GetById", "Project")
+        <p>
+            Проект по id
+            В теле objectId.toString() id(POST)
+        </p>
+    </li>
+    <li>
+        @Html.ActionLink("Comments", "AddComment", "Comment")
+        <p>Добавить комментарий(POST)</p>
+    </li>
+    <li>
+        @Html.ActionLink("Images", "AddImage", "Image")
+        <p>Добавить картинку(POST)</p>
+    </li>
+    <li>
+        @Html.ActionLink("Projects", "AddProject", "Project")
+        <p>Добавить проект(POST)</p>
+    </li>
+    <li>
+        <p>Все классы реализованы согласно доске, если не сходиться то </p>
+        <a href="https://github.com/ease-l/backend/tree/feautere/DB.Models/DB/Models">вот репозиторий с их реализациями</a>
+    </li>
 </ul>

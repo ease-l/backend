@@ -14,12 +14,34 @@ namespace WebApp.Controllers
     {
         private DB.Interfaces.ICommentRepository _commentRepository = new DB.Repositories.DBCommentRepository();
         public JsonResult Index()
-        {            
+        {
+            //Betta data
+            var o = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CommentWithoutObjectId>>(@"[{""Id"":""5764fd5efcfbb421280ee61e"",""Author"":""000000000000000000000000"",""Version"":1,""Name"":""Simple comment"",""CreationelData"":""\/Date(1467320400000)\/"",""Text"":""The best comment to image in project in project""},{""Id"":""5764ff18fcfbb423487e7f1a"",""Author"":""000000000000000000000000"",""Version"":3,""Name"":""Simple comment 2"",""CreationelData"":""\/Date(1467320400000)\/"",""Text"":""The best comment to root project""}]");
+            return Json(o, JsonRequestBehavior.AllowGet);
+            //Betta data
             var comments = CommentWithoutObjectId.CommentsToCommentWithoutObjectId(_commentRepository.GetAllComment());
             return Json(comments, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetById(String id)
-        {            
+        {
+            //Betta data
+            if (id.Equals("5764ff18fcfbb423487e7f1a"))
+            {
+                var o = Newtonsoft.Json.JsonConvert.DeserializeObject<CommentWithoutObjectId>(@"{""Id"":""5764ff18fcfbb423487e7f1a"",""Author"":""000000000000000000000000"",""Version"":3,""Name"":""Simple comment 2"",""CreationelData"":""/Date(1467320400000)/"",""Text"":""The best comment to root project""}");
+                return Json(o, JsonRequestBehavior.AllowGet);
+            }
+            else if (id.Equals("5764fd5efcfbb421280ee61e"))
+            {
+                var o = Newtonsoft.Json.JsonConvert.DeserializeObject<CommentWithoutObjectId>(@"{""Id"":""5764fd5efcfbb421280ee61e"",""Author"":""000000000000000000000000"",""Version"":1,""Name"":""Simple comment"",""CreationelData"":""/Date(1467320400000)/"",""Text"":""The best comment to image in project in project""}");
+                return Json(o, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var result = new List<Object>();
+                result.Add(new { Result = "Bad id" });
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            //Betta data
             var objectId = new ObjectId();
             if (!ObjectId.TryParse(id, out objectId))
             {

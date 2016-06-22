@@ -23,10 +23,20 @@ namespace DB
             return new MongoClient();
 
         }
-        
         public static IMongoDatabase GetMongoDatabase(String name = "mongodb")
-        {            
-            return GetMongoClient().GetDatabase(name);
+        {
+           return GetMongoClient().GetDatabase(name);
+        }
+        public static MongoDatabase GetMongoDatabase2(String name = "mongodb")
+        {
+            var connectionstring =
+            ConfigurationManager.AppSettings.Get("MONGOLAB_URI");
+            var url = new MongoUrl(connectionstring);
+            var client = new MongoClient(url);
+            var server = client.GetServer();
+            var database = server.GetDatabase(url.DatabaseName);
+            return database;
+            //return GetMongoClient().GetDatabase(name);
         }
     }
 }

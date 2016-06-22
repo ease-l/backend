@@ -18,8 +18,8 @@ namespace DB.Models
             this.Images = new List<ObjectId>();
             this.Comments = new List<ObjectId>();
         }
-    }
-    public class ProjectWithoutObjectId
+    } 
+    public partial class ProjectWithoutObjectId
     {
         public List<String> Projects { get; set; }
         public List<String> Images { get; set; }
@@ -29,6 +29,10 @@ namespace DB.Models
         public uint Version { get; set; }
         public String Name { get; set; }
         public DateTime CreationelData { get; set; }
+    }
+
+    public partial class ProjectWithoutObjectId
+        {
         public static List<ProjectWithoutObjectId> ProjectsToProjectWithoutObjectId(List<Project> list)
         {
             List<ProjectWithoutObjectId> result = new List<ProjectWithoutObjectId>();

@@ -11,7 +11,7 @@ namespace DB.Models
     {
         public String Text { get; set; }
     }
-    public class CommentWithoutObjectId
+    public partial class CommentWithoutObjectId
     {
         public String Id { get; set; }
         public String Author { get; set; }
@@ -19,8 +19,11 @@ namespace DB.Models
         public String Name { get; set; }
         public DateTime CreationelData { get; set; }
         public String Text { get; set; }
-        public static CommentWithoutObjectId CommentToCommentWithoutObjectId(Comment comment)
-        {
+    }
+       public partial class CommentWithoutObjectId
+       {
+            public static CommentWithoutObjectId CommentToCommentWithoutObjectId(Comment comment)
+               {
             var result = new CommentWithoutObjectId{
                 Author = comment.Author.ToString(),
             CreationelData = comment.CreationelData,

@@ -16,7 +16,7 @@ namespace DB.Models
             this.Comments = new List<ObjectId>();
         }
     }
-    public class ImageWithoutObjectId
+    public partial class ImageWithoutObjectId
     {
         public String Id { get; set; }
         public String Author { get; set; }
@@ -24,7 +24,11 @@ namespace DB.Models
         public String Name { get; set; }
         public DateTime CreationelData { get; set; }
         public List<String> Comments { get; set; }
-        public String Url { get; set; }
+        public String Url { get; set; }'
+       }
+
+    public partial class ImageWithoutObjectId
+    {
         public static ImageWithoutObjectId ImageToImageWithoutObjectId(Image image)
         {
             ImageWithoutObjectId result = new ImageWithoutObjectId {

@@ -14,19 +14,21 @@ namespace WebApp.Controllers
     public class ProjectController : Controller
     {
         private DB.Interfaces.IProjectRepository _projectRepository = new DB.Repositories.DBProjectRepository();
+        [HttpGet, Route("Project")]
         public JsonResult Index()
         {
             //Beta data
-            var o = JsonConvert.DeserializeObject<List<ProjectWithoutObjectId>>(@"[{ ""Projects"":[""576452b7fcfbb42694ca9c17""],""Images"":[""5764f98afcfbb40838060bd0""],""Comments"":[""5764ff18fcfbb423487e7f1a""],""Id"":""57645ae9fcfbb429a48aaef3"",""Author"":null,""Version"":129,""Name"":""TestProjectInProject"",""CreationelData"":""\/Date(1496264400000)\/""},{""Projects"":[""576452b7fcfbb42694ca9c17""],""Images"":[""5764f98afcfbb40838060bd0""],""Comments"":[""5764ff18fcfbb423487e7f1a""],""Id"":""57645ae9fcfbb429a48aaef3"",""Author"":null,""Version"":129,""Name"":""TestProjectInProject"",""CreationelData"":""\/Date(1496264400000)\/""}]");
-            return Json(o, JsonRequestBehavior.AllowGet);
+            /*var o = JsonConvert.DeserializeObject<List<ProjectWithoutObjectId>>(@"[{ ""Projects"":[""576452b7fcfbb42694ca9c17""],""Images"":[""5764f98afcfbb40838060bd0""],""Comments"":[""5764ff18fcfbb423487e7f1a""],""Id"":""57645ae9fcfbb429a48aaef3"",""Author"":null,""Version"":129,""Name"":""TestProjectInProject"",""CreationelData"":""\/Date(1496264400000)\/""},{""Projects"":[""576452b7fcfbb42694ca9c17""],""Images"":[""5764f98afcfbb40838060bd0""],""Comments"":[""5764ff18fcfbb423487e7f1a""],""Id"":""57645ae9fcfbb429a48aaef3"",""Author"":null,""Version"":129,""Name"":""TestProjectInProject"",""CreationelData"":""\/Date(1496264400000)\/""}]");
+            return Json(o, JsonRequestBehavior.AllowGet);*/
             //Beta data
             var projects = ProjectWithoutObjectId.ProjectsToProjectWithoutObjectId(_projectRepository.GetAllProject());            
             return Json(projects, JsonRequestBehavior.AllowGet);
         }
+        [HttpGet, Route("Project/id{id}")]
         public JsonResult GetById(String  id)
         {
             //Beta data
-            if (id.Equals("576452b7fcfbb42694ca9c17"))
+            /*if (id.Equals("576452b7fcfbb42694ca9c17"))
             {
                 var o = Newtonsoft.Json.JsonConvert.DeserializeObject<ProjectWithoutObjectId>(@"{  ""Projects"": [],  ""Images"": [    ""5764fa34fcfbb40838060bd1""  ],  ""Comments"": [],  ""Id"": ""576452b7fcfbb42694ca9c17"",  ""Author"": ""000000000000000000000000"",  ""Version"": 129,  ""Name"": ""TestProjectInProject"",  ""CreationelData"": ""/Date(1496264400000)/""}");
                 return Json(o, JsonRequestBehavior.AllowGet);
@@ -41,7 +43,7 @@ namespace WebApp.Controllers
                 var result = new List<Object>();
                 result.Add(new { Result = "Bad id" });
                 return Json(result, JsonRequestBehavior.AllowGet);
-            }
+            }*/
             //Beta data
             var objectId = new ObjectId();
             if (!ObjectId.TryParse(id, out objectId))
@@ -65,16 +67,16 @@ namespace WebApp.Controllers
             }
             return Json(project, JsonRequestBehavior.AllowGet);
         }
-        [HttpPost]
+        [HttpPost, Route("Project")]
         public JsonResult AddProject(String name)
         {
             Project project = new Project();
             project.Name = name;
             project.Version = 1;
             project.CreationelData = DateTime.UtcNow;
-            _projectRepository.AddProject(project);
+            var id = _projectRepository.AddProject(project).Id.ToString();
             var movies = new List<object>();
-            movies.Add(new { Result = "OK. Project add"});
+            movies.Add(id);
             return Json(movies, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]

@@ -13,6 +13,7 @@ namespace WebApp.Controllers
     public class CommentController : Controller
     {
         private DB.Interfaces.ICommentRepository _commentRepository = new DB.Repositories.DBCommentRepository();
+        [HttpGet, Route("Comment")]
         public JsonResult Index()
         {
             //Beta data
@@ -22,10 +23,11 @@ namespace WebApp.Controllers
             var comments = CommentWithoutObjectId.CommentsToCommentWithoutObjectId(_commentRepository.GetAllComment());
             return Json(comments, JsonRequestBehavior.AllowGet);
         }
+        [HttpGet, Route("Comment/id{id}")]
         public JsonResult GetById(String id)
         {
             //Beta data
-            if (id.Equals("5764ff18fcfbb423487e7f1a"))
+            /*if (id.Equals("5764ff18fcfbb423487e7f1a"))
             {
                 var o = Newtonsoft.Json.JsonConvert.DeserializeObject<CommentWithoutObjectId>(@"{""Id"":""5764ff18fcfbb423487e7f1a"",""Author"":""000000000000000000000000"",""Version"":3,""Name"":""Simple comment 2"",""CreationelData"":""/Date(1467320400000)/"",""Text"":""The best comment to root project""}");
                 return Json(o, JsonRequestBehavior.AllowGet);
@@ -40,7 +42,7 @@ namespace WebApp.Controllers
                 var result = new List<Object>();
                 result.Add(new { Result = "Bad id" });
                 return Json(result, JsonRequestBehavior.AllowGet);
-            }
+            }*/
             //Beta data
             var objectId = new ObjectId();
             if (!ObjectId.TryParse(id, out objectId))
@@ -64,7 +66,7 @@ namespace WebApp.Controllers
             }
             return Json(comments, JsonRequestBehavior.AllowGet);
         }
-        [HttpPost]
+        [HttpPost, Route("Comment")]
         public JsonResult AddComment(String text, String name)
         {
             Comment comment = new Comment();
@@ -72,7 +74,7 @@ namespace WebApp.Controllers
             comment.CreationelData = DateTime.UtcNow;
             comment.Name = name;
             comment.Version = 1;
-            _commentRepository.AddComment(comment);
+            var id = _commentRepository.AddComment(comment).Id.ToString();
             var movies = new List<object>();
             movies.Add(new { Result = "OK. Comment add" });
             return Json(movies, JsonRequestBehavior.AllowGet);

@@ -7,16 +7,17 @@ using DB.Interfaces;
 using DB.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 
 namespace DB.Repositories
 {
     public class DBImageRepository : IImageRepository
     {
-        private readonly IMongoCollection<Image> _imageCollection;
+        private readonly MongoCollection<Image> _imageCollection;
 
         public DBImageRepository()
         {
-            var database = MongoClientFactory.GetMongoDatabase();
+            var database = MongoClientFactory.GetMongoDatabase2();
             _imageCollection = database.GetCollection<Image>("images");
         }
 
@@ -32,12 +33,12 @@ namespace DB.Repositories
                 comments.Add(pId);
             }
             var update = Builders<Image>.Update.Set(i => i.Comments, comments);
-            _imageCollection.FindOneAndUpdate(i => i.Id.Equals(idImage), update);
+            //_imageCollection.FindOneAndUpdate(i => i.Id.Equals(idImage), update);
         }
 
         public Image AddImage(Image image)
         {
-            _imageCollection.InsertOne(image);
+            _imageCollection.Insert(image);
             return image;
         }
 

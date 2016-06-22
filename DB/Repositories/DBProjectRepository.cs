@@ -7,28 +7,29 @@ using MongoDB.Bson;
 using DB.Interfaces;
 using DB.Models;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 
 namespace DB.Repositories
 {
     public class DBProjectRepository : IProjectRepository
     {
-        private readonly IMongoCollection<Project> _projectCollection;
+        private readonly MongoCollection<Project> _projectCollection;
 
         public DBProjectRepository()
         {
-            var database = MongoClientFactory.GetMongoDatabase();
+            var database = MongoClientFactory.GetMongoDatabase2();
             _projectCollection = database.GetCollection<Project>("projects");
         }
         public Project AddProject(Project project)
         {
-            _projectCollection.InsertOne(project);
+            _projectCollection.Insert(project);
             return project; 
         }
 
         public List<Project> GetAllProject()
         {
-            //ToDo delet this bad method
-            return _projectCollection.AsQueryable().ToList();
+            //ToDo delete this bad method
+            return _projectCollection.FindAll().ToList();
         }
 
         public Project GetProjectById(ObjectId id)
@@ -49,7 +50,7 @@ namespace DB.Repositories
             }
             var update = Builders<Project>.Update.Set(p => p.Projects, projects);
             //var update = Builders<Project>.Update.AddToSet(p => p.Projects, pId);
-            _projectCollection.FindOneAndUpdate(p => p.Id.Equals(iDRootProject), update);
+            //_projectCollection.FindOneAndUpdate(p => p.Id.Equals(iDRootProject), update);
         }
 
         public void AddImagesToProject(List<ObjectId> newImages, ObjectId iDProject)
@@ -64,7 +65,7 @@ namespace DB.Repositories
                 images.Add(pId);
             }
             var update = Builders<Project>.Update.Set(p => p.Images, images);
-            _projectCollection.FindOneAndUpdate(p => p.Id.Equals(iDProject), update);
+            //_projectCollection.FindOneAndUpdate(p => p.Id.Equals(iDProject), update);
         }
 
         public void AddCommentsToProject(List<ObjectId> newComments, ObjectId iDProject)
@@ -79,7 +80,7 @@ namespace DB.Repositories
                 comments.Add(pId);
             }
             var update = Builders<Project>.Update.Set(p => p.Comments, comments);
-            _projectCollection.FindOneAndUpdate(p => p.Id.Equals(iDProject), update);
+            //_projectCollection.FindOneAndUpdate(p => p.Id.Equals(iDProject), update);
         }
     }
 }

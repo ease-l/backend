@@ -29,24 +29,21 @@
         </p>
     </li>
     <li>
-        @Html.ActionLink("Comments", "GetById", "Comment")
+        @Html.ActionLink("Comments/id{}", "GetById", "Comment")
         <p>
-            Комментарий по id,
-            В теле objectId.toString() id(POST)
+            Комментарий по id            
         </p>
     </li>
     <li>
-        @Html.ActionLink("Images", "GetById", "Image")
+        @Html.ActionLink("Images/id{}", "GetById", "Image")
         <p>
             Картинка по id
-            В теле objectId.toString() id(POST)
         </p>
     </li>
     <li>
-        @Html.ActionLink("Projects", "GetById", "Project")
+        @Html.ActionLink("Projects/id{}", "GetById", "Project")
         <p>
             Проект по id
-            В теле objectId.toString() id(POST)
         </p>
     </li>
     <li>

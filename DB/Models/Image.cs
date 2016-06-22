@@ -25,6 +25,10 @@ namespace DB.Models
         public DateTime CreationelData { get; set; }
         public List<String> Comments { get; set; }
         public String Url { get; set; }
+        public ImageWithoutObjectId()
+        {
+            this.Comments = new List<String>();
+        }
         public static ImageWithoutObjectId ImageToImageWithoutObjectId(Image image)
         {
             ImageWithoutObjectId result = new ImageWithoutObjectId {

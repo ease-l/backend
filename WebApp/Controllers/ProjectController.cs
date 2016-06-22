@@ -79,7 +79,7 @@ namespace WebApp.Controllers
             movies.Add(id);
             return Json(movies, JsonRequestBehavior.AllowGet);
         }
-        [HttpPost]
+        [HttpPost, Route("Project")]
         public JsonResult AddProjectToProject(String sidNew, String sidRoot)
         {
             var idNew = new ObjectId();
@@ -90,14 +90,12 @@ namespace WebApp.Controllers
                 result.Add(new { Result = "Bad id it's not objectId" });
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
-            var list = new List<ObjectId>();
-            list.Add(idNew);
-            _projectRepository.AddProjectsToProject(list, idRoot);
+            _projectRepository.AddProjectsToProject(idNew, idRoot);
             var movies = new List<object>();
             movies.Add(new { Result = "OK. Project add" });
             return Json(movies, JsonRequestBehavior.AllowGet);
         }
-        [HttpPost]
+        [HttpPost, Route("Project")]
         public JsonResult AddImageToProject(String simageId, String sprojectId)
         {
             var imageId = new ObjectId();
@@ -108,14 +106,12 @@ namespace WebApp.Controllers
                 result.Add(new { Result = "Bad id it's not objectId" });
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
-            var list = new List<ObjectId>();
-            list.Add(imageId);
-            _projectRepository.AddImagesToProject(list,projectId);
+            _projectRepository.AddImagesToProject(imageId, projectId);
             var movies = new List<object>();
             movies.Add(new { Result = "OK. Image add" });
             return Json(movies, JsonRequestBehavior.AllowGet);
         }
-        [HttpPost]
+        [HttpPost, Route("Project")]
         public JsonResult AddCommentToProject(String scommentId, String sprojectId)
         {
             var commentId = new ObjectId();
@@ -126,9 +122,7 @@ namespace WebApp.Controllers
                 result.Add(new { Result = "Bad id it's not objectId" });
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
-            var list = new List<ObjectId>();
-            list.Add(commentId);
-            _projectRepository.AddCommentsToProject(list, projectId);
+            _projectRepository.AddCommentsToProject(commentId, projectId);
             var movies = new List<object>();
             movies.Add(new { Result = "OK. Comment add" });
             return Json(movies, JsonRequestBehavior.AllowGet);

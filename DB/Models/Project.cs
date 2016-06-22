@@ -29,6 +29,12 @@ namespace DB.Models
         public uint Version { get; set; }
         public String Name { get; set; }
         public DateTime CreationelData { get; set; }
+        public ProjectWithoutObjectId()
+        {
+            this.Projects = new List<String>();
+            this.Images = new List<String>();
+            this.Comments = new List<String>();
+        }
         public static List<ProjectWithoutObjectId> ProjectsToProjectWithoutObjectId(List<Project> list)
         {
             List<ProjectWithoutObjectId> result = new List<ProjectWithoutObjectId>();

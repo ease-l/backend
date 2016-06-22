@@ -76,7 +76,7 @@ namespace WebApp.Controllers
             comment.Version = 1;
             var id = _commentRepository.AddComment(comment).Id.ToString();
             var movies = new List<object>();
-            movies.Add(new { Result = "OK. Comment add" });
+            movies.Add(id);
             return Json(movies, JsonRequestBehavior.AllowGet);
         }
     }

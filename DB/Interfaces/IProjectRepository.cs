@@ -13,8 +13,8 @@ namespace DB.Interfaces
         Project AddProject(Project project);
         Project GetProjectById(ObjectId id);
         List<Project> GetAllProject();
-        void AddProjectsToProject(List<ObjectId> newProjects, ObjectId iDRootProject);
-        void AddImagesToProject(List<ObjectId> newImages, ObjectId iDProject);
-        void AddCommentsToProject(List<ObjectId> newComments, ObjectId iDProject);
+        void AddProjectsToProject(ObjectId newProjects, ObjectId iDRootProject);
+        void AddImagesToProject(ObjectId newImages, ObjectId iDProject);
+        void AddCommentsToProject(ObjectId newComments, ObjectId iDProject);
     }
 }

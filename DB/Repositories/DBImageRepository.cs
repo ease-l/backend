@@ -8,6 +8,7 @@ using DB.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using MongoDB.Driver.Builders;
 
 namespace DB.Repositories
 {
@@ -21,19 +22,20 @@ namespace DB.Repositories
             _imageCollection = database.GetCollection<Image>("images");
         }
 
-        public void AddCommentToImage(List<ObjectId> newComments, ObjectId idImage)
+        public void AddCommentToImage(ObjectId newComments, ObjectId idImage)
         {
-            var comments = _imageCollection.AsQueryable().FirstOrDefault(i => i.Id.Equals(idImage)).Comments;
-            if (comments == null)
+            var images = _imageCollection.FindAll().ToList();
+            //ToDo make delete 1 element not All
+            //_imageCollection.Remove(Query.EQ("Id", idImage));            
+            _imageCollection.RemoveAll(); 
+            foreach(Image i in images)
             {
-                comments = new List<ObjectId>();
+                if (i.Id.Equals(idImage))
+                {
+                    i.Comments.Add(newComments);
+                }
+                _imageCollection.Insert(i);
             }
-            foreach (ObjectId pId in newComments)
-            {
-                comments.Add(pId);
-            }
-            var update = Builders<Image>.Update.Set(i => i.Comments, comments);
-            //_imageCollection.FindOneAndUpdate(i => i.Id.Equals(idImage), update);
         }
 
         public Image AddImage(Image image)

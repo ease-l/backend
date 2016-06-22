@@ -100,6 +100,7 @@ namespace WebApp.Controllers
             image.CreationelData = DateTime.UtcNow;
             var idAttackingWarrior = _imageRepository.AddImage(image).Id;
 
+            project = new Project();
             project.Id = new ObjectId();
             project.Name = "Warriors";
             project.Version = 17;
@@ -115,6 +116,7 @@ namespace WebApp.Controllers
             project.Images.Add(idStandingWizard);
             var idWarriors = _projectRepository.AddProject(project).Id;
 
+            project = new Project();
             project.Id = new ObjectId();
             project.Name = "Heroes";
             project.Version = 26;
@@ -145,6 +147,7 @@ namespace WebApp.Controllers
             var idMap1 = _imageRepository.AddImage(image).Id;
 
             image.Id = new ObjectId();
+            image.Comments = new List<ObjectId>();
             image.Url = "http://media.fatalgame.com/store/store-heroes3-map-8080.jpg";
             image.Version = 2;
             image.Name = "For 6 People";
@@ -152,6 +155,7 @@ namespace WebApp.Controllers
             var idMap2 = _imageRepository.AddImage(image).Id;
 
             image.Id = new ObjectId();
+            image.Comments = new List<ObjectId>();
             image.Url = "http://media.fatalgame.com/store/store-heroes3-map-11731.jpg";
             image.Version = 2;
             image.Name = "For 4 People";
@@ -165,6 +169,7 @@ namespace WebApp.Controllers
             image.Comments.Add(comment.Id);
             var idMap3 = _imageRepository.AddImage(image).Id;
 
+            project = new Project();
             project.Id = new ObjectId();
             project.Name = "Maps";
             project.Version = 14;
@@ -181,6 +186,7 @@ namespace WebApp.Controllers
             project.Images.Add(idMap3);
             var idMaps = _projectRepository.AddProject(project).Id;
 
+            project = new Project();
             project.Id = new ObjectId();
             project.Name = "Game";
             project.Version = 39;

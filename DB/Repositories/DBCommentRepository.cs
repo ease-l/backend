@@ -7,28 +7,27 @@ using DB.Interfaces;
 using DB.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using MongoDB.Driver.Linq;
 
 namespace DB.Repositories
 {
     public class DBCommentRepository : ICommentRepository
     {
-        private readonly MongoCollection<Comment> _commentCollection;
+        private readonly IMongoCollection<Comment> _commentCollection;
 
         public DBCommentRepository()
         {
-            var database = MongoClientFactory.GetMongoDatabase2();
+            var database = MongoClientFactory.GetMongoDatabase();
             _commentCollection = database.GetCollection<Comment>("comments");
         }
         public Comment AddComment(Comment comment)
         {
-            _commentCollection.Insert(comment);
+            _commentCollection.InsertOne(comment);
             return comment;
         }
 
         public List<Comment> GetAllComment()
         {
-            return _commentCollection.FindAll().ToList();
+            return _commentCollection.AsQueryable().ToList(); 
         }
 
         public Comment GetCommentById(ObjectId id)

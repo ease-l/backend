@@ -37,102 +37,23 @@ namespace WebApp.Controllers
                     map2.image
                     map3.image
              */
-            var list = new List<ObjectId>();
-            var listcom = new List<ObjectId>();
+            //var list = new List<ObjectId>();
+            //var listcom = new List<ObjectId>();
             Project project = new Project();
-            project.Name = "Game";
-            project.Version = 39;
-            project.CreationelData = DateTime.Today;
-            var idRootProject = _projectRepository.AddProject(project).Id;
             Comment comment = new Comment();
-            comment.Text = "Make icon!!!";
-            comment.CreationelData = DateTime.UtcNow;
-            comment.Name = "Icon";
-            comment.Version = 1;
-            list.Add(_commentRepository.AddComment(comment).Id);
-            _projectRepository.AddCommentsToProject(list, idRootProject);
-            list.Clear();
-
-            project.Id = new ObjectId();
-            project.Name = "Heroes";
-            project.Version = 26;
-            project.CreationelData = DateTime.Today;
-            var idHeroes = _projectRepository.AddProject(project).Id;
-            list.Add(idHeroes);
-            comment.Id = new ObjectId();
-            comment.Text = "Make more heroes for example archer!!!";
-            comment.CreationelData = DateTime.UtcNow;
-            comment.Name = "Archer";
-            comment.Version = 1;
-            listcom.Add(_commentRepository.AddComment(comment).Id);
-            _projectRepository.AddCommentsToProject(listcom, idHeroes);
-            listcom.Clear();
-
-            project.Id = new ObjectId();
-            project.Name = "Maps";
-            project.Version = 14;
-            project.CreationelData = DateTime.Today;
-            var idMaps = _projectRepository.AddProject(project).Id;
-            list.Add(idMaps);
-            comment.Id = new ObjectId();
-            comment.Text = "Make map for 2 people!!!";
-            comment.CreationelData = DateTime.UtcNow;
-            comment.Name = "Map for 2";
-            comment.Version = 1;
-            listcom.Add(_commentRepository.AddComment(comment).Id);
-            _projectRepository.AddCommentsToProject(listcom, idMaps);
-            listcom.Clear();
-
-            _projectRepository.AddProjectsToProject(list, idRootProject);
-
-            project.Name = "Wizards";
-            project.Id = new ObjectId();
-            project.Version = 9;
-            project.CreationelData = DateTime.Today;
-            var idWizards = _projectRepository.AddProject(project).Id;
-            comment.Id = new ObjectId();
-            comment.Text = "Make more detailed!!!";
-            comment.CreationelData = DateTime.UtcNow;
-            comment.Name = "Details";
-            comment.Version = 1;
-            listcom.Add(_commentRepository.AddComment(comment).Id);
-            _projectRepository.AddCommentsToProject(listcom, idWizards);
-            listcom.Clear();
-
-            project.Id = new ObjectId();
-            project.Name = "Warriors";
-            project.Version = 17;
-            project.CreationelData = DateTime.Today;
-            var idWarriors = _projectRepository.AddProject(project).Id;
-            comment.Id = new ObjectId();
-            comment.Text = "This warriors terrible, make new!!!";
-            comment.CreationelData = DateTime.UtcNow;
-            comment.Name = "Terrible";
-            comment.Version = 1;
-            listcom.Add(_commentRepository.AddComment(comment).Id);
-            _projectRepository.AddCommentsToProject(listcom, idWarriors);
-            listcom.Clear();
-
-            list.Clear();
-            list.Add(idWarriors);
-            list.Add(idWizards);
-            _projectRepository.AddProjectsToProject(list, idHeroes);
-
-
             Image image = new Image();
             image.Url = "http://clash-wiki.com/images/army/wizard/wizard_level6_attacks.png";
             image.Version = 4;
             image.Name = "Attacking";
             image.CreationelData = DateTime.UtcNow;
-            var idAttackingWizard = _imageRepository.AddImage(image).Id;
             comment.Id = new ObjectId();
             comment.Text = "This Wizards very beautiful!!!";
             comment.CreationelData = DateTime.UtcNow;
             comment.Name = "Beautiful";
             comment.Version = 1;
-            listcom.Add(_commentRepository.AddComment(comment).Id);
-            _imageRepository.AddCommentToImage(listcom, idAttackingWizard);
-            listcom.Clear();
+            comment = _commentRepository.AddComment(comment);
+            image.Comments.Add(comment.Id);
+            var idAttackingWizard = _imageRepository.AddImage(image).Id;
 
             image.Id = new ObjectId();
             image.Url = "http://clash-wiki.com/images/army/wizard/wizard_level6_attacks.png";
@@ -148,11 +69,22 @@ namespace WebApp.Controllers
             image.CreationelData = DateTime.UtcNow;
             var idRastingWizard = _imageRepository.AddImage(image).Id;
 
-            list.Clear();
-            list.Add(idAttackingWizard);
-            list.Add(idRastingWizard);
-            list.Add(idStandingWizard);
-            _projectRepository.AddImagesToProject(list, idWizards);
+            project.Name = "Wizards";
+            project.Id = new ObjectId();
+            project.Version = 9;
+            project.CreationelData = DateTime.Today;
+            comment.Id = new ObjectId();
+            comment.Text = "Make more detailed!!!";
+            comment.CreationelData = DateTime.UtcNow;
+            comment.Name = "Details";
+            comment.Version = 1;
+            comment = _commentRepository.AddComment(comment);
+            project.Comments.Add(comment.Id);
+            project.Images.Add(idStandingWizard);
+            project.Images.Add(idRastingWizard);
+            project.Images.Add(idAttackingWizard);
+            var idWizards = _projectRepository.AddProject(project).Id;
+
 
             image.Id = new ObjectId();
             image.Url = "http://vignette1.wikia.nocookie.net/anime-characters-fight/images/5/5b/Warrior_cg_render.png/revision/latest?cb=20140816083714&path-prefix=ru";
@@ -168,25 +100,49 @@ namespace WebApp.Controllers
             image.CreationelData = DateTime.UtcNow;
             var idAttackingWarrior = _imageRepository.AddImage(image).Id;
 
-            list.Clear();
-            list.Add(idAttackingWarrior);
-            list.Add(idStandingWarrior);
-            _projectRepository.AddImagesToProject(list, idWarriors);
+            project.Id = new ObjectId();
+            project.Name = "Warriors";
+            project.Version = 17;
+            project.CreationelData = DateTime.Today;
+            comment.Id = new ObjectId();
+            comment.Text = "This warriors terrible, make new!!!";
+            comment.CreationelData = DateTime.UtcNow;
+            comment.Name = "Terrible";
+            comment.Version = 1;
+            comment = _commentRepository.AddComment(comment);
+            project.Comments.Add(comment.Id);
+            project.Images.Add(idAttackingWarrior);
+            project.Images.Add(idStandingWizard);
+            var idWarriors = _projectRepository.AddProject(project).Id;
+
+            project.Id = new ObjectId();
+            project.Name = "Heroes";
+            project.Version = 26;
+            project.CreationelData = DateTime.Today;
+            comment.Id = new ObjectId();
+            comment.Text = "Make more heroes for example archer!!!";
+            comment.CreationelData = DateTime.UtcNow;
+            comment.Name = "Archer";
+            comment.Version = 1;
+            comment = _commentRepository.AddComment(comment);
+            project.Comments.Add(comment.Id);
+            project.Projects.Add(idWarriors);
+            project.Projects.Add(idWizards);
+            var idHeroes = _projectRepository.AddProject(project).Id;
 
             image.Id = new ObjectId();
             image.Url = "http://media.fatalgame.com/store/store-heroes3-map-9589.jpg";
             image.Version = 2;
             image.Name = "For 4+ People";
             image.CreationelData = DateTime.UtcNow;
-            var idMap1 = _imageRepository.AddImage(image).Id;
             comment.Id = new ObjectId();
             comment.Text = "Make more water!!!";
             comment.CreationelData = DateTime.UtcNow;
             comment.Name = "Water";
             comment.Version = 1;
-            listcom.Add(_commentRepository.AddComment(comment).Id);
-            _imageRepository.AddCommentToImage(listcom, idMap1);
-            listcom.Clear();
+            comment = _commentRepository.AddComment(comment);
+            image.Comments.Add(comment.Id);
+            var idMap1 = _imageRepository.AddImage(image).Id;
 
             image.Id = new ObjectId();
             image.Url = "http://media.fatalgame.com/store/store-heroes3-map-8080.jpg";
@@ -200,21 +156,46 @@ namespace WebApp.Controllers
             image.Version = 2;
             image.Name = "For 4 People";
             image.CreationelData = DateTime.UtcNow;
-            var idMap3 = _imageRepository.AddImage(image).Id;
             comment.Id = new ObjectId();
             comment.Text = "Make one more island!!!";
             comment.CreationelData = DateTime.UtcNow;
             comment.Name = "Island";
             comment.Version = 1;
-            listcom.Add(_commentRepository.AddComment(comment).Id);
-            _imageRepository.AddCommentToImage(listcom, idMap3);
-            listcom.Clear();
+            comment = _commentRepository.AddComment(comment);
+            image.Comments.Add(comment.Id);
+            var idMap3 = _imageRepository.AddImage(image).Id;
 
-            list.Clear();
-            list.Add(idMap1);
-            list.Add(idMap2);
-            list.Add(idMap3);
-            _projectRepository.AddImagesToProject(list, idMaps);
+            project.Id = new ObjectId();
+            project.Name = "Maps";
+            project.Version = 14;
+            project.CreationelData = DateTime.Today;
+            comment.Id = new ObjectId();
+            comment.Text = "Make map for 2 people!!!";
+            comment.CreationelData = DateTime.UtcNow;
+            comment.Name = "Map for 2";
+            comment.Version = 1;
+            comment = _commentRepository.AddComment(comment);
+            project.Comments.Add(comment.Id);
+            project.Images.Add(idMap1);
+            project.Images.Add(idMap2);
+            project.Images.Add(idMap3);
+            var idMaps = _projectRepository.AddProject(project).Id;
+
+            project.Id = new ObjectId();
+            project.Name = "Game";
+            project.Version = 39;
+            project.CreationelData = DateTime.Today;
+            comment.Id = new ObjectId();
+            comment.Text = "Make icon!!!";
+            comment.CreationelData = DateTime.UtcNow;
+            comment.Name = "Icon";
+            comment.Version = 1;
+            comment = _commentRepository.AddComment(comment);
+            project.Comments.Add(comment.Id);
+            project.Projects.Add(idHeroes);
+            project.Projects.Add(idMaps);
+            var idRootProject = _projectRepository.AddProject(project).Id;                                    
+                     
             return View(new MongoDBViewModels
             {
                 IdRoot = idRootProject.ToString()

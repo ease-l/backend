@@ -24,9 +24,11 @@ namespace DB.Repositories
 
         public void AddCommentToImage(ObjectId newComments, ObjectId idImage)
         {
-            var images = _imageCollection.FindAll().ToList();
-            //ToDo make delete 1 element not All
-            //_imageCollection.Remove(Query.EQ("Id", idImage));            
+            var image = _imageCollection.AsQueryable().FirstOrDefault(im => im.Id.Equals(idImage));
+            _imageCollection.Remove(Query.EQ("Id", idImage));
+            image.Comments.Add(newComments);
+            _imageCollection.Insert(image);
+            /*var images = _imageCollection.FindAll().ToList();
             _imageCollection.RemoveAll(); 
             foreach(Image i in images)
             {
@@ -35,7 +37,7 @@ namespace DB.Repositories
                     i.Comments.Add(newComments);
                 }
                 _imageCollection.Insert(i);
-            }
+            }*/
         }
 
         public Image AddImage(Image image)

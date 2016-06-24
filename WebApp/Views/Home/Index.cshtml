@@ -1,8 +1,7 @@
-﻿@{
+﻿﻿@{
     ViewBag.Title = "Home Page";
 }
 @model WebApp.ViewModels.MongoDBViewModels
-
 <ul>
     <li>
         @Html.ActionLink("Demo data", "MakeData", "MongoDB")
@@ -11,7 +10,7 @@
     <li>
         @Html.ActionLink("Delete all data", "DeleteData", "MongoDB")
         <p>Чистка базы</p>
-    </li>    
+    </li>
     <li>
         @Html.ActionLink("/Project", "Index", "Project")
         <p>
@@ -85,7 +84,7 @@
     <li>
         @Html.ActionLink("/Image", "Index", "Image")
         <p>Добавить картинку(POST) в теле name и url</p>
-    </li>       
+    </li>
     <li>
         @Html.ActionLink("/Comment", "Index", "Comment")
         <p>
@@ -98,13 +97,13 @@
                 <p>
                     Комментарий по id
                 </p>
-            </li> 
+            </li>
         </ul>
-    </li>       
+    </li>
     <li>
         @Html.ActionLink("/Comment", "Index", "Comment")
         <p>Добавить комментарий(POST) в теле name и text</p>
-    </li>                        
+    </li>
     <li>
         <a href="https://github.com/ease-l/backend/tree/feautere/DB.Models/DB/Models">Вот репозиторий с реализациями классов, вы получаете классы без ObjectId</a>
     </li>

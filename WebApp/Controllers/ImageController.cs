@@ -64,9 +64,7 @@ namespace WebApp.Controllers
             image.Name = name;
             image.CreationelData = DateTime.UtcNow;
             var id = _imageRepository.AddImage(image).Id.ToString();
-            var movies = new List<object>();
-            movies.Add(id);
-            return Json(movies, JsonRequestBehavior.AllowGet);
+            return Json(new { Result = id }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost, Route("Image/id{simageId}/comment")]
         public JsonResult AddCommentToImage(String simageId, String text, String name)
@@ -86,14 +84,11 @@ namespace WebApp.Controllers
             }
             if (_imageRepository.GetImageById(imageId) == null)
             {
-                var result = new List<Object>();
-                result.Add(new { Result = "Bad id image" });
+                var result = new { Result = "Bad id image" };
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
             _imageRepository.AddCommentToImage(commentId, imageId);
-            var movies = new List<object>();
-            movies.Add(new { Result = "OK. Comment add" });
-            return Json(movies, JsonRequestBehavior.AllowGet);
+            return Json(new { Result = commentId.ToString() }, JsonRequestBehavior.AllowGet);
         }
         [HttpGet, Route("Image/id{simageId}/comment")]
         public JsonResult GetCommentFromImage(String simageId)

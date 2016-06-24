@@ -52,10 +52,8 @@ namespace WebApp.Controllers
             comment.CreationelData = DateTime.UtcNow;
             comment.Name = name;
             comment.Version = 1;
-            var id = _commentRepository.AddComment(comment).Id.ToString();
-            var movies = new List<object>();
-            movies.Add(id);
-            return Json(movies, JsonRequestBehavior.AllowGet);
+            var id = _commentRepository.AddComment(comment).Id.ToString();            
+            return Json(new { Result = id }, JsonRequestBehavior.AllowGet);
         }
     }
 }

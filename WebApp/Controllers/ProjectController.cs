@@ -20,34 +20,12 @@ namespace WebApp.Controllers
         [HttpGet, Route("Project")]
         public JsonResult Index()
         {
-            //Beta data
-            /*var o = JsonConvert.DeserializeObject<List<ProjectWithoutObjectId>>(@"[{ ""Projects"":[""576452b7fcfbb42694ca9c17""],""Images"":[""5764f98afcfbb40838060bd0""],""Comments"":[""5764ff18fcfbb423487e7f1a""],""Id"":""57645ae9fcfbb429a48aaef3"",""Author"":null,""Version"":129,""Name"":""TestProjectInProject"",""CreationelData"":""\/Date(1496264400000)\/""},{""Projects"":[""576452b7fcfbb42694ca9c17""],""Images"":[""5764f98afcfbb40838060bd0""],""Comments"":[""5764ff18fcfbb423487e7f1a""],""Id"":""57645ae9fcfbb429a48aaef3"",""Author"":null,""Version"":129,""Name"":""TestProjectInProject"",""CreationelData"":""\/Date(1496264400000)\/""}]");
-            return Json(o, JsonRequestBehavior.AllowGet);*/
-            //Beta data
             var projects = ProjectWithoutObjectId.ProjectsToProjectWithoutObjectId(_projectRepository.GetAllProject());            
             return Json(projects, JsonRequestBehavior.AllowGet);
         }
         [HttpGet, Route("Project/id{id}")]
         public JsonResult GetById(String  id)
         {
-            //Beta data
-            /*if (id.Equals("576452b7fcfbb42694ca9c17"))
-            {
-                var o = Newtonsoft.Json.JsonConvert.DeserializeObject<ProjectWithoutObjectId>(@"{  ""Projects"": [],  ""Images"": [    ""5764fa34fcfbb40838060bd1""  ],  ""Comments"": [],  ""Id"": ""576452b7fcfbb42694ca9c17"",  ""Author"": ""000000000000000000000000"",  ""Version"": 129,  ""Name"": ""TestProjectInProject"",  ""CreationelData"": ""/Date(1496264400000)/""}");
-                return Json(o, JsonRequestBehavior.AllowGet);
-            }
-            else if (id.Equals("57645ae9fcfbb429a48aaef3"))
-            {
-                var o = Newtonsoft.Json.JsonConvert.DeserializeObject<ProjectWithoutObjectId>(@"{  ""Projects"": [    ""576452b7fcfbb42694ca9c17""  ],  ""Images"": [    ""5764f98afcfbb40838060bd0""  ],  ""Comments"": [    ""5764ff18fcfbb423487e7f1a""  ],  ""Id"": ""57645ae9fcfbb429a48aaef3"",  ""Author"": ""000000000000000000000000"",  ""Version"": 129,  ""Name"": ""TestProjectInProject"",  ""CreationelData"": ""/Date(1496264400000)/""}");
-                return Json(o, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                var result = new List<Object>();
-                result.Add(new { Result = "Bad id" });
-                return Json(result, JsonRequestBehavior.AllowGet);
-            }*/
-            //Beta data
             var objectId = new ObjectId();
             if (!ObjectId.TryParse(id, out objectId))
             {
@@ -78,9 +56,7 @@ namespace WebApp.Controllers
             project.Version = 1;
             project.CreationelData = DateTime.UtcNow;
             var id = _projectRepository.AddProject(project).Id.ToString();
-            var movies = new List<object>();
-            movies.Add(id);
-            return Json(movies, JsonRequestBehavior.AllowGet);
+            return Json(new { Result = id }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost, Route("Project/id{sidRoot}/project")]
         public JsonResult AddProjectToProject(String sidRoot, String name)
@@ -88,14 +64,12 @@ namespace WebApp.Controllers
             var idRoot = new ObjectId();
             if (!ObjectId.TryParse(sidRoot, out idRoot))
             {
-                var result = new List<Object>();
-                result.Add(new { Result = "Bad id it's not objectId" });
+                var result = new { Result = "Bad id it's not objectId" };
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
             if (_projectRepository.GetProjectById(idRoot) == null)
             {
-                var result = new List<Object>();
-                result.Add(new { Result = "Bad id it's not found in DB" });
+                var result = new { Result = "Bad id it's not found in DB" };
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
             Project project = new Project();
@@ -104,9 +78,7 @@ namespace WebApp.Controllers
             project.CreationelData = DateTime.UtcNow;
             var idNew = _projectRepository.AddProject(project).Id;            
             _projectRepository.AddProjectToProject(idNew, idRoot);
-            var movies = new List<object>();
-            movies.Add(new { Result = "OK. Project add" });
-            return Json(movies, JsonRequestBehavior.AllowGet);
+            return Json(new { Result = idNew.ToString() }, JsonRequestBehavior.AllowGet);
         }
         [HttpGet, Route("Project/id{sidRoot}/Project")]
         public JsonResult GetPtojectsFormProject(String sidRoot)
@@ -134,14 +106,12 @@ namespace WebApp.Controllers
             var projectId = new ObjectId();
             if (!ObjectId.TryParse(sprojectId, out projectId))
             {
-                var result = new List<Object>();
-                result.Add(new { Result = "Bad id it's not objectId" });
+                var result = new { Result = "Bad id it's not objectId" };
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
             if (_projectRepository.GetProjectById(projectId) == null)
             {
-                var result = new List<Object>();
-                result.Add(new { Result = "Bad id it's not found in DB" });
+                var result = new { Result = "Bad id it's not found in DB" };
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
             Image image = new Image();
@@ -149,11 +119,9 @@ namespace WebApp.Controllers
             image.Version = 1;
             image.Name = name;
             image.CreationelData = DateTime.UtcNow;
-            var imageId = _imageRepository.AddImage(image).Id;            
+            var imageId = _imageRepository.AddImage(image).Id;
             _projectRepository.AddImageToProject(imageId, projectId);
-            var movies = new List<object>();
-            movies.Add(new { Result = "OK. Image add" });
-            return Json(movies, JsonRequestBehavior.AllowGet);
+            return Json(new { Result = imageId.ToString() }, JsonRequestBehavior.AllowGet);
         }
         [HttpGet, Route("Project/id{sidRoot}/Image")]
         public JsonResult GetImagesFormProject(String sidRoot)
@@ -181,14 +149,12 @@ namespace WebApp.Controllers
             var projectId = new ObjectId();
             if (!ObjectId.TryParse(sprojectId, out projectId))
             {
-                var result = new List<Object>();
-                result.Add(new { Result = "Bad id it's not objectId" });
+                var result = new { Result = "Bad id it's not objectId" };
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
             if (_projectRepository.GetProjectById(projectId) == null)
             {
-                var result = new List<Object>();
-                result.Add(new { Result = "Bad id it's not found in DB" });
+                var result = new { Result = "Bad id it's not found in DB" };
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
             Comment comment = new Comment();
@@ -198,9 +164,7 @@ namespace WebApp.Controllers
             comment.Version = 1;
             var commentId = _commentRepository.AddComment(comment).Id;
             _projectRepository.AddCommentToProject(commentId, projectId);
-            var movies = new List<object>();
-            movies.Add(new { Result = "OK. Image add" });
-            return Json(movies, JsonRequestBehavior.AllowGet);
+            return Json(new { Result = commentId.ToString() }, JsonRequestBehavior.AllowGet);
         }
         [HttpGet, Route("Project/id{sidRoot}/Comment")]
         public JsonResult GetCommentsFormProject(String sidRoot)

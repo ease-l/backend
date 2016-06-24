@@ -16,38 +16,17 @@ namespace WebApp.Controllers
 {    
     public class ImageController:Controller
     {
-        private DB.Interfaces.IImageRepository _imageRepository = new DB.Repositories.DBImageRepository();
+        private IImageRepository _imageRepository = new DB.Repositories.DBImageRepository();
+        private ICommentRepository _commentRepository = new DB.Repositories.DBCommentRepository();
         [HttpGet, Route("Image")]
         public JsonResult Index()
         {
-            //Beta data
-            /*var o = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ImageWithoutObjectId>>(@"[{""Id"":""5764f98afcfbb40838060bd0"",""Author"":""000000000000000000000000"",""Version"":129,""Name"":""TestImageInProject"",""CreationelData"":""\/Date(1496264400000)\/"",""Comments"":[],""Url"":""http://www.zooclub.ru/skat/img.php?w=700\u0026h=700\u0026img=./attach/12000/12669.jpg""},{""Id"":""5764fa34fcfbb40838060bd1"",""Author"":""000000000000000000000000"",""Version"":1,""Name"":""TestImageInProjectInProject"",""CreationelData"":""\/Date(1467320400000)\/"",""Comments"":[""5764fd5efcfbb421280ee61e""],""Url"":""http://tamgdeya.ru/photos/norm/1/1_Oa7eAbl2.jpg""}]");
-            return Json(o, JsonRequestBehavior.AllowGet);*/
-            //Beta data
             var images =  ImageWithoutObjectId.ImagesToImageWithoutObjectId(_imageRepository.GetAllImage());            
             return Json(images, JsonRequestBehavior.AllowGet);
         }
         [HttpGet, Route("Image/id{id}")]
         public JsonResult GetById(String id)
         {
-            //Beta data
-            /*if (id.Equals("5764f98afcfbb40838060bd0"))
-            {
-                var o = Newtonsoft.Json.JsonConvert.DeserializeObject<ImageWithoutObjectId>(@"{  ""Id"": ""5764f98afcfbb40838060bd0"",  ""Author"": ""000000000000000000000000"",  ""Version"": 129,  ""Name"": ""TestImageInProject"",  ""CreationelData"": ""/Date(1496264400000)/"",  ""Comments"": [],  ""Url"": ""http://www.zooclub.ru/skat/img.php?w=700&h=700&img=./attach/12000/12669.jpg""}");
-                return Json(o, JsonRequestBehavior.AllowGet);
-            }
-            else if (id.Equals("5764fa34fcfbb40838060bd1"))
-            {
-                var o = Newtonsoft.Json.JsonConvert.DeserializeObject<ImageWithoutObjectId>(@"{  ""Id"": ""5764fa34fcfbb40838060bd1"",  ""Author"": ""000000000000000000000000"",  ""Version"": 1,  ""Name"": ""TestImageInProjectInProject"",  ""CreationelData"": ""/Date(1467320400000)/"",  ""Comments"": [    ""5764fd5efcfbb421280ee61e""  ],  ""Url"": ""http://tamgdeya.ru/photos/norm/1/1_Oa7eAbl2.jpg""}");
-                return Json(o, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                var result = new List<Object>();
-                result.Add(new { Result = "Bad id" });
-                return Json(result, JsonRequestBehavior.AllowGet);
-            }*/
-            //Beta data
             var objectId = new ObjectId();
             if (!ObjectId.TryParse(id, out objectId))
             {
@@ -89,12 +68,17 @@ namespace WebApp.Controllers
             movies.Add(id);
             return Json(movies, JsonRequestBehavior.AllowGet);
         }
-        [HttpPost, Route("Image2")]
-        public JsonResult AddCommentToImage(String scommentId, String simageId)
+        [HttpPost, Route("Image/id{simageId}/comment")]
+        public JsonResult AddCommentToImage(String simageId, String text, String name)
         {
-            var commentId = new ObjectId();
+            Comment comment = new Comment();
+            comment.Text = text;
+            comment.CreationelData = DateTime.UtcNow;
+            comment.Name = name;
+            comment.Version = 1;
+            var commentId = _commentRepository.AddComment(comment).Id;
             var imageId = new ObjectId();
-            if (!ObjectId.TryParse(scommentId, out commentId) || !ObjectId.TryParse(simageId, out imageId))
+            if (!ObjectId.TryParse(simageId, out imageId))
             {
                 var result = new List<Object>();
                 result.Add(new { Result = "Bad id it's not objectId" });
@@ -109,6 +93,27 @@ namespace WebApp.Controllers
             _imageRepository.AddCommentToImage(commentId, imageId);
             var movies = new List<object>();
             movies.Add(new { Result = "OK. Comment add" });
+            return Json(movies, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet, Route("Image/id{simageId}/comment")]
+        public JsonResult GetCommentFromImage(String simageId)
+        {
+            var imageId = new ObjectId();
+            if (!ObjectId.TryParse(simageId, out imageId))
+            {
+                var result = new List<Object>();
+                result.Add(new { Result = "Bad id it's not objectId" });
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            var image = _imageRepository.GetImageById(imageId);
+            if (image == null)
+            {
+                var result = new List<Object>();
+                result.Add(new { Result = "Bad id image, this image don't found in DB" });
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            
+            var movies = CommentWithoutObjectId.CommentsToCommentWithoutObjectId(_commentRepository.GetCommentsByIds(image.Comments));
             return Json(movies, JsonRequestBehavior.AllowGet);
         }
     }

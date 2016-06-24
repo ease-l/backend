@@ -20,6 +20,12 @@ namespace WebApp.Controllers
         {
             return View();
         }
+        public void DeleteData()
+        {
+            _commentRepository.DeleteAll();
+            _projectRepository.DeleteAll();
+            _imageRepository.DeleteAll();
+        }
         public ActionResult MakeData()
         {
             /*Make this project
@@ -60,12 +66,14 @@ namespace WebApp.Controllers
             image.Version = 2;
             image.Name = "Standing";
             image.CreationelData = DateTime.UtcNow;
+            image.Comments = new List<ObjectId>();
             var idStandingWizard = _imageRepository.AddImage(image).Id;
 
             image.Id = new ObjectId();
             image.Url = "http://i0.wp.com/fc09.deviantart.net/fs71/f/2014/324/3/6/_render__clash_of_clans___wizard_by_aaa13xxx-d871py5.png?w=1024&h=1024";
             image.Version = 2;
             image.Name = "Resting";
+            image.Comments = new List<ObjectId>();
             image.CreationelData = DateTime.UtcNow;
             var idRastingWizard = _imageRepository.AddImage(image).Id;
 
@@ -91,6 +99,7 @@ namespace WebApp.Controllers
             image.Version = 2;
             image.Name = "Standing";
             image.CreationelData = DateTime.UtcNow;
+            image.Comments = new List<ObjectId>();
             var idStandingWarrior = _imageRepository.AddImage(image).Id;
 
             image.Id = new ObjectId();
@@ -98,6 +107,7 @@ namespace WebApp.Controllers
             image.Version = 2;
             image.Name = "Attacking";
             image.CreationelData = DateTime.UtcNow;
+            image.Comments = new List<ObjectId>();
             var idAttackingWarrior = _imageRepository.AddImage(image).Id;
 
             project = new Project();
@@ -136,6 +146,7 @@ namespace WebApp.Controllers
             image.Url = "http://media.fatalgame.com/store/store-heroes3-map-9589.jpg";
             image.Version = 2;
             image.Name = "For 4+ People";
+            image.Comments = new List<ObjectId>();
             image.CreationelData = DateTime.UtcNow;
             comment.Id = new ObjectId();
             comment.Text = "Make more water!!!";

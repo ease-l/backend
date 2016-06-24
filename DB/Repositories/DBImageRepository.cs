@@ -21,14 +21,17 @@ namespace DB.Repositories
             var database = MongoClientFactory.GetMongoDatabase2();
             _imageCollection = database.GetCollection<Image>("images");
         }
-
+        public void DeleteAll()
+        {
+            _imageCollection.RemoveAll();
+        }
         public void AddCommentToImage(ObjectId newComments, ObjectId idImage)
         {
-            var image = _imageCollection.AsQueryable().FirstOrDefault(im => im.Id.Equals(idImage));
+            /*var image = _imageCollection.AsQueryable().FirstOrDefault(im => im.Id.Equals(idImage));
             _imageCollection.Remove(Query.EQ("Id", idImage));
             image.Comments.Add(newComments);
-            _imageCollection.Insert(image);
-            /*var images = _imageCollection.FindAll().ToList();
+            _imageCollection.Insert(image);*/
+            var images = _imageCollection.FindAll().ToList();
             _imageCollection.RemoveAll(); 
             foreach(Image i in images)
             {
@@ -37,7 +40,7 @@ namespace DB.Repositories
                     i.Comments.Add(newComments);
                 }
                 _imageCollection.Insert(i);
-            }*/
+            }
         }
 
         public Image AddImage(Image image)
@@ -55,6 +58,24 @@ namespace DB.Repositories
         public Image GetImageById(ObjectId id)
         {
             return _imageCollection.AsQueryable().FirstOrDefault(im => im.Id.Equals(id));
+        }
+        public List<Image> GetImagesByIds(List<ObjectId> ids)
+        {
+            var list = _imageCollection.FindAll().ToList();
+            HashSet<ObjectId> id = new HashSet<ObjectId>();
+            foreach (ObjectId i in ids)
+            {
+                id.Add(i);
+            }
+            var images = new List<Image>();
+            foreach (Image i in list)
+            {
+                if (id.Contains(i.Id))
+                {
+                    images.Add(i);
+                }
+            }
+            return images;
         }
     }
 }

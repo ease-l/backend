@@ -20,6 +20,10 @@ namespace DB.Repositories
             var database = MongoClientFactory.GetMongoDatabase2();
             _projectCollection = database.GetCollection<Project>("projects");
         }
+        public void DeleteAll()
+        {
+            _projectCollection.RemoveAll();
+        }
         public Project AddProject(Project project)
         {
             _projectCollection.Insert(project);
@@ -37,19 +41,65 @@ namespace DB.Repositories
             return _projectCollection.AsQueryable().FirstOrDefault(p => p.Id.Equals(id));
         }
 
-        public void AddProjectsToProject(ObjectId newProjects, ObjectId iDRootProject)
+        public void AddProjectToProject(ObjectId newProjects, ObjectId iDRootProject)
         {
-            
+            var projects = _projectCollection.FindAll().ToList();
+            _projectCollection.RemoveAll();
+            foreach (Project p in projects)
+            {
+                if (p.Id.Equals(iDRootProject))
+                {
+                    p.Projects.Add(newProjects);
+                }
+                _projectCollection.Insert(p);
+            }
         }
 
-        public void AddImagesToProject(ObjectId newImages, ObjectId iDProject)
+        public void AddImageToProject(ObjectId newImages, ObjectId iDProject)
         {
-            
+            var projects = _projectCollection.FindAll().ToList();
+            _projectCollection.RemoveAll();
+            foreach (Project p in projects)
+            {
+                if (p.Id.Equals(iDProject))
+                {
+                    p.Images.Add(newImages);
+                }
+                _projectCollection.Insert(p);
+            }
         }
 
-        public void AddCommentsToProject(ObjectId newComments, ObjectId iDProject)
+        public void AddCommentToProject(ObjectId newComments, ObjectId iDProject)
         {
-            
+            var projects = _projectCollection.FindAll().ToList();
+            _projectCollection.RemoveAll();
+            foreach (Project p in projects)
+            {
+                if (p.Id.Equals(iDProject))
+                {
+                    p.Comments.Add(newComments);
+                }
+                _projectCollection.Insert(p);
+            }
+        }
+
+        public List<Project> GetProjectsByIds(List<ObjectId> ids)
+        {
+            var list = _projectCollection.FindAll().ToList();
+            HashSet<ObjectId> id = new HashSet<ObjectId>();
+            foreach (ObjectId i in ids)
+            {
+                id.Add(i);
+            }
+            var projects = new List<Project>();
+            foreach (Project p in list)
+            {
+                if (id.Contains(p.Id))
+                {
+                    projects.Add(p);
+                }
+            }
+            return projects;
         }
     }
 }

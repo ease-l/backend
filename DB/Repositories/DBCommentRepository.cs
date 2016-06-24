@@ -20,6 +20,10 @@ namespace DB.Repositories
             var database = MongoClientFactory.GetMongoDatabase2();
             _commentCollection = database.GetCollection<Comment>("comments");
         }
+        public void DeleteAll()
+        {
+            _commentCollection.RemoveAll();
+        }
         public Comment AddComment(Comment comment)
         {
             _commentCollection.Insert(comment);
@@ -34,6 +38,24 @@ namespace DB.Repositories
         public Comment GetCommentById(ObjectId id)
         {
             return _commentCollection.AsQueryable().FirstOrDefault(c => c.Id.Equals(id));
+        }
+        public List<Comment> GetCommentsByIds(List<ObjectId> ids)
+        {
+            var list = _commentCollection.FindAll().ToList();
+            HashSet<ObjectId> id = new HashSet<ObjectId>();
+            foreach (ObjectId i in ids)
+            {
+                id.Add(i);
+            }
+            var comments = new List<Comment>();
+            foreach(Comment comment in list)
+            {
+                if (id.Contains(comment.Id))
+                {
+                    comments.Add(comment);
+                }
+            }
+            return comments;
         }
     }
 }

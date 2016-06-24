@@ -6,36 +6,55 @@ using DB.Models;
 using DB.Interfaces;
 using System.Web.Mvc;
 using MongoDB.Bson;
+using System.Configuration;
 
 namespace WebApp.Controllers
-{
+{    
     public class CommentController : Controller
     {
         private DB.Interfaces.ICommentRepository _commentRepository = new DB.Repositories.DBCommentRepository();
+        [HttpGet, Route("Comment")]
         public JsonResult Index()
         {
-            var movies = _commentRepository.GetAllComment();
-            return Json(movies, JsonRequestBehavior.AllowGet);
+            var comments = CommentWithoutObjectId.CommentsToCommentWithoutObjectId(_commentRepository.GetAllComment());
+            return Json(comments, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetById(ObjectId id)
+        [HttpGet, Route("Comment/id{id}")]
+        public JsonResult GetById(String id)
         {
-            var movies = _commentRepository.GetCommentById(id);
-            if(movies == null)
+            var objectId = new ObjectId();
+            if (!ObjectId.TryParse(id, out objectId))
+            {
+                var result = new List<Object>();
+                result.Add(new { Result = "Bad id it's not objectId" });
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }            
+            if (objectId == null)
             {
                 var result = new List<Object>();
                 result.Add(new { Result = "Bad id" });
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
-            return Json(movies, JsonRequestBehavior.AllowGet);
+            var comments = CommentWithoutObjectId.CommentToCommentWithoutObjectId(_commentRepository.GetCommentById(objectId));
+            if (comments == null)
+            {
+                var result = new List<Object>();
+                result.Add(new { Result = "Bad id" });
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            return Json(comments, JsonRequestBehavior.AllowGet);
         }
-        [HttpPost]
-        public JsonResult AddComment(String text)
+        [HttpPost, Route("Comment")]
+        public JsonResult AddComment(String text, String name)
         {
             Comment comment = new Comment();
             comment.Text = text;
-            _commentRepository.AddComment(comment);
+            comment.CreationelData = DateTime.UtcNow;
+            comment.Name = name;
+            comment.Version = 1;
+            var id = _commentRepository.AddComment(comment).Id.ToString();
             var movies = new List<object>();
-            movies.Add(new { Result = "OK. Comment add" });
+            movies.Add(id);
             return Json(movies, JsonRequestBehavior.AllowGet);
         }
     }

@@ -7,21 +7,45 @@ using DB.Interfaces;
 using DB.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
+using MongoDB.Driver.Builders;
 
 namespace DB.Repositories
 {
     public class DBImageRepository : IImageRepository
     {
-        private readonly IMongoCollection<Image> _imageCollection;
+        private readonly MongoCollection<Image> _imageCollection;
 
         public DBImageRepository()
         {
-            var database = MongoClientFactory.GetMongoDatabase();
+            var database = MongoClientFactory.GetMongoDatabase2();
             _imageCollection = database.GetCollection<Image>("images");
         }
+        public void DeleteAll()
+        {
+            _imageCollection.RemoveAll();
+        }
+        public void AddCommentToImage(ObjectId newComments, ObjectId idImage)
+        {
+            /*var image = _imageCollection.AsQueryable().FirstOrDefault(im => im.Id.Equals(idImage));
+            _imageCollection.Remove(Query.EQ("Id", idImage));
+            image.Comments.Add(newComments);
+            _imageCollection.Insert(image);*/
+            var images = _imageCollection.FindAll().ToList();
+            _imageCollection.RemoveAll(); 
+            foreach(Image i in images)
+            {
+                if (i.Id.Equals(idImage))
+                {
+                    i.Comments.Add(newComments);
+                }
+                _imageCollection.Insert(i);
+            }
+        }
+
         public Image AddImage(Image image)
         {
-            _imageCollection.InsertOne(image);
+            _imageCollection.Insert(image);
             return image;
         }
 
@@ -34,6 +58,24 @@ namespace DB.Repositories
         public Image GetImageById(ObjectId id)
         {
             return _imageCollection.AsQueryable().FirstOrDefault(im => im.Id.Equals(id));
+        }
+        public List<Image> GetImagesByIds(List<ObjectId> ids)
+        {
+            var list = _imageCollection.FindAll().ToList();
+            HashSet<ObjectId> id = new HashSet<ObjectId>();
+            foreach (ObjectId i in ids)
+            {
+                id.Add(i);
+            }
+            var images = new List<Image>();
+            foreach (Image i in list)
+            {
+                if (id.Contains(i.Id))
+                {
+                    images.Add(i);
+                }
+            }
+            return images;
         }
     }
 }

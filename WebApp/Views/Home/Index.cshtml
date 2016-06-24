@@ -1,23 +1,101 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+
 <ul>
-    <li>@Html.ActionLink("Comments", "Index", "Comment") 
-        <p>Полный список комментариев</p></li>
-    <li>@Html.ActionLink("Images", "Index", "Image")
-        <p>Полный список картинок</p></li>
-    <li>@Html.ActionLink("Projects", "Image", "Project")    
-        <p>Полный список проектов</p></li>
-    <li> @Html.ActionLink("Comments", "GetById", "Comment")
-        <p>Комментарий по id</p></li>
-    <li>@Html.ActionLink("Images", "GetById", "Image")
-        <p>Картинка по id</p></li>
-    <li>@Html.ActionLink("Projects", "GetById", "Project")
-        <p>Проект по id</p></li>
-    <li>@Html.ActionLink("Comments", "AddComment", "Comment")
-        <p>Комментарий добавить(POST)</p></li>
-    <li>@Html.ActionLink("Images", "AddImage", "Image")
-        <p>Картинку добавить(POST)</p></li>
-    <li>@Html.ActionLink("Projects", "AddProject", "Project")
-        <p>Проект добавить(POST)</p</li>
+    <li>
+        @Html.ActionLink("Demo data", "MakeData", "MongoDB")
+        <p>Добавить демо проект в базу</p>
+    </li>
+    <li>
+        @Html.ActionLink("Delete all data", "DeleteData", "MongoDB")
+        <p>Чистка базы</p>
+    </li>
+    <li>
+        @Html.ActionLink("/Comment", "Index", "Comment")
+        <p>
+            Полный список комментариев,
+            Пустой get запрос
+        </p>
+    </li>
+    <li>
+        @Html.ActionLink("/Image", "Index", "Image")
+        <p>
+            Полный список картинок,
+            Пустой get запрос
+        </p>
+    </li>
+    <li>
+        @Html.ActionLink("/Project", "Index", "Project")
+        <p>
+            Полный список проектов,
+            Пустой get запрос
+        </p>
+    </li>
+    <li>
+        @Html.ActionLink("/Comment/id{id}", "id", "Comment")
+        <p>
+            Комментарий по id            
+        </p>
+    </li>
+    <li>
+        @Html.ActionLink("/Image/id{id}", "id", "Image")
+        <p>
+            Картинка по id
+        </p>
+    </li>
+    <li>
+        @Html.ActionLink("/Project/id{id}", "id", "Project")
+        <p>
+            Проект по id
+        </p>
+    </li>
+    <li>
+        @Html.ActionLink("/Comment", "Index", "Comment")
+        <p>Добавить комментарий(POST) в теле name и </p>
+    </li>
+    <li>
+        @Html.ActionLink("/Image", "Index", "Image")
+        <p>Добавить картинку(POST) в теле name и url</p>
+    </li>
+    <li>
+        @Html.ActionLink("/Project", "Index", "Project")
+        <p>Добавить проект(POST) в теле name</p>
+    </li>
+    <li>
+        <a href="/image/id/comment">/Image/id{id}/comment</a>
+        <p>Получить все коментарии к картинке</p>
+    </li>
+    <li>
+        <a href="/image/id/comment">/Image/id{id}/comment</a>
+        <p>Добавить коментарий к картинке(Post)</p>
+    </li>
+    <li>
+        <a href="/Project/id/comment">/Project/id{id}/comment</a>
+        <p>Получить все коментарии к проекту</p>
+    </li>
+    <li>
+        <a href="/project/id/comment">/Project/id{id}/comment</a>
+        <p>Добавить коментарий к проекту(Post)</p>
+    </li>
+    <li>
+        <a href="/project/id/project">/project/id{id}/project</a>
+        <p>Получить все подпроекты к проекта</p>
+    </li>
+    <li>
+        <a href="/project/id/project">/project/id{id}/project</a>
+        <p>Добавить подпроект к проекту(Post)</p>
+    </li>
+    <li>
+        <a href="/project/id/image">/project/id{id}/image</a>
+        <p>Получить все картинки из корня проекта</p>
+    </li>
+    <li>
+        <a href="/project/id/image">/project/id{id}/image</a>
+        <p>Добавить картинку в корень проекта(Post)</p>
+    </li>
+    <li>
+        <p>Все классы реализованы согласно доске, если не сходиться то </p>
+        <a href="https://github.com/ease-l/backend/tree/feautere/DB.Models/DB/Models">вот репозиторий с их реализациями, вы получаете классы без ObjectId</a>
+    </li>
 </ul>

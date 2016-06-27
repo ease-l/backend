@@ -24,11 +24,19 @@ namespace DB.Models
         public String Name { get; set; }
         public DateTime CreationelData { get; set; }
         public List<String> Comments { get; set; }
+<<<<<<< HEAD
+        public String Url { get; set; }
+        public ImageWithoutObjectId()
+        {
+            this.Comments = new List<String>();
+        }
+=======
         public String Url { get; set; }'
        }
 
     public partial class ImageWithoutObjectId
     {
+>>>>>>> origin/featured/Entities
         public static ImageWithoutObjectId ImageToImageWithoutObjectId(Image image)
         {
             ImageWithoutObjectId result = new ImageWithoutObjectId {

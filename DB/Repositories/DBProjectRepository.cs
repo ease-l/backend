@@ -8,6 +8,7 @@ using DB.Interfaces;
 using DB.Models;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using MongoDB.Driver.Builders;
 
 namespace DB.Repositories
 {
@@ -20,9 +21,21 @@ namespace DB.Repositories
             var database = MongoClientFactory.GetMongoDatabase2();
             _projectCollection = database.GetCollection<Project>("projects");
         }
+        public void DeleteById(ObjectId id)
+        {
+            _projectCollection.Remove(Query.EQ("_id", id));
+        }
         public void DeleteAll()
         {
             _projectCollection.RemoveAll();
+        }
+
+        public void DeleteCommentFromProject(ObjectId projectId, ObjectId commentId)
+        {
+            var project = _projectCollection.AsQueryable().FirstOrDefault(p=>p.Id.Equals(projectId));
+            _projectCollection.Remove(Query.EQ("_id", projectId));
+            project.Comments.Remove(commentId);
+            _projectCollection.Insert(project);
         }
         public Project AddProject(Project project)
         {
@@ -41,9 +54,13 @@ namespace DB.Repositories
             return _projectCollection.AsQueryable().FirstOrDefault(p => p.Id.Equals(id));
         }
 
-        public void AddProjectToProject(ObjectId newProjects, ObjectId iDRootProject)
+        public void AddProjectToProject(ObjectId newProject, ObjectId iDRootProject)
         {
-            var projects = _projectCollection.FindAll().ToList();
+            var project = _projectCollection.AsQueryable().FirstOrDefault(im => im.Id.Equals(iDRootProject));
+            _projectCollection.Remove(Query.EQ("Id", iDRootProject));
+            project.Comments.Add(newProject);
+            _projectCollection.Insert(project);
+            /*var projects = _projectCollection.FindAll().ToList();
             _projectCollection.RemoveAll();
             foreach (Project p in projects)
             {
@@ -52,12 +69,16 @@ namespace DB.Repositories
                     p.Projects.Add(newProjects);
                 }
                 _projectCollection.Insert(p);
-            }
+            }*/
         }
 
-        public void AddImageToProject(ObjectId newImages, ObjectId iDProject)
+        public void AddImageToProject(ObjectId newImage, ObjectId iDProject)
         {
-            var projects = _projectCollection.FindAll().ToList();
+            var project = _projectCollection.AsQueryable().FirstOrDefault(im => im.Id.Equals(iDProject));
+            _projectCollection.Remove(Query.EQ("Id", iDProject));
+            project.Comments.Add(newImage);
+            _projectCollection.Insert(project);
+            /*var projects = _projectCollection.FindAll().ToList();
             _projectCollection.RemoveAll();
             foreach (Project p in projects)
             {
@@ -66,12 +87,16 @@ namespace DB.Repositories
                     p.Images.Add(newImages);
                 }
                 _projectCollection.Insert(p);
-            }
+            }*/
         }
 
-        public void AddCommentToProject(ObjectId newComments, ObjectId iDProject)
+        public void AddCommentToProject(ObjectId newComment, ObjectId iDProject)
         {
-            var projects = _projectCollection.FindAll().ToList();
+            var project = _projectCollection.AsQueryable().FirstOrDefault(im => im.Id.Equals(iDProject));
+            _projectCollection.Remove(Query.EQ("Id", iDProject));
+            project.Comments.Add(newComment);
+            _projectCollection.Insert(project);
+            /*var projects = _projectCollection.FindAll().ToList();
             _projectCollection.RemoveAll();
             foreach (Project p in projects)
             {
@@ -80,7 +105,7 @@ namespace DB.Repositories
                     p.Comments.Add(newComments);
                 }
                 _projectCollection.Insert(p);
-            }
+            }*/
         }
 
         public List<Project> GetProjectsByIds(List<ObjectId> ids)

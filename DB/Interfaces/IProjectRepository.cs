@@ -10,7 +10,9 @@ namespace DB.Interfaces
 {
     public interface IProjectRepository
     {
+        void DeleteById(ObjectId id);
         void DeleteAll();
+        void DeleteCommentFromProject(ObjectId projectId, ObjectId commentId);
         Project AddProject(Project project);
         Project GetProjectById(ObjectId id);
         List<Project> GetAllProject();

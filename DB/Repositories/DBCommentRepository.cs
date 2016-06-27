@@ -8,6 +8,7 @@ using DB.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using MongoDB.Driver.Builders;
 
 namespace DB.Repositories
 {
@@ -19,6 +20,10 @@ namespace DB.Repositories
         {
             var database = MongoClientFactory.GetMongoDatabase2();
             _commentCollection = database.GetCollection<Comment>("comments");
+        }
+        public void DeleteById(ObjectId id)
+        {
+            _commentCollection.Remove(Query.EQ("_id", id));
         }
         public void DeleteAll()
         {

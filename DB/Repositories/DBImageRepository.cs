@@ -25,12 +25,23 @@ namespace DB.Repositories
         {
             _imageCollection.RemoveAll();
         }
+        public void DeleteById(ObjectId id)
+        {
+            _imageCollection.Remove(Query.EQ("_id", id));
+        }
+        public void DeleteCommentFromImage(ObjectId imageId, ObjectId commentId)
+        {
+            var image = _imageCollection.AsQueryable().FirstOrDefault(i => i.Id.Equals(imageId));
+            _imageCollection.Remove(Query.EQ("_id", imageId));
+            image.Comments.Remove(commentId);
+            _imageCollection.Insert(image);
+        }
         public void AddCommentToImage(ObjectId newComments, ObjectId idImage)
         {
-            /*var image = _imageCollection.AsQueryable().FirstOrDefault(im => im.Id.Equals(idImage));
+            var image = _imageCollection.AsQueryable().FirstOrDefault(im => im.Id.Equals(idImage));
             _imageCollection.Remove(Query.EQ("Id", idImage));
             image.Comments.Add(newComments);
-            _imageCollection.Insert(image);*/
+            _imageCollection.Insert(image);/*
             var images = _imageCollection.FindAll().ToList();
             _imageCollection.RemoveAll(); 
             foreach(Image i in images)
@@ -40,7 +51,7 @@ namespace DB.Repositories
                     i.Comments.Add(newComments);
                 }
                 _imageCollection.Insert(i);
-            }
+            }*/
         }
 
         public Image AddImage(Image image)

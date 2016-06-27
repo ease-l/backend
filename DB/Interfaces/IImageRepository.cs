@@ -10,7 +10,9 @@ namespace DB.Interfaces
 {
     public interface IImageRepository
     {
+        void DeleteById(ObjectId id);
         void DeleteAll();
+        void DeleteCommentFromImage(ObjectId imageId, ObjectId commentId);
         Image AddImage(Image image);
         Image GetImageById(ObjectId id);
         List<Image> GetAllImage();

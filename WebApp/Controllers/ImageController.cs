@@ -18,54 +18,7 @@ namespace WebApp.Controllers
     {
         private IImageRepository _imageRepository = new DB.Repositories.DBImageRepository();
         private ICommentRepository _commentRepository = new DB.Repositories.DBCommentRepository();
-        [HttpGet, Route("Image")]
-        public JsonResult Index()
-        {
-            var images =  ImageWithoutObjectId.ImagesToImageWithoutObjectId(_imageRepository.GetAllImage());            
-            return Json(images, JsonRequestBehavior.AllowGet);
-        }
-        [HttpGet, Route("Image/id{id}")]
-        public JsonResult GetById(String id)
-        {
-            var objectId = new ObjectId();
-            if (!ObjectId.TryParse(id, out objectId))
-            {
-                var result = new List<Object>();
-                result.Add(new { Result = "Bad id it's not objectId" });
-                return Json(result, JsonRequestBehavior.AllowGet);
-            }            
-            if (objectId == null)
-            {
-                var result = new List<Object>();
-                result.Add(new { Result = "Bad id" });
-                return Json(result, JsonRequestBehavior.AllowGet);
-            }
-            if(_imageRepository.GetImageById(objectId) == null)
-            {
-                var result = new List<Object>();
-                result.Add(new { Result = "Bad id" });
-                return Json(result, JsonRequestBehavior.AllowGet);
-            }
-            var images = ImageWithoutObjectId.ImageToImageWithoutObjectId(_imageRepository.GetImageById(objectId));
-            if (images == null)
-            {
-                var result = new List<Object>();
-                result.Add(new { Result = "Bad id" });
-                return Json(result, JsonRequestBehavior.AllowGet);
-            }
-            return Json(images, JsonRequestBehavior.AllowGet);
-        }
-        [HttpPost, Route("Image")]
-        public JsonResult AddImage(String url, String name)
-        {
-            Image image = new Image();
-            image.Url = url;
-            image.Version = 1;
-            image.Name = name;
-            image.CreationelData = DateTime.UtcNow;
-            var id = _imageRepository.AddImage(image).Id.ToString();
-            return Json(new { Result = id }, JsonRequestBehavior.AllowGet);
-        }
+
         [HttpPost, Route("Image/id{simageId}/comment")]
         public JsonResult AddCommentToImage(String simageId, String text, String name)
         {
@@ -78,9 +31,7 @@ namespace WebApp.Controllers
             var imageId = new ObjectId();
             if (!ObjectId.TryParse(simageId, out imageId))
             {
-                var result = new List<Object>();
-                result.Add(new { Result = "Bad id it's not objectId" });
-                return Json(result, JsonRequestBehavior.AllowGet);
+                return Json(new { Result = "Bad id it's not objectId" }, JsonRequestBehavior.AllowGet);
             }
             if (_imageRepository.GetImageById(imageId) == null)
             {
@@ -90,26 +41,104 @@ namespace WebApp.Controllers
             _imageRepository.AddCommentToImage(commentId, imageId);
             return Json(new { Result = commentId.ToString() }, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost, Route("Image")]
+        public JsonResult AddImage(String url, String name)
+        {
+            Image image = new Image();
+            image.Url = url;
+            image.Version = 1;
+            image.Name = name;
+            image.CreationelData = DateTime.UtcNow;
+            var id = _imageRepository.AddImage(image).Id.ToString();
+            return Json(new { Result = id }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpDelete, Route("Image/id{id}")]
+        public JsonResult DeleteById(String id)
+        {
+            var objectId = new ObjectId();
+            if (!ObjectId.TryParse(id, out objectId))
+            {
+                return Json(new { Result = "Bad id it's not objectId" }, JsonRequestBehavior.AllowGet);
+            }
+            if (objectId == null)
+            {
+                return Json(new { Result = "Bad id" }, JsonRequestBehavior.AllowGet);
+            }
+            if (_imageRepository.GetImageById(objectId) == null)
+            {
+                return Json(new { Result = "Bad id" }, JsonRequestBehavior.AllowGet);
+            }
+            _imageRepository.DeleteById(objectId);
+            return Json(new { Result = "OK" }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpDelete, Route("Image/id{idImage}/comment/id{idComment}")]
+        public JsonResult DeleteCommentFromImage(String idImage, String idComment)
+        {
+            var objectIdImage = new ObjectId();
+            var objectIdComment = new ObjectId();
+            if(!ObjectId.TryParse(idImage, out objectIdImage))
+            {
+                return Json(new { Result = "Bad image id" }, JsonRequestBehavior.AllowGet);
+            }
+            if(!ObjectId.TryParse(idComment, out objectIdComment))
+            {
+                return Json(new { Result = "Bad comment id" }, JsonRequestBehavior.AllowGet);
+            }
+            if(_imageRepository.GetImageById(objectIdImage) == null)
+            {
+                return Json(new { Result = "Bad image id, not found in DB" }, JsonRequestBehavior.AllowGet);
+            }
+            _imageRepository.DeleteCommentFromImage(objectIdImage, objectIdComment);
+            _commentRepository.DeleteById(objectIdComment);
+            return Json(new { Result = "OK" }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet, Route("Image/id{id}")]
+        public JsonResult GetById(String id)
+        {
+            var objectId = new ObjectId();
+            if (!ObjectId.TryParse(id, out objectId))
+            {
+                return Json(new { Result = "Bad id it's not objectId" }, JsonRequestBehavior.AllowGet);
+            }
+            if (objectId == null)
+            {
+                return Json(new { Result = "Bad id" }, JsonRequestBehavior.AllowGet);
+            }
+            if (_imageRepository.GetImageById(objectId) == null)
+            {
+                var result = new List<Object>();
+                result.Add(new { Result = "Bad id" });
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            var images = ImageWithoutObjectId.ImageToImageWithoutObjectId(_imageRepository.GetImageById(objectId));
+            if (images == null)
+            {
+                return Json(new { Result = "Bad id" }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(images, JsonRequestBehavior.AllowGet);
+        }
         [HttpGet, Route("Image/id{simageId}/comment")]
         public JsonResult GetCommentFromImage(String simageId)
         {
             var imageId = new ObjectId();
             if (!ObjectId.TryParse(simageId, out imageId))
             {
-                var result = new List<Object>();
-                result.Add(new { Result = "Bad id it's not objectId" });
-                return Json(result, JsonRequestBehavior.AllowGet);
+                return Json(new { Result = "Bad id it's not objectId" }, JsonRequestBehavior.AllowGet);
             }
             var image = _imageRepository.GetImageById(imageId);
             if (image == null)
             {
-                var result = new List<Object>();
-                result.Add(new { Result = "Bad id image, this image don't found in DB" });
-                return Json(result, JsonRequestBehavior.AllowGet);
+                return Json(new { Result = "Bad id image, this image don't found in DB" }, JsonRequestBehavior.AllowGet);
             }
-            
+
             var movies = CommentWithoutObjectId.CommentsToCommentWithoutObjectId(_commentRepository.GetCommentsByIds(image.Comments));
             return Json(movies, JsonRequestBehavior.AllowGet);
         }
+        [HttpGet, Route("Image")]
+        public JsonResult Index()
+        {
+            var images =  ImageWithoutObjectId.ImagesToImageWithoutObjectId(_imageRepository.GetAllImage());            
+            return Json(images, JsonRequestBehavior.AllowGet);
+        }                
     }
 }

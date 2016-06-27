@@ -10,6 +10,7 @@ namespace DB.Interfaces
 {
     public interface ICommentRepository
     {
+        void DeleteById(ObjectId id);
         void DeleteAll();
         Comment AddComment(Comment comment);
         Comment GetCommentById(ObjectId id);

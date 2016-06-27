@@ -24,7 +24,7 @@ namespace DB.Models
         public String Name { get; set; }
         public DateTime CreationelData { get; set; }
         public List<String> Comments { get; set; }
-        public String Url { get; set; }'
+        public String Url { get; set; }
        }
 
     public partial class ImageWithoutObjectId

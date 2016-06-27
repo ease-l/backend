@@ -42,7 +42,7 @@ namespace DB.Repositories
 
         public Comment GetCommentById(ObjectId id)
         {
-            return _commentCollection.AsQueryable().FirstOrDefault(c => c.Id.Equals(id)).;
+            return _commentCollection.AsQueryable().FirstOrDefault(c => c.Id.Equals(id));
 
         }
         public List<Comment> GetCommentsByIds(List<ObjectId> ids)

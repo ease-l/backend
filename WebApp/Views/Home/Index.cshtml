@@ -59,6 +59,12 @@
             <li>
                 @Html.ActionLink("/Project/id{id}", "id", "Project")
                 <p>
+                    Обновить проект id(Post), в теле name
+                </p>
+            </li>
+<li>
+                @Html.ActionLink("/Project/id{id}", "id", "Project")
+                <p>
                     Удалить проект по id(HttpDelete)
                 </p>
             </li>
@@ -100,9 +106,15 @@
             <li>
                 @Html.ActionLink("/Image/id{id}", "id", "Image")
                 <p>
-                    Удалить картинку по id(HttpDelete)
+                    Обновить картинку по id(Post), в теле url и name
                 </p>
             </li>
+                <!--<li>
+            @Html.ActionLink("/Image/id{id}", "id", "Image")
+            <p>
+                Удалить картинку по id(HttpDelete)
+            </p>
+        </li>-->
 </ul>
     </li>
     <li>
@@ -125,9 +137,15 @@
             <li>
                 @Html.ActionLink("/Comment/id{id}", "id", "Comment")
                 <p>
-                    Удалить комментарий по id(HttpDelete)
+                    Обновление комментария(Post), в теле name и text
                 </p>
             </li>
+            <!--<li>
+                @Html.ActionLink("/Comment/id{id}", "id", "Comment")
+                <p>
+                    Удалить комментарий по id(HttpDelete)
+                </p>
+            </li>-->
         </ul>
     </li>
     <li>

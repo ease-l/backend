@@ -216,5 +216,28 @@ namespace WebApp.Controllers
             var projects = ProjectWithoutObjectId.ProjectsToProjectWithoutObjectId(_projectRepository.GetAllProject());
             return Json(projects, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost, Route("Project/id{id}")]
+        public JsonResult UpdateById(String id, String name)
+        {
+            var objectId = new ObjectId();
+            if (!ObjectId.TryParse(id, out objectId))
+            {
+                return Json(new { Result = "Bad id it's not objectId" }, JsonRequestBehavior.AllowGet);
+            }
+            if (objectId == null)
+            {
+                return Json(new { Result = "Bad id" }, JsonRequestBehavior.AllowGet);
+            }
+            var project = _projectRepository.GetProjectById(objectId);
+            if (project == null)
+            {
+                return Json(new { Result = "Bad id" }, JsonRequestBehavior.AllowGet);
+            }
+            project.Name = name;
+            project.Version++;
+            _projectRepository.DeleteById(objectId);
+            _projectRepository.AddProject(project);
+            return Json(ProjectWithoutObjectId.ProjectToProjectWithoutObjectId(project), JsonRequestBehavior.AllowGet);
+        }
     }
 }

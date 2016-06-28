@@ -24,7 +24,7 @@ namespace WebApp.Controllers
             var id = _commentRepository.AddComment(comment).Id.ToString();
             return Json(new { Result = id }, JsonRequestBehavior.AllowGet);
         }
-        [HttpDelete, Route("Comment/id{id}")]
+        /*[HttpDelete, Route("Comment/id{id}")]
         public JsonResult DeleteById(String id)
         {
             var objectId = new ObjectId();
@@ -38,7 +38,7 @@ namespace WebApp.Controllers
             }
             _commentRepository.DeleteById(objectId);
             return Json(new { Result = "OK" }, JsonRequestBehavior.AllowGet);
-        }
+        }*/
         [HttpGet, Route("Comment/id{id}")]
         public JsonResult GetById(String id)
         {
@@ -63,7 +63,31 @@ namespace WebApp.Controllers
         {
             var comments = CommentWithoutObjectId.CommentsToCommentWithoutObjectId(_commentRepository.GetAllComment());
             return Json(comments, JsonRequestBehavior.AllowGet);
-        }        
-        
+        }
+        [HttpPost, Route("Comment/id{id}")]
+        public JsonResult UpdateById(String id, String name, String text)
+        {
+            var objectId = new ObjectId();
+            if (!ObjectId.TryParse(id, out objectId))
+            {
+                return Json(new { Result = "Bad id it's not objectId" }, JsonRequestBehavior.AllowGet);
+            }
+            if (objectId == null)
+            {
+                return Json(new { Result = "Bad id" }, JsonRequestBehavior.AllowGet);
+            }
+            var comment = _commentRepository.GetCommentById(objectId);
+            if (comment == null)
+            {
+                return Json(new { Result = "Bad id" }, JsonRequestBehavior.AllowGet);
+            }
+            comment.Name = name;
+            comment.Text = text;
+            comment.Version++;
+            _commentRepository.DeleteById(objectId);
+            _commentRepository.AddComment(comment);
+            return Json(CommentWithoutObjectId.CommentToCommentWithoutObjectId(comment), JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

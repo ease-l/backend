@@ -52,7 +52,7 @@ namespace WebApp.Controllers
             var id = _imageRepository.AddImage(image).Id.ToString();
             return Json(new { Result = id }, JsonRequestBehavior.AllowGet);
         }
-        [HttpDelete, Route("Image/id{id}")]
+        /*[HttpDelete, Route("Image/id{id}")]
         public JsonResult DeleteById(String id)
         {
             var objectId = new ObjectId();
@@ -70,7 +70,7 @@ namespace WebApp.Controllers
             }
             _imageRepository.DeleteById(objectId);
             return Json(new { Result = "OK" }, JsonRequestBehavior.AllowGet);
-        }
+        }*/
         [HttpDelete, Route("Image/id{idImage}/comment/id{idComment}")]
         public JsonResult DeleteCommentFromImage(String idImage, String idComment)
         {
@@ -139,6 +139,30 @@ namespace WebApp.Controllers
         {
             var images =  ImageWithoutObjectId.ImagesToImageWithoutObjectId(_imageRepository.GetAllImage());            
             return Json(images, JsonRequestBehavior.AllowGet);
-        }                
+        }
+        [HttpPost, Route("Image/id{id}")]
+        public JsonResult UpdateById(String id, String name, String url)
+        {
+            var objectId = new ObjectId();
+            if (!ObjectId.TryParse(id, out objectId))
+            {
+                return Json(new { Result = "Bad id it's not objectId" }, JsonRequestBehavior.AllowGet);
+            }
+            if (objectId == null)
+            {
+                return Json(new { Result = "Bad id" }, JsonRequestBehavior.AllowGet);
+            }
+            var image = _imageRepository.GetImageById(objectId);
+            if (image == null)
+            {
+                return Json(new { Result = "Bad id" }, JsonRequestBehavior.AllowGet);
+            }
+            image.Url = url;
+            image.Version++;
+            image.Name = name;
+            _imageRepository.DeleteById(objectId);
+            _imageRepository.AddImage(image);
+            return Json(ImageWithoutObjectId.ImageToImageWithoutObjectId(image), JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -216,7 +216,7 @@ namespace WebApp.Controllers
             var projects = ProjectWithoutObjectId.ProjectsToProjectWithoutObjectId(_projectRepository.GetAllProject());
             return Json(projects, JsonRequestBehavior.AllowGet);
         }
-        [HttpPost, Route("Project/id{id}")]
+        [HttpPut, Route("Project/id{id}")]
         public JsonResult UpdateById(String id, String name)
         {
             var objectId = new ObjectId();

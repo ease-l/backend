@@ -64,7 +64,7 @@ namespace WebApp.Controllers
             var comments = CommentWithoutObjectId.CommentsToCommentWithoutObjectId(_commentRepository.GetAllComment());
             return Json(comments, JsonRequestBehavior.AllowGet);
         }
-        [HttpPost, Route("Comment/id{id}")]
+        [HttpPut, Route("Comment/id{id}")]
         public JsonResult UpdateById(String id, String name, String text)
         {
             var objectId = new ObjectId();

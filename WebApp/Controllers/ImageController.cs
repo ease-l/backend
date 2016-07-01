@@ -140,7 +140,7 @@ namespace WebApp.Controllers
             var images =  ImageWithoutObjectId.ImagesToImageWithoutObjectId(_imageRepository.GetAllImage());            
             return Json(images, JsonRequestBehavior.AllowGet);
         }
-        [HttpPost, Route("Image/id{id}")]
+        [HttpPut, Route("Image/id{id}")]
         public JsonResult UpdateById(String id, String name, String url)
         {
             var objectId = new ObjectId();

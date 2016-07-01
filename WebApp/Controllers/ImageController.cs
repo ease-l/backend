@@ -10,7 +10,7 @@ using MongoDB.Bson.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Web.Helpers;
-
+using System.IO;
 
 namespace WebApp.Controllers
 {    
@@ -44,7 +44,7 @@ namespace WebApp.Controllers
         [HttpPost, Route("Image")]
         public JsonResult AddImage(String url, String name)
         {
-            Image image = new Image();
+            DB.Models.Image image = new DB.Models.Image();
             image.Url = url;
             image.Version = 1;
             image.Name = name;

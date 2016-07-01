@@ -57,7 +57,7 @@ namespace DB.Repositories
         public void AddProjectToProject(ObjectId newProject, ObjectId iDRootProject)
         {
             var project = _projectCollection.AsQueryable().FirstOrDefault(im => im.Id.Equals(iDRootProject));
-            _projectCollection.Remove(Query.EQ("Id", iDRootProject));
+            _projectCollection.Remove(Query.EQ("_id", iDRootProject));
             project.Comments.Add(newProject);
             _projectCollection.Insert(project);
             /*var projects = _projectCollection.FindAll().ToList();
@@ -75,7 +75,7 @@ namespace DB.Repositories
         public void AddImageToProject(ObjectId newImage, ObjectId iDProject)
         {
             var project = _projectCollection.AsQueryable().FirstOrDefault(im => im.Id.Equals(iDProject));
-            _projectCollection.Remove(Query.EQ("Id", iDProject));
+            _projectCollection.Remove(Query.EQ("_id", iDProject));
             project.Comments.Add(newImage);
             _projectCollection.Insert(project);
             /*var projects = _projectCollection.FindAll().ToList();
@@ -93,7 +93,7 @@ namespace DB.Repositories
         public void AddCommentToProject(ObjectId newComment, ObjectId iDProject)
         {
             var project = _projectCollection.AsQueryable().FirstOrDefault(im => im.Id.Equals(iDProject));
-            _projectCollection.Remove(Query.EQ("Id", iDProject));
+            _projectCollection.Remove(Query.EQ("_id", iDProject));
             project.Comments.Add(newComment);
             _projectCollection.Insert(project);
             /*var projects = _projectCollection.FindAll().ToList();

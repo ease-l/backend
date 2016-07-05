@@ -99,11 +99,11 @@ namespace WebApp.Controllers
             {
                 string fileName = Path.GetFileName(uploadImage.FileName);
                 // сохраняем файл в папку Files в проекте
-                uploadImage.SaveAs(Server.MapPath("~/Files/" + fileName));
+                uploadImage.SaveAs(Server.MapPath("~/View/" + fileName));
                 
-                CloudinaryDotNet.Cloudinary cloudinary = new CloudinaryDotNet.Cloudinary();
-                /*CloudinaryDotNet.Account account = new CloudinaryDotNet.Account("hzvwvtbls", "482455376217895", "bXPz-CiQrEjZp4xqSV8UK_nfI2c");
-                CloudinaryDotNet.Cloudinary cloudinary = new CloudinaryDotNet.Cloudinary(account);*/
+                //CloudinaryDotNet.Cloudinary cloudinary = new CloudinaryDotNet.Cloudinary();
+                CloudinaryDotNet.Account account = new CloudinaryDotNet.Account("hzvwvtbls", "482455376217895", "bXPz-CiQrEjZp4xqSV8UK_nfI2c");
+                CloudinaryDotNet.Cloudinary cloudinary = new CloudinaryDotNet.Cloudinary(account);
                 CloudinaryDotNet.Actions.ImageUploadParams uploadParams = new CloudinaryDotNet.Actions.ImageUploadParams()
                 {
                     File = new CloudinaryDotNet.Actions.FileDescription(@Server.MapPath("~/Files/" + fileName))

@@ -96,17 +96,17 @@ namespace WebApp.Controllers
         public JsonResult DownloadImage(HttpPostedFileBase uploadImage)
         {
             if (uploadImage != null)
-            {
+            {                
                 string fileName = Path.GetFileName(uploadImage.FileName);
-                // сохраняем файл в папку Files в проекте
-                uploadImage.SaveAs(Server.MapPath("~/Views/" + fileName));
-                
+                /*// сохраняем файл 
+                uploadImage.SaveAs(Server.MapPath("~/Views/" + fileName));       */
                 //CloudinaryDotNet.Cloudinary cloudinary = new CloudinaryDotNet.Cloudinary();
+                var input = uploadImage.InputStream;
                 CloudinaryDotNet.Account account = new CloudinaryDotNet.Account("hzvwvtbls", "482455376217895", "bXPz-CiQrEjZp4xqSV8UK_nfI2c");
                 CloudinaryDotNet.Cloudinary cloudinary = new CloudinaryDotNet.Cloudinary(account);
                 CloudinaryDotNet.Actions.ImageUploadParams uploadParams = new CloudinaryDotNet.Actions.ImageUploadParams()
                 {
-                    File = new CloudinaryDotNet.Actions.FileDescription(@Server.MapPath("~/Views/" + fileName))
+                    File = new CloudinaryDotNet.Actions.FileDescription(fileName, input)
                 };
                 CloudinaryDotNet.Actions.ImageUploadResult uploadResult = cloudinary.Upload(uploadParams);
                 string url = cloudinary.Api.UrlImgUp.BuildUrl(String.Format("{0}.{1}", uploadResult.PublicId, uploadResult.Format));

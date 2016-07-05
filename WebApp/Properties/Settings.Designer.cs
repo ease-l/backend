@@ -40,5 +40,14 @@ namespace WebApp.Properties {
                 return ((string)(this["MONGOLAB_URI"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CLOUDINARY_URL {
+            get {
+                return ((string)(this["CLOUDINARY_URL"]));
+            }
+        }
     }
 }

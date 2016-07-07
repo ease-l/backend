@@ -122,7 +122,7 @@ namespace WebApp.Controllers
         {
             if (uploadImage != null)
             {
-                string fileName = "";
+                string fileName = "Name";
                 MemoryStream input = new MemoryStream(uploadImage);
                 CloudinaryDotNet.Account account = new CloudinaryDotNet.Account("hzvwvtbls", "482455376217895", "bXPz-CiQrEjZp4xqSV8UK_nfI2c");
                 CloudinaryDotNet.Cloudinary cloudinary = new CloudinaryDotNet.Cloudinary(account);

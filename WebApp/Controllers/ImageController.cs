@@ -117,6 +117,28 @@ namespace WebApp.Controllers
                 return Json(new { Result = "Bad file" }, JsonRequestBehavior.AllowGet);
             }
         }
+        [HttpPost, Route("Image/Download2")]
+        public JsonResult DownloadImage2(byte[] uploadImage)
+        {
+            if (uploadImage != null)
+            {
+                string fileName = "";
+                MemoryStream input = new MemoryStream(uploadImage);
+                CloudinaryDotNet.Account account = new CloudinaryDotNet.Account("hzvwvtbls", "482455376217895", "bXPz-CiQrEjZp4xqSV8UK_nfI2c");
+                CloudinaryDotNet.Cloudinary cloudinary = new CloudinaryDotNet.Cloudinary(account);
+                CloudinaryDotNet.Actions.ImageUploadParams uploadParams = new CloudinaryDotNet.Actions.ImageUploadParams()
+                {
+                    File = new CloudinaryDotNet.Actions.FileDescription(fileName, input)
+                };
+                CloudinaryDotNet.Actions.ImageUploadResult uploadResult = cloudinary.Upload(uploadParams);
+                string url = cloudinary.Api.UrlImgUp.BuildUrl(String.Format("{0}.{1}", uploadResult.PublicId, uploadResult.Format));
+                return Json(new { Result = url }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { Result = "Bad file" }, JsonRequestBehavior.AllowGet);
+            }
+        }
         [HttpGet, Route("Image/id{id}")]
         public JsonResult GetById(String id)
         {

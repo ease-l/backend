@@ -18,7 +18,7 @@ namespace DB.Repositories
 
         public DBImageRepository()
         {
-            var database = MongoClientFactory.GetMongoDatabase2();
+            var database = MongoClientFactory.GetMongoDatabase();
             _imageCollection = database.GetCollection<Image>("images");
         }
         public void DeleteAll()

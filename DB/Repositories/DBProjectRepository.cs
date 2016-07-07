@@ -18,7 +18,7 @@ namespace DB.Repositories
 
         public DBProjectRepository()
         {
-            var database = MongoClientFactory.GetMongoDatabase2();
+            var database = MongoClientFactory.GetMongoDatabase();
             _projectCollection = database.GetCollection<Project>("projects");
         }
         public void DeleteById(ObjectId id)

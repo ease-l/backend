@@ -18,7 +18,7 @@ namespace DB.Repositories
 
         public DBCommentRepository()
         {
-            var database = MongoClientFactory.GetMongoDatabase2();
+            var database = MongoClientFactory.GetMongoDatabase();
             _commentCollection = database.GetCollection<Comment>("comments");
         }
         public void DeleteById(ObjectId id)

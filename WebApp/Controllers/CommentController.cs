@@ -6,37 +6,88 @@ using DB.Models;
 using DB.Interfaces;
 using System.Web.Mvc;
 using MongoDB.Bson;
+using System.Configuration;
 
 namespace WebApp.Controllers
-{
+{    
     public class CommentController : Controller
     {
         private DB.Interfaces.ICommentRepository _commentRepository = new DB.Repositories.DBCommentRepository();
-        public JsonResult Index()
-        {
-            var movies = _commentRepository.GetAllComment();
-            return Json(movies, JsonRequestBehavior.AllowGet);
-        }
-        public JsonResult GetById(ObjectId id)
-        {
-            var movies = _commentRepository.GetCommentById(id);
-            if(movies == null)
-            {
-                var result = new List<Object>();
-                result.Add(new { Result = "Bad id" });
-                return Json(result, JsonRequestBehavior.AllowGet);
-            }
-            return Json(movies, JsonRequestBehavior.AllowGet);
-        }
-        [HttpPost]
-        public JsonResult AddComment(String text)
+        [HttpPost, Route("Comment")]
+        public JsonResult AddComment(String text, String name)
         {
             Comment comment = new Comment();
             comment.Text = text;
-            _commentRepository.AddComment(comment);
-            var movies = new List<object>();
-            movies.Add(new { Result = "OK. Comment add" });
-            return Json(movies, JsonRequestBehavior.AllowGet);
+            comment.CreationelData = DateTime.UtcNow;
+            comment.Name = name;
+            comment.Version = 1;
+            var id = _commentRepository.AddComment(comment).Id.ToString();
+            return Json(new { Result = id }, JsonRequestBehavior.AllowGet);
         }
+        /*[HttpDelete, Route("Comment/id{id}")]
+        public JsonResult DeleteById(String id)
+        {
+            var objectId = new ObjectId();
+            if (!ObjectId.TryParse(id, out objectId))
+            {
+                return Json(new { Result = "Bad id it's not objectId" }, JsonRequestBehavior.AllowGet);
+            }
+            if (objectId == null)
+            {
+                return Json(new { Result = "Bad id" }, JsonRequestBehavior.AllowGet);
+            }
+            _commentRepository.DeleteById(objectId);
+            return Json(new { Result = "OK" }, JsonRequestBehavior.AllowGet);
+        }*/
+        [HttpGet, Route("Comment/id{id}")]
+        public JsonResult GetById(String id)
+        {
+            var objectId = new ObjectId();
+            if (!ObjectId.TryParse(id, out objectId))
+            {
+                return Json(new { Result = "Bad id it's not objectId" }, JsonRequestBehavior.AllowGet);
+            }
+            if (objectId == null)
+            {
+                return Json(new { Result = "Bad id" }, JsonRequestBehavior.AllowGet);
+            }
+            var comments = CommentWithoutObjectId.CommentToCommentWithoutObjectId(_commentRepository.GetCommentById(objectId));
+            if (comments == null)
+            {
+                return Json(new { Result = "Bad id" }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(comments, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet, Route("Comment")]
+        public JsonResult Index()
+        {
+            var comments = CommentWithoutObjectId.CommentsToCommentWithoutObjectId(_commentRepository.GetAllComment());
+            return Json(comments, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPut, Route("Comment/id{id}")]
+        public JsonResult UpdateById(String id, String name, String text)
+        {
+            var objectId = new ObjectId();
+            if (!ObjectId.TryParse(id, out objectId))
+            {
+                return Json(new { Result = "Bad id it's not objectId" }, JsonRequestBehavior.AllowGet);
+            }
+            if (objectId == null)
+            {
+                return Json(new { Result = "Bad id" }, JsonRequestBehavior.AllowGet);
+            }
+            var comment = _commentRepository.GetCommentById(objectId);
+            if (comment == null)
+            {
+                return Json(new { Result = "Bad id" }, JsonRequestBehavior.AllowGet);
+            }
+            comment.Name = name;
+            comment.Text = text;
+            comment.Version++;
+            _commentRepository.DeleteById(objectId);
+            _commentRepository.AddComment(comment);
+            return Json(CommentWithoutObjectId.CommentToCommentWithoutObjectId(comment), JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

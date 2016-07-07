@@ -5,24 +5,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
+using MongoDB;
 
 namespace DB
 {
     public class MongoClientFactory
     {
-        public static MongoClient GetMongoClient()
+        public static MongoUrl GetMongoUrl()
         {
-            var dbConnectionString = System.Configuration.ConfigurationManager.AppSettings["DB"];
-            if (!String.IsNullOrEmpty(dbConnectionString))
-            {
-                return new MongoClient(dbConnectionString);
-            }
-            return new MongoClient();
+            return new MongoUrl(ConfigurationManager.AppSettings.Get("MONGOLAB_URI"));
         }
-
-        public static IMongoDatabase GetMongoDatabase(String name = "mongodb")
+        public static MongoServer GetMongoServer()
         {
-            return GetMongoClient().GetDatabase(name);
+            var client = new MongoClient(GetMongoUrl());
+            var server = client.GetServer();
+            return server;
+
+        }
+        public static MongoDatabase GetMongoDatabase()
+        {
+            var database = GetMongoServer().GetDatabase(GetMongoUrl().DatabaseName);
+            return database;
         }
     }
 }

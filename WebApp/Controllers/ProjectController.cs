@@ -133,6 +133,28 @@ namespace WebApp.Controllers
                 return Json(new { Result = "Bad id" }, JsonRequestBehavior.AllowGet);
             }
             _projectRepository.DeleteCommentFromProject(objectIdProject, objectIdComment);
+            _commentRepository.DeleteById(objectIdComment);
+            return Json(new { Result = "OK" }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpDelete, Route("Project/id{projectId}/image/id{imageId}")]
+        public JsonResult DeleteImageFromProject(String projectId, String imageId)
+        {
+            var objectIdProject = new ObjectId();
+            var objectIdImage = new ObjectId();
+            if (!ObjectId.TryParse(projectId, out objectIdProject))
+            {
+                return Json(new { Result = "Bad id project it's not objectId" }, JsonRequestBehavior.AllowGet);
+            }
+            if (!ObjectId.TryParse(imageId, out objectIdImage))
+            {
+                return Json(new { Result = "Bad id image it's not objectId" }, JsonRequestBehavior.AllowGet);
+            }
+            if (_projectRepository.GetProjectById(objectIdProject) == null)
+            {
+                return Json(new { Result = "Bad id" }, JsonRequestBehavior.AllowGet);
+            }
+            _projectRepository.DeleteImageFromProject(objectIdProject, objectIdImage);
+            _imageRepository.DeleteById(objectIdImage);
             return Json(new { Result = "OK" }, JsonRequestBehavior.AllowGet);
         }
         [HttpGet, Route("Project/id{id}")]
@@ -173,7 +195,7 @@ namespace WebApp.Controllers
             }
             var movies = CommentWithoutObjectId.CommentsToCommentWithoutObjectId(_commentRepository.GetCommentsByIds(project.Comments));
             return Json(movies, JsonRequestBehavior.AllowGet);
-        }        
+        }
         [HttpGet, Route("Project/id{sidRoot}/Image")]
         public JsonResult GetImagesFormProject(String sidRoot)
         {

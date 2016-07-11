@@ -37,6 +37,13 @@ namespace DB.Repositories
             project.Comments.Remove(commentId);
             _projectCollection.Insert(project);
         }
+        public void DeleteImageFromProject(ObjectId projectId, ObjectId imageId)
+        {
+            var project = _projectCollection.AsQueryable().FirstOrDefault(p => p.Id.Equals(projectId));
+            _projectCollection.Remove(Query.EQ("_id", projectId));
+            project.Images.Remove(imageId);
+            _projectCollection.Insert(project);
+        }
         public Project AddProject(Project project)
         {
             _projectCollection.Insert(project);

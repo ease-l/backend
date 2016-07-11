@@ -120,11 +120,9 @@ namespace WebApp.Controllers
         [HttpPost, Route("Image/Download2")]
         public JsonResult DownloadImage2(byte[] uploadImage)
         {
-            return Json(new { Result = "If you are read this message that mistake in my code." }, JsonRequestBehavior.AllowGet);
             if (uploadImage != null)
             {
                 string fileName = "Name";
-                return Json(new { Result = "Only stik that you image go to this code, before make inputStream from that" }, JsonRequestBehavior.AllowGet);
                 MemoryStream input = new MemoryStream(uploadImage);
                 return Json(new { Result = "Only stik that you image go to this code, after make inputStream from that" }, JsonRequestBehavior.AllowGet);
                 CloudinaryDotNet.Account account = new CloudinaryDotNet.Account("hzvwvtbls", "482455376217895", "bXPz-CiQrEjZp4xqSV8UK_nfI2c");

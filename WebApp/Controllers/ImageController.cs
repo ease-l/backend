@@ -123,18 +123,13 @@ namespace WebApp.Controllers
             if (uploadImage != null)
             {
                 string fileName = "Name";
-                MemoryStream input = new MemoryStream(uploadImage);
-                return Json(new { Result = "Only stik that you image go to this code, after make inputStream from that" }, JsonRequestBehavior.AllowGet);
-                CloudinaryDotNet.Account account = new CloudinaryDotNet.Account("hzvwvtbls", "482455376217895", "bXPz-CiQrEjZp4xqSV8UK_nfI2c");
+                MemoryStream input = new MemoryStream(uploadImage);CloudinaryDotNet.Account account = new CloudinaryDotNet.Account("hzvwvtbls", "482455376217895", "bXPz-CiQrEjZp4xqSV8UK_nfI2c");
                 CloudinaryDotNet.Cloudinary cloudinary = new CloudinaryDotNet.Cloudinary(account);
-                return Json(new { Result = "Secsesful autorizi in cloudinary" }, JsonRequestBehavior.AllowGet);
                 CloudinaryDotNet.Actions.ImageUploadParams uploadParams = new CloudinaryDotNet.Actions.ImageUploadParams()
                 {
                     File = new CloudinaryDotNet.Actions.FileDescription(fileName, input)
                 };
-                return Json(new { Result = "Secsesful make uploadParams" }, JsonRequestBehavior.AllowGet);
                 CloudinaryDotNet.Actions.ImageUploadResult uploadResult = cloudinary.Upload(uploadParams);
-                return Json(new { Result = "Secsesful make uploadResult, thats you download image" }, JsonRequestBehavior.AllowGet);
                 string url = cloudinary.Api.UrlImgUp.BuildUrl(String.Format("{0}.{1}", uploadResult.PublicId, uploadResult.Format));
                 return Json(new { Result = url }, JsonRequestBehavior.AllowGet);
             }

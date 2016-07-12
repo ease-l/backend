@@ -95,8 +95,7 @@ namespace WebApp.Controllers
         [HttpPost, Route("Image/Download")]
         public JsonResult DownloadImage(HttpPostedFileBase uploadImage)
         {
-            if (uploadImage != null)
-            {                
+            //if (uploadImage != null)            {                
                 string fileName = Path.GetFileName(uploadImage.FileName);
                 /*// сохраняем файл 
                 uploadImage.SaveAs(Server.MapPath("~/Views/" + fileName));       */
@@ -111,11 +110,11 @@ namespace WebApp.Controllers
                 CloudinaryDotNet.Actions.ImageUploadResult uploadResult = cloudinary.Upload(uploadParams);
                 string url = cloudinary.Api.UrlImgUp.BuildUrl(String.Format("{0}.{1}", uploadResult.PublicId, uploadResult.Format));
                 return Json(new { Result = url }, JsonRequestBehavior.AllowGet);
-            }
+            /*}
             else
             {
                 return Json(new { Result = "Bad file" }, JsonRequestBehavior.AllowGet);
-            }
+            }*/
         }
         [HttpPost, Route("Image/Download2")]
         public JsonResult DownloadImage2(byte[] uploadImage)

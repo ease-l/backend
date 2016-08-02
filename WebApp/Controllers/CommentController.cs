@@ -61,7 +61,7 @@ namespace WebApp.Controllers
         [HttpGet, Route("Comment")]
         public JsonResult Index()
         {
-            var comments = CommentWithoutObjectId.CommentsToCommentWithoutObjectId(_commentRepository.GetAllComment());
+            var comments = CommentWithoutObjectId.CommentsToCommentWithoutObjectId(_commentRepository.GetAll());
             return Json(comments, JsonRequestBehavior.AllowGet);
         }
         [HttpPut, Route("Comment/id{id}")]

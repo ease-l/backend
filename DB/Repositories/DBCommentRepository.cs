@@ -35,7 +35,7 @@ namespace DB.Repositories
             return comment;
         }
 
-        public List<Comment> GetAllComment()
+        public List<Comment> GetAll()
         {
             return _commentCollection.FindAll().ToList();
         }

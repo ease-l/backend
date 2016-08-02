@@ -66,17 +66,7 @@ namespace DB.Repositories
             var project = _projectCollection.AsQueryable().FirstOrDefault(im => im.Id.Equals(iDRootProject));
             _projectCollection.Remove(Query.EQ("_id", iDRootProject));
             project.Comments.Add(newProject);
-            _projectCollection.Insert(project);
-            /*var projects = _projectCollection.FindAll().ToList();
-            _projectCollection.RemoveAll();
-            foreach (Project p in projects)
-            {
-                if (p.Id.Equals(iDRootProject))
-                {
-                    p.Projects.Add(newProjects);
-                }
-                _projectCollection.Insert(p);
-            }*/
+            _projectCollection.Insert(project);            
         }
 
         public void AddImageToProject(ObjectId newImage, ObjectId iDProject)
@@ -84,17 +74,7 @@ namespace DB.Repositories
             var project = _projectCollection.AsQueryable().FirstOrDefault(im => im.Id.Equals(iDProject));
             _projectCollection.Remove(Query.EQ("_id", iDProject));
             project.Comments.Add(newImage);
-            _projectCollection.Insert(project);
-            /*var projects = _projectCollection.FindAll().ToList();
-            _projectCollection.RemoveAll();
-            foreach (Project p in projects)
-            {
-                if (p.Id.Equals(iDProject))
-                {
-                    p.Images.Add(newImages);
-                }
-                _projectCollection.Insert(p);
-            }*/
+            _projectCollection.Insert(project);           
         }
 
         public void AddCommentToProject(ObjectId newComment, ObjectId iDProject)
@@ -103,16 +83,6 @@ namespace DB.Repositories
             _projectCollection.Remove(Query.EQ("_id", iDProject));
             project.Comments.Add(newComment);
             _projectCollection.Insert(project);
-            /*var projects = _projectCollection.FindAll().ToList();
-            _projectCollection.RemoveAll();
-            foreach (Project p in projects)
-            {
-                if (p.Id.Equals(iDProject))
-                {
-                    p.Comments.Add(newComments);
-                }
-                _projectCollection.Insert(p);
-            }*/
         }
 
         public List<Project> GetProjectsByIds(List<ObjectId> ids)

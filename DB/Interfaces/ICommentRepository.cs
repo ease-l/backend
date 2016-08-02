@@ -14,7 +14,7 @@ namespace DB.Interfaces
         void DeleteAll();
         Comment AddComment(Comment comment);
         Comment GetCommentById(ObjectId id);
-        List<Comment> GetAllComment();
+        List<Comment> GetAll();
         List<Comment> GetCommentsByIds(List<ObjectId> ids);
     }
 }

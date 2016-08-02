@@ -41,17 +41,7 @@ namespace DB.Repositories
             var image = _imageCollection.AsQueryable().FirstOrDefault(im => im.Id.Equals(idImage));
             _imageCollection.Remove(Query.EQ("Id", idImage));
             image.Comments.Add(newComments);
-            _imageCollection.Insert(image);/*
-            var images = _imageCollection.FindAll().ToList();
-            _imageCollection.RemoveAll(); 
-            foreach(Image i in images)
-            {
-                if (i.Id.Equals(idImage))
-                {
-                    i.Comments.Add(newComments);
-                }
-                _imageCollection.Insert(i);
-            }*/
+            _imageCollection.Insert(image);
         }
 
         public Image AddImage(Image image)

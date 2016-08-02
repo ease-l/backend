@@ -24,21 +24,6 @@ namespace WebApp.Controllers
             var id = _commentRepository.AddComment(comment).Id.ToString();
             return Json(new { Result = id }, JsonRequestBehavior.AllowGet);
         }
-        /*[HttpDelete, Route("Comment/id{id}")]
-        public JsonResult DeleteById(String id)
-        {
-            var objectId = new ObjectId();
-            if (!ObjectId.TryParse(id, out objectId))
-            {
-                return Json(new { Result = "Bad id it's not objectId" }, JsonRequestBehavior.AllowGet);
-            }
-            if (objectId == null)
-            {
-                return Json(new { Result = "Bad id" }, JsonRequestBehavior.AllowGet);
-            }
-            _commentRepository.DeleteById(objectId);
-            return Json(new { Result = "OK" }, JsonRequestBehavior.AllowGet);
-        }*/
         [HttpGet, Route("Comment/id{id}")]
         public JsonResult GetById(String id)
         {

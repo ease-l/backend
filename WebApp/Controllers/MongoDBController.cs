@@ -43,8 +43,6 @@ namespace WebApp.Controllers
                     map2.image
                     map3.image
              */
-            //var list = new List<ObjectId>();
-            //var listcom = new List<ObjectId>();
             Project project = new Project();
             Comment comment = new Comment();
             Image image = new Image();

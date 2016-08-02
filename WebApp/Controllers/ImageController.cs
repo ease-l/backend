@@ -52,25 +52,6 @@ namespace WebApp.Controllers
             var id = _imageRepository.AddImage(image).Id.ToString();
             return Json(new { Result = id }, JsonRequestBehavior.AllowGet);
         }
-        /*[HttpDelete, Route("Image/id{id}")]
-        public JsonResult DeleteById(String id)
-        {
-            var objectId = new ObjectId();
-            if (!ObjectId.TryParse(id, out objectId))
-            {
-                return Json(new { Result = "Bad id it's not objectId" }, JsonRequestBehavior.AllowGet);
-            }
-            if (objectId == null)
-            {
-                return Json(new { Result = "Bad id" }, JsonRequestBehavior.AllowGet);
-            }
-            if (_imageRepository.GetImageById(objectId) == null)
-            {
-                return Json(new { Result = "Bad id" }, JsonRequestBehavior.AllowGet);
-            }
-            _imageRepository.DeleteById(objectId);
-            return Json(new { Result = "OK" }, JsonRequestBehavior.AllowGet);
-        }*/
         [HttpDelete, Route("Image/id{idImage}/comment/id{idComment}")]
         public JsonResult DeleteCommentFromImage(String idImage, String idComment)
         {
@@ -97,9 +78,6 @@ namespace WebApp.Controllers
         {
             if (uploadImage != null)            {                
                 string fileName = Path.GetFileName(uploadImage.FileName);
-                /*// сохраняем файл 
-                uploadImage.SaveAs(Server.MapPath("~/Views/" + fileName));       */
-                //CloudinaryDotNet.Cloudinary cloudinary = new CloudinaryDotNet.Cloudinary();
                 var input = uploadImage.InputStream;
                 CloudinaryDotNet.Account account = new CloudinaryDotNet.Account("hzvwvtbls", "482455376217895", "bXPz-CiQrEjZp4xqSV8UK_nfI2c");
                 CloudinaryDotNet.Cloudinary cloudinary = new CloudinaryDotNet.Cloudinary(account);

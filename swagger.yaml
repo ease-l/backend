@@ -1,0 +1,729 @@
+# this is an example of the Uber API
+# as a demonstration of an API spec in YAML
+swagger: '2.0'
+info:
+  title: Ease-L
+  description: Making project
+  version: "1.0.0"
+# the domain of the service
+host: api.uber.com
+# array of all schemes that your API supports
+schemes:
+  - https
+# will be prefixed to all paths
+basePath: /v1
+produces:
+  - application/json
+paths:
+
+
+  
+  /Comment:
+    get:
+      summary: All comments
+      description: Returns all comments
+      responses: 
+        200: 
+          description: Array of comments
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CommentWithoutObjectId'
+            
+  /Comment/GetById:
+    get:
+      summary: One comment
+      description: Gets comment by id
+      parameters:
+        - name: id
+          in: query
+          required: true
+          type: string
+          description: Comment id
+      responses: 
+        200: 
+          description: Comment
+          schema:
+            $ref: '#/definitions/CommentWithoutObjectId'
+        400:
+          description: Bad request
+          schema: 
+            type: string
+            
+            
+          
+  /Comment/AddComment:
+    post:
+      summary: Posted
+      description: Adds comment to comment
+      parameters:
+        - name: text
+          in: query
+          required: true
+          type: string
+          description: Comment text
+        - name: name
+          in: query
+          required: true
+          type: string
+          description:  Comment name
+      responses: 
+        200: 
+          description: Comment added successfully
+          schema:
+            type: string
+            
+              
+  /Comment/UpdateById:
+    post:
+      summary: Posted
+      description: Updates comment by id
+      parameters: 
+        - name: id
+          in: query
+          required: true
+          type: string
+          description: Comment id
+        - name: name
+          in: query
+          required: true
+          type: string
+          description: Comment name
+        - name: text
+          in: query
+          required: true
+          type: string
+          description: Comment text
+      responses:
+        200: 
+          description: Updated comment
+          schema: 
+            $ref: '#/definitions/CommentWithoutObjectId'
+        400:
+          description: Bad id
+          schema:
+            type: string
+            
+   ############
+  
+  /Image:
+    get:
+      summary: All images
+      description: Returns all images
+      responses: 
+        200: 
+          description: Array of images
+          schema: 
+            type: array
+            items:
+              $ref: '#/definitions/ImageWithoutObjectId'
+            
+  /Image/GetById:
+    get:
+      summary: One image
+      description: Gets image by id
+      parameters:
+        - name: id
+          required: true
+          in: query
+          type: string
+          description: Image id
+      responses: 
+        200: 
+          description: Image
+          schema:
+            $ref: '#/definitions/ImageWithoutObjectId'
+        400: 
+          description: Bad id
+          schema: 
+            type: string
+             
+  /Image/AddImage:
+    post:
+      summary: Posted
+      description: Adds image
+      parameters:
+        - name: name
+          in: query
+          required: true
+          type: string
+          description: Image name
+        - name: url
+          in: query
+          required: true
+          type: string
+          description: Image Url
+      responses: 
+        200: 
+          description: Image added successfully
+          schema:
+            type: string
+            #items:
+              #$ref: '#/definitions/Image'
+            
+  /Image/AddCommentToImage:
+    post:
+      summary: Posted
+      description: Adds comment to image
+      parameters:
+        - name: name
+          in: query
+          required: true
+          type: string
+          description:  Comment name
+        - name: simageId
+          required: true
+          in: query
+          type: string
+          description: Image id
+        - name: text
+          in: query
+          required: true
+          type: string
+          description:  Comment text
+      responses:
+        200:
+          description: Comment added to image successfully
+          schema: 
+            type: string
+        400: 
+          description: Bad id
+          schema: 
+            type: string
+            
+  /Image/DeleteCommentFromImage:
+    delete:
+      summary: Comment deleted from image
+      description: Deletes comment from image
+      parameters: 
+        - name: idImage
+          in: query
+          required: true
+          type: string
+          description:  Image id
+        - name: idComment
+          in: query
+          required: true
+          type: string
+          description:  Comment id
+      responses: 
+        200: 
+          description: Comment deleted from image successfully
+          schema: 
+            type: string
+        400:
+          description: Bad id
+          schema:
+            type: string
+            
+  /Image/GetCommentFromImage:
+    get:
+      summary: One comment
+      description: Gets comment  by id
+      parameters:
+        - name: simageId
+          required: true
+          in: query
+          type: string
+          description: Image id
+      responses: 
+        200: 
+          description: Comments
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CommentWithoutObjectId'
+        400: 
+          description: Bad id
+          schema: 
+            type: string
+  
+  /Image/UpdateById:
+    put:
+      summary: Updated image
+      description: Updates image by id
+      parameters:
+        - name: id
+          required: true
+          in: query
+          type: string
+          description: Image id
+        - name: name
+          required: true
+          in: query
+          type: string
+          description: Image name
+        - name: url
+          required: true
+          in: query
+          type: string
+          description: Image url
+      responses: 
+        200: 
+          description: Comments
+          schema:
+            $ref: '#/definitions/ImageWithoutObjectId'
+        400: 
+          description: Bad id
+          schema: 
+            type: string
+          
+  /Image/DownloadImage2:
+    post:
+      summary: Dowloaded
+      description: Dowloads image(byte[])
+      parameters:
+        - name: uploadImage
+          in: query
+          required: true
+          type: string
+          format: byte
+          description:  Upload image
+      responses:
+        200:
+          description: Image downloaded successfully
+          schema: 
+            type: string
+  
+  
+          
+            
+   ############
+            
+  /Project:
+    get:
+      summary: All projects
+      description: Returns all projects
+      responses: 
+        200: 
+          description: Array of projects
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ProjectWithoutObjectId'
+            
+  /Project/GetById:
+    get:
+      summary: One Project
+      description: Gets project by id
+      parameters:
+        - name: id
+          in: query
+          required: true
+          type: string
+          description: Project id
+      responses: 
+        200: 
+          description: Project
+          schema:
+            $ref: '#/definitions/ProjectWithoutObjectId'
+  #fix method an go on         
+  /Project/AddProject:
+    post:
+      summary: Posted
+      description: Adds project to root library
+      parameters:
+        - name: name
+          in: query
+          required: true
+          type: string
+          description: Project name
+      responses: 
+        200: 
+          description: Project added to root library successfully
+          schema:
+            type: string
+            #$ref: '#/definitions/Comment'
+  
+  /Project/AddProjectToProject:
+    post:
+      summary: Posted
+      description: Adds new project to root project
+      parameters:
+        - name: name
+          in: query
+          required: true
+          type: string
+          description: New project name
+        - name: sidRoot
+          in: query
+          required: true
+          type: string
+          description: Root project id
+      responses: 
+        200: 
+          description: Project added to root project successfully
+          schema:
+            type: string
+        400:
+          description: Bad id
+          schema:
+            type: string
+            
+  /Project/AddImageToProject:
+    post:
+      summary: Posted
+      description: Adds image to project
+      parameters:
+        - name: url
+          in: query
+          required: true
+          type: string
+          description: Image url
+        - name: name
+          required: true
+          in: query
+          type: string
+          description: Image name
+        - name: sprojectId
+          in: query
+          required: true
+          type: string
+          description: Project id
+      responses: 
+        200: 
+          description: Image added to project successfully
+          schema:
+            type: string
+        400:
+          description: Bad id
+          schema:
+            type: string
+  
+  /Project/AddCommentToProject:
+    post:
+      summary: Posted
+      description: Adds comment to project
+      parameters:
+        - name: text
+          in: query
+          required: true
+          type: string
+          description: Comment text
+        - name: name
+          required: true
+          in: query
+          type: string
+          description: Comment name
+        - name: sprojectId
+          in: query
+          required: true
+          type: string
+          description: Project id
+      responses: 
+        200: 
+          description: Comment added to project successfully
+          schema:
+            type: string
+        400:
+          description: Bad id
+          schema:
+            type: string
+            
+  /Project/DeleteById:
+    delete:
+      summary: Project deleted
+      description: Deletes project
+      parameters: 
+        - name: id
+          in: query
+          required: true
+          type: string
+          description:  Project id
+      responses: 
+        200: 
+          description: Project deleted successfully
+          schema: 
+            type: string
+        400:
+          description: Bad id
+          schema:
+            type: string
+  
+  /Project/DeleteCommentFromProject:
+    delete:
+      summary: Comment deleted from project
+      description: Deletes comment from project
+      parameters: 
+        - name: projectId
+          in: query
+          required: true
+          type: string
+          description:  Project id
+        - name: commentId
+          in: query
+          required: true
+          type: string
+          description:  Comment id
+      responses: 
+        200: 
+          description: Comment deleted from project successfully
+          schema: 
+            type: string
+        400:
+          description: Bad id
+          schema:
+            type: string
+            
+  /Project/DeleteImageFromProject:
+    delete:
+      summary: Image deleted from project
+      description: Deletes image from project
+      parameters: 
+        - name: projectId
+          in: query
+          required: true
+          type: string
+          description:  Project id
+        - name: imageId
+          in: query
+          required: true
+          type: string
+          description:  Image id
+      responses: 
+        200: 
+          description: Image deleted from project successfully
+          schema: 
+            type: string
+        400:
+          description: Bad id
+          schema:
+            type: string
+            
+  /Project/GetCommentsFromProject:
+    get:
+      summary: All comments from project
+      description: Gets all comments from project
+      parameters:
+        - name: sidRoot
+          in: query
+          required: true
+          type: string
+          description: Project id
+      responses: 
+        200: 
+          description: All comments from project
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CommentWithoutObjectId'
+        400:
+          description: Bad id
+          schema:
+            type: string
+            
+  /Project/GetImagesFromProject:
+    get:
+      summary: All images from project
+      description: Gets all images from project
+      parameters:
+        - name: sidRoot
+          in: query
+          required: true
+          type: string
+          description: Project id
+      responses: 
+        200: 
+          description: All images from project
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ImageWithoutObjectId'
+        400:
+          description: Bad id
+          schema:
+            type: string
+  
+  /Project/GetProjectsFromProject:
+    get:
+      summary: All projects from project
+      description: Gets all projects from project
+      parameters:
+        - name: sidRoot
+          in: query
+          required: true
+          type: string
+          description: Project id
+      responses: 
+        200: 
+          description: All projects from project
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ProjectWithoutObjectId'
+        400:
+          description: Bad id
+          schema:
+            type: string
+            
+  /Project/UpdateById:
+    put:
+      summary: Updated project
+      description: Updates project by id
+      parameters:
+        - name: id
+          required: true
+          in: query
+          type: string
+          description: Project id
+        - name: name
+          required: true
+          in: query
+          type: string
+          description: Project name
+      responses: 
+        200: 
+          description: Projects
+          schema:
+            $ref: '#/definitions/ProjectWithoutObjectId'
+        400: 
+          description: Bad id
+          schema: 
+            type: string
+  
+            
+        
+  ############
+            
+            
+definitions:
+  
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
+
+  BaseEntity:
+    required:
+      - Name
+      - Author
+      - Version
+      - Id
+      - CreationelData
+    properties:
+      Name: 
+        type: string
+      Author:
+        type: string
+      Version: 
+        type: integer
+        #format: uint
+      Id:
+        type: string
+      CreationelData:
+        type: string
+      
+  Comment:
+    type: object
+    description: Comment!
+    allOf:
+      - $ref: '#/definitions/BaseEntity' 
+      - properties: 
+          Text:
+            type: string
+            description: Comment content
+  
+  CommentWithoutObjectId:
+    type: object
+    description: CommentWithoutObkectId
+    properties:
+      Name: 
+        type: string
+      Author:
+        type: string
+      Version: 
+        type: integer
+        #format: uint
+      Id:
+        type: string
+      CreationelData:
+        type: string 
+      Text:
+        type: string
+  
+  Image:
+    type: object
+    description: Image!
+    allOf:
+      - $ref: '#/definitions/BaseEntity' 
+      - properties: 
+          Comments:
+            type: array
+            items:
+                $ref: '#/definitions/Comment'
+            description: List of comments
+            
+  ImageWithoutObjectId:
+    type: object
+    description: ImageWithoutObjectId
+    properties:
+      Name: 
+        type: string
+      Author:
+        type: string
+      Version: 
+        type: integer
+        #format: uint
+      Id:
+        type: string
+      CreationelData:
+        type: string 
+      Comments:
+            type: array
+            items:
+                $ref: '#/definitions/Comment'
+            description: List of comments
+  
+  
+  Project:
+    type: object
+    description: Project!
+    allOf:
+      - $ref: '#/definitions/BaseEntity'
+      - properties: 
+          Comments:
+            type: array
+            items:
+              $ref: '#/definitions/Comment'
+          Images:
+            type: array
+            items:
+              $ref: '#/definitions/Image'
+          Projects:
+            type: array
+            items:
+              $ref: '#/definitions/Project'
+              
+  ProjectWithoutObjectId: 
+    type: object
+    description: ProjectWithoutObjectId
+    properties:
+      Name: 
+        type: string
+      Author:
+        type: string
+      Version: 
+        type: integer
+        #format: uint
+      Id:
+        type: string
+      CreationelData:
+        type: string 
+      Comments:
+        type: array
+        items:
+          $ref: '#/definitions/Comment'
+      Images:
+        type: array
+        items:
+          $ref: '#/definitions/Image'
+      Projects:
+        type: array
+        items:
+          $ref: '#/definitions/Project'

@@ -73,7 +73,7 @@ namespace DB.Repositories
         {
             var project = _projectCollection.AsQueryable().FirstOrDefault(im => im.Id.Equals(iDProject));
             _projectCollection.Remove(Query.EQ("_id", iDProject));
-            project.Comments.Add(newImage);
+            project.Images.Add(newImage);
             _projectCollection.Insert(project);           
         }
 

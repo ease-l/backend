@@ -14,7 +14,7 @@ namespace DB.Repositories
 {
     public class DBCommentRepository : ICommentRepository
     {
-        private readonly MongoCollection<Comment> _commentCollection;
+        private readonly IMongoCollection<Comment> _commentCollection;
 
         public DBCommentRepository()
         {
@@ -23,21 +23,21 @@ namespace DB.Repositories
         }
         public void DeleteById(ObjectId id)
         {
-            _commentCollection.Remove(Query.EQ("_id", id));
+            _commentCollection.DeleteOne(c => c.Id.Equals(id));
         }
         public void DeleteAll()
         {
-            _commentCollection.RemoveAll();
+            _commentCollection.DeleteMany(c => true);
         }
         public Comment AddComment(Comment comment)
         {
-            _commentCollection.Insert(comment);
+            _commentCollection.InsertOne(comment);
             return comment;
         }
 
         public List<Comment> GetAll()
         {
-            return _commentCollection.FindAll().ToList();
+            return _commentCollection.AsQueryable().ToList();
         }
 
         public Comment GetCommentById(ObjectId id)
@@ -47,7 +47,7 @@ namespace DB.Repositories
         }
         public List<Comment> GetCommentsByIds(List<ObjectId> ids)
         {
-            return _commentCollection.FindAll().Where(item => ids.Contains(item.Id)).ToList();
+            return _commentCollection.AsQueryable().Where(item => ids.Contains(item.Id)).ToList();
         }
     }
 }

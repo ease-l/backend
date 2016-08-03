@@ -217,7 +217,7 @@ namespace WebApp.Controllers
             return Json(movies, JsonRequestBehavior.AllowGet);
         }
         [HttpGet, Route("Project/id{sidRoot}/Project")]
-        public JsonResult GetPtojectsFormProject(String sidRoot)
+        public JsonResult GetProjectsFormProject(String sidRoot)
         {
             var idRoot = new ObjectId();
             if (!ObjectId.TryParse(sidRoot, out idRoot))

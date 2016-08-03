@@ -14,7 +14,6 @@ namespace DB.Interfaces
         void DeleteAll();
         void DeleteCommentFromProject(ObjectId projectId, ObjectId commentId);
         void DeleteImageFromProject(ObjectId projectId, ObjectId imageId);
-        void DeleteProjectFromProject(ObjectId rootProjectId, ObjectId deletedProjectId);
         Project AddProject(Project project);
         Project GetProjectById(ObjectId id);
         List<Project> GetAllProject();

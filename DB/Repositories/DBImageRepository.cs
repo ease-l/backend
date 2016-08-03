@@ -14,7 +14,7 @@ namespace DB.Repositories
 {
     public class DBImageRepository : IImageRepository
     {
-        private readonly IMongoCollection<Image> _imageCollection;
+        private readonly MongoCollection<Image> _imageCollection;
 
         public DBImageRepository()
         {
@@ -23,34 +23,30 @@ namespace DB.Repositories
         }
         public void DeleteAll()
         {
-            _imageCollection.DeleteMany(prop => true);
+            _imageCollection.RemoveAll();
         }
         public void DeleteById(ObjectId id)
         {
-            _imageCollection.DeleteOne(prop => prop.Id.Equals(id));
+            _imageCollection.Remove(Query.EQ("_id", id));
         }
         public void DeleteCommentFromImage(ObjectId imageId, ObjectId commentId)
         {
-            var list = _imageCollection.AsQueryable().FirstOrDefault(p => p.Id.Equals(imageId)).Comments;
-            list.Remove(commentId);
-            var filter = Builders<Image>.Filter.Eq("_Id", imageId);
-            var update = Builders<Image>.Update
-                .Set("Comments", list)
-                .CurrentDate("lastModified");
-            var result = _imageCollection.UpdateOne(filter, update);
+            var image = _imageCollection.AsQueryable().FirstOrDefault(i => i.Id.Equals(imageId));
+            _imageCollection.Remove(Query.EQ("_id", imageId));
+            image.Comments.Remove(commentId);
+            _imageCollection.Insert(image);
         }
         public void AddCommentToImage(ObjectId newComments, ObjectId idImage)
         {
-            var filter = Builders<Image>.Filter.Eq("_Id", idImage);
-            var update = Builders<Image>.Update
-                .AddToSet("Projects", newComments)
-                .CurrentDate("lastModified");
-            var result = _imageCollection.UpdateOne(filter, update);
+            var image = _imageCollection.AsQueryable().FirstOrDefault(im => im.Id.Equals(idImage));
+            _imageCollection.Remove(Query.EQ("Id", idImage));
+            image.Comments.Add(newComments);
+            _imageCollection.Insert(image);
         }
 
         public Image AddImage(Image image)
         {
-            _imageCollection.InsertOne(image);
+            _imageCollection.Insert(image);
             return image;
         }
 
@@ -66,7 +62,21 @@ namespace DB.Repositories
         }
         public List<Image> GetImagesByIds(List<ObjectId> ids)
         {
-            return _imageCollection.AsQueryable().Where(i => ids.Contains(i.Id)).ToList();
+            var list = _imageCollection.FindAll().ToList();
+            HashSet<ObjectId> id = new HashSet<ObjectId>();
+            foreach (ObjectId i in ids)
+            {
+                id.Add(i);
+            }
+            var images = new List<Image>();
+            foreach (Image i in list)
+            {
+                if (id.Contains(i.Id))
+                {
+                    images.Add(i);
+                }
+            }
+            return images;
         }
     }
 }

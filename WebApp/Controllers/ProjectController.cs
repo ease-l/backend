@@ -85,7 +85,7 @@ namespace WebApp.Controllers
             }
         }
         [HttpGet, Route(nameof(Project) + "/{sidRoot}/Project")]
-        public JsonResult GetPtojectsFormProject(String sidRoot)
+        public JsonResult GetProjectsFormProject(String sidRoot)
         {
             try
             { 

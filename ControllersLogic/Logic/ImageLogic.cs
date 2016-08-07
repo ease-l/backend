@@ -156,14 +156,13 @@ namespace ControllersLogic.Logic
                 throw new Exception("Bad id");
             }
             var image = _imageRepository.GetImageById(objectId);
-            Image prev_image = image;
+            Image prev_image = _imageRepository.GetImageById(objectId);
             if (image == null)
             {
                 throw new Exception("Bad id");
             }
             image.Url = url;
             image.Version++;
-            prev_image.Version--;
             image.Name = name;
             image.StartId = id;
             _imageRepository.DeleteById(objectId);

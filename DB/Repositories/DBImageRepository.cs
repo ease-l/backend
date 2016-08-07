@@ -64,6 +64,11 @@ namespace DB.Repositories
         {
             return _imageCollection.AsQueryable().FirstOrDefault(im => im.Id.Equals(id));
         }
+        public Image GetImageByIdAndVersion(ObjectId id, int version)
+        {
+            return _imageCollection.AsQueryable().FirstOrDefault(im => im.Id.Equals(id) && im.Version.Equals(version));
+        }
+
         public List<Image> GetImagesByIds(List<ObjectId> ids)
         {
             return _imageCollection.AsQueryable().Where(i => ids.Contains(i.Id)).ToList();

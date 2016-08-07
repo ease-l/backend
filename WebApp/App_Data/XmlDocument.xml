@@ -556,6 +556,14 @@
             <param name="id">Id</param>
             <returns>Image</returns>
         </member>
+        <member name="M:WebApp.Controllers.ImageWebApiController.GetByIdAndVersion(System.String,System.Int32)">
+            <summary>
+            Get image by id and version
+            </summary>
+            <param name="id">Id</param>
+            <param name="version">Version</param>
+            <returns>Image</returns>
+        </member>
         <member name="M:WebApp.Controllers.ImageWebApiController.GetCommentsFromImage(System.String)">
             <summary>
             Get comments from image

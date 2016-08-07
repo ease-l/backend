@@ -15,6 +15,7 @@ namespace DB.Interfaces
         void DeleteCommentFromImage(ObjectId imageId, ObjectId commentId);
         Image AddImage(Image image);
         Image GetImageById(ObjectId id);
+        Image GetImageByIdAndVersion(ObjectId id, int version);
         List<Image> GetAllImage();
         void AddCommentToImage(ObjectId newComments, ObjectId idImage);
         List<Image> GetImagesByIds(List<ObjectId> ids);

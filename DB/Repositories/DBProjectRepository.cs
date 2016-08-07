@@ -27,7 +27,7 @@ namespace DB.Repositories
         }
         public void DeleteAll()
         {
-            _projectCollection.DeleteMany(p => p.Id.Equals(p.Id));
+            _projectCollection.DeleteMany(p => true);
         }
 
         public void DeleteCommentFromProject(ObjectId projectId, ObjectId commentId)

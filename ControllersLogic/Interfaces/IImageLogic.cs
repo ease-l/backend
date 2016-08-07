@@ -16,6 +16,7 @@ namespace ControllersLogic.Interfaces
         String DownloadImage(HttpPostedFileBase uploadImage);
         List<ImageWithoutObjectId> GetAllImage();
         ImageWithoutObjectId GetById(String id);
+        ImageWithoutObjectId GetByIdAndVersion(String id, int version);
         List<CommentWithoutObjectId> GetCommentFromImage(String simageId);
         ImageWithoutObjectId UpdateById(String id, String name, String url);
     }

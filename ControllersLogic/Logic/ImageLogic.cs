@@ -41,8 +41,11 @@ namespace ControllersLogic.Logic
             image.Version = 1;
             image.Name = name;
             image.CreationelData = DateTime.UtcNow;
-            var id = _imageRepository.AddImage(image).Id.ToString();
-            return id;
+            var id = _imageRepository.AddImage(image).Id;
+            image.StartId = id.ToString();
+            _imageRepository.DeleteById(id);
+            _imageRepository.AddImage(image);
+            return id.ToString();
         }
         public String DeleteCommentFromImage(String idImage, String idComment)
         {
@@ -97,11 +100,29 @@ namespace ControllersLogic.Logic
             {
                 throw new Exception("Bad id it's not objectId");
             }
-            if (objectId == null || _imageRepository.GetImageById(objectId) == null)
+            if (objectId == null)
             {
                 throw new Exception("Bad id");
             }
             var image = ImageWithoutObjectId.ImageToImageWithoutObjectId(_imageRepository.GetImageById(objectId));
+            if (image == null)
+            {
+                throw new Exception("Bad id");
+            }
+            return image;
+        }
+        public ImageWithoutObjectId GetByIdAndVersion(String id, int version)
+        {
+            var objectId = new ObjectId();
+            if (!ObjectId.TryParse(id, out objectId))
+            {
+                throw new Exception("Bad id it's not objectId");
+            }
+            if (objectId == null)
+            {
+                throw new Exception("Bad id");
+            }
+            var image = ImageWithoutObjectId.ImageToImageWithoutObjectId(_imageRepository.GetImageByIdAndVersion(objectId, version));
             if (image == null)
             {
                 throw new Exception("Bad id");
@@ -135,15 +156,21 @@ namespace ControllersLogic.Logic
                 throw new Exception("Bad id");
             }
             var image = _imageRepository.GetImageById(objectId);
+            Image prev_image = image;
             if (image == null)
             {
                 throw new Exception("Bad id");
             }
             image.Url = url;
             image.Version++;
+            prev_image.Version--;
             image.Name = name;
+            image.StartId = id;
             _imageRepository.DeleteById(objectId);
             _imageRepository.AddImage(image);
+            prev_image.Id = new ObjectId();
+            prev_image.StartId = id;
+            _imageRepository.AddImage(prev_image);
             return ImageWithoutObjectId.ImageToImageWithoutObjectId(image);
         }
     }

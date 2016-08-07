@@ -11,6 +11,7 @@ namespace DB.Models
     {
         public List<ObjectId> Comments { get; set; }
         public String Url { get; set; }
+        public String StartId { get; set; }
         public Image()
         {
             this.Comments = new List<ObjectId>();
@@ -36,7 +37,7 @@ namespace DB.Models
             Url = image.Url,
             Version = image.Version,
             Name = image.Name,
-            Id = image.Id.ToString(),
+            Id = image.StartId,
             CreationelData = image.CreationelData,
             Comments = new List<string>()};           
             if (image.Comments != null)

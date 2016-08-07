@@ -32,13 +32,13 @@ namespace WebApp.Controllers
         [HttpPost, Route("Image/Download")]
         public JsonResult DownloadImage(HttpPostedFileBase uploadImage)
         {
-            return Json(new { Result = _imageLogic.DownloadImage(uploadImage), JsonRequestBehavior.AllowGet });
+            return Json(new { Result = _imageLogic.DownloadImage(uploadImage) }, JsonRequestBehavior.AllowGet );
         }
         [HttpGet, Route("Image/id{id}")]
         public JsonResult GetById(String id)
         {
             try { 
-                return Json(new { Result = _imageLogic.GetById(id), JsonRequestBehavior.AllowGet });
+                return Json(new { Result = _imageLogic.GetById(id) }, JsonRequestBehavior.AllowGet );
             }
             catch (Exception e)
             {

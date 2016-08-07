@@ -76,6 +76,17 @@ namespace WebApp.Controllers
             return _imageLogic.GetById(id);
         }
         /// <summary>
+        /// Get image by id and version
+        /// </summary>
+        /// <param name="id">Id</param>
+        /// <param name="version">Version</param>
+        /// <returns>Image</returns>
+        [HttpGet, Route("api/Image/id{id}/{version}")]
+        public ImageWithoutObjectId GetByIdAndVersion(String id, int version)
+        {
+            return _imageLogic.GetByIdAndVersion(id, version);
+        }
+        /// <summary>
         /// Get comments from image
         /// </summary>
         /// <param name="simageId">Image id</param>

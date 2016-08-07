@@ -55,8 +55,10 @@
   <ItemGroup>
     <Compile Include="Interfaces\ICommentLogic.cs" />
     <Compile Include="Interfaces\IImageLogic.cs" />
+    <Compile Include="Interfaces\IProjectLogic.cs" />
     <Compile Include="Logic\CommentLogic.cs" />
     <Compile Include="Logic\ImageLogic.cs" />
+    <Compile Include="Logic\ProjectLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

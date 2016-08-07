@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace WebApp.Controllers
 {
-    public class CommentApiController : ApiController
+    public class CommentWebApiController : ApiController
     {
         private static ICommentLogic _commentLogic = new CommentLogic();
 
@@ -29,21 +29,13 @@ namespace WebApp.Controllers
         public CommentWithoutObjectId GetById(String id)
         {
             var comment = _commentLogic.GetById(id);
-            if (comment == null)
-            {
-                throw new Exception("Bad id");
-            }
             return comment;
         }
 
-        [HttpPut, Route("Comment/id{id}")]
+        [HttpPut, Route("api/Comment/id{id}")]
         public CommentWithoutObjectId UpdateById(String id, String name, String text)
         {
-            var comment = _commentLogic.UpdateById(id, name, text);
-            if (comment == null)
-            {
-                throw new Exception("Bad id");
-            }
+            var comment = _commentLogic.UpdateById(id, name, text);            
             return comment;
         }
     }

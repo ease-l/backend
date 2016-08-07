@@ -24,28 +24,30 @@ namespace WebApp.Controllers
         [HttpGet, Route("Comment/id{id}")]
         public JsonResult GetById(String id)
         {
-            var comment = _commentLogic.GetById(id);
-            if(comment == null)
-            {
-                return Json(new { Result = "Bad id" }, JsonRequestBehavior.AllowGet);
+            try {
+                return Json(_commentLogic.GetById(id), JsonRequestBehavior.AllowGet);
             }
-            return Json(comment, JsonRequestBehavior.AllowGet);
+            catch (Exception e)
+            {
+                return Json(e.ToString() , JsonRequestBehavior.AllowGet);
+            }
         }
         [HttpGet, Route("Comment")]
-        public JsonResult GetAllComment()
+        public JsonResult Index()
         {
             return Json(_commentLogic.GetAllComment(), JsonRequestBehavior.AllowGet);
         }
         [HttpPut, Route("Comment/id{id}")]
         public JsonResult UpdateById(String id, String name, String text)
         {
-            var comment = _commentLogic.UpdateById(id, name, text);
-            if(comment == null)
-            {
-                return Json(new { Result = "Bad id" }, JsonRequestBehavior.AllowGet);
+            try
+            { 
+                 return Json(_commentLogic.UpdateById(id, name, text), JsonRequestBehavior.AllowGet);
             }
-            return Json(comment, JsonRequestBehavior.AllowGet);
+            catch (Exception e)
+            {
+                return Json(e.ToString() , JsonRequestBehavior.AllowGet);
+            }
         }
-
     }
 }

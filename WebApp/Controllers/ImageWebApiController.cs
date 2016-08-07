@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace WebApp.Controllers
 {
-    public class ImageApiController
+    public class ImageWebApiController:ApiController
     {
         private IImageLogic _imageLogic = new ImageLogic();
 

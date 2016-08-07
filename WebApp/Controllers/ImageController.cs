@@ -12,7 +12,7 @@ namespace WebApp.Controllers
 {    
     public class ImageController:Controller
     {
-        private IImageLogic _imageLogic = new ImageLogic();
+        private static IImageLogic _imageLogic = new ImageLogic();
 
         [HttpPost, Route("Image/id{simageId}/comment")]
         public JsonResult AddCommentToImage(String simageId, String text, String name)
@@ -37,12 +37,24 @@ namespace WebApp.Controllers
         [HttpGet, Route("Image/id{id}")]
         public JsonResult GetById(String id)
         {
-            return Json(new { Result = _imageLogic.GetById(id), JsonRequestBehavior.AllowGet });
+            try { 
+                return Json(new { Result = _imageLogic.GetById(id), JsonRequestBehavior.AllowGet });
+            }
+            catch (Exception e)
+            {
+                return Json(e.ToString(), JsonRequestBehavior.AllowGet);
+            }
         }
         [HttpGet, Route("Image/id{simageId}/comment")]
         public JsonResult GetCommentFromImage(String simageId)
         {
-            return Json(_imageLogic.GetCommentFromImage(simageId), JsonRequestBehavior.AllowGet);
+            try { 
+                return Json(_imageLogic.GetCommentFromImage(simageId), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(e.ToString(), JsonRequestBehavior.AllowGet);
+            }
         }
         [HttpGet, Route("Image")]
         public JsonResult Index()
@@ -51,8 +63,14 @@ namespace WebApp.Controllers
         }
         [HttpPut, Route("Image/id{id}")]
         public JsonResult UpdateById(String id, String name, String url)
-        {            
-            return Json(_imageLogic.UpdateById(id, name, url), JsonRequestBehavior.AllowGet);
+        {
+            try { 
+                return Json(_imageLogic.UpdateById(id, name, url), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(e.ToString(), JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

@@ -33,16 +33,16 @@ namespace ControllerLogic
             var objectId = new ObjectId();
             if (!ObjectId.TryParse(id, out objectId))
             {
-                return null;
+                throw new Exception("This isn't objectId");
             }
             if (objectId == null)
             {
-                return null;
+                throw new Exception("Bad id");
             }
             var comment = CommentWithoutObjectId.CommentToCommentWithoutObjectId(_commentRepository.GetCommentById(objectId));
             if (comment == null)
             {
-                return null;
+                 throw new Exception("Bad id");
             }
             return comment;
         }
@@ -51,16 +51,16 @@ namespace ControllerLogic
             var objectId = new ObjectId();
             if (!ObjectId.TryParse(id, out objectId))
             {
-                return null;
+                throw new Exception("This isn't objectId");
             }
             if (objectId == null)
             {
-                return null;
+                throw new Exception("Bad id");                  
             }
             var comment = _commentRepository.GetCommentById(objectId);
             if (comment == null)
             {
-                return null;
+                throw new Exception("Bad id");
             }
             comment.Name = name;
             comment.Text = text;

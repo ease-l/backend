@@ -45,6 +45,18 @@ namespace WebApp.Controllers
                 return Json(e.ToString(), JsonRequestBehavior.AllowGet);
             }
         }
+        [HttpGet, Route("Image/id{id}/{version}")]
+        public JsonResult GetByIdAndVersion(String id, int version)
+        {
+            try
+            {
+                return Json(new { Result = _imageLogic.GetByIdAndVersion(id, version) }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(e.ToString(), JsonRequestBehavior.AllowGet);
+            }
+        }
         [HttpGet, Route("Image/id{simageId}/comment")]
         public JsonResult GetCommentFromImage(String simageId)
         {

@@ -12,21 +12,19 @@ namespace DB
 {
     public class MongoClientFactory
     {
-        public static MongoUrl GetMongoUrl()
+        public static MongoClient GetMongoClient()
         {
-            return new MongoUrl(ConfigurationManager.AppSettings.Get("MONGOLAB_URI"));
+            var dbConnectionString = System.Configuration.ConfigurationManager.AppSettings["DB"];
+            if (!String.IsNullOrEmpty(dbConnectionString))
+            {
+                return new MongoClient(dbConnectionString);
+            }
+            return new MongoClient();
         }
-        public static MongoServer GetMongoServer()
-        {
-            var client = new MongoClient(GetMongoUrl());
-            var server = client.GetServer();
-            return server;
 
-        }
-        public static MongoDatabase GetMongoDatabase()
+        public static IMongoDatabase GetMongoDatabase(String name = "mongodb")
         {
-            var database = GetMongoServer().GetDatabase(GetMongoUrl().DatabaseName);
-            return database;
+            return GetMongoClient().GetDatabase(name);
         }
     }
 }

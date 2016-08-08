@@ -3,7 +3,6 @@ using ControllersLogic.Logic;
 using DB.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Http;
 
@@ -20,7 +19,7 @@ namespace WebApp.Controllers
         /// <param name="name">Comment name</param>
         /// <returns>Id new comment</returns>
         [HttpPost, Route("api/Image/id{simageId}/comment")]
-        public String  AddCommentToImage(String simageId, String text, String name)
+        public String  AddCommentToImage(String simageId, [FromBody]String text, [FromBody]String name)
         {
             return _imageLogic.AddCommentToImage(simageId, text, name);
         }
@@ -31,7 +30,7 @@ namespace WebApp.Controllers
         /// <param name="name">Name</param>
         /// <returns>Id new image</returns>
         [HttpPost, Route("api/Image")]
-        public String AddImage(String url, String name)
+        public String AddImage([FromBody]String url, [FromBody]String name)
         {
             return _imageLogic.AddImage(url, name);
         }
@@ -52,7 +51,7 @@ namespace WebApp.Controllers
         /// <param name="uploadImage">Uploded image, HttpPostedFileBase </param>
         /// <returns>Image url</returns>
         [HttpPost, Route("api/Image/Download")]
-        public String DownloadImage(HttpPostedFileBase uploadImage)
+        public String DownloadImage([FromBody]HttpPostedFileBase uploadImage)
         {
             return _imageLogic.DownloadImage(uploadImage);
         }
@@ -104,7 +103,7 @@ namespace WebApp.Controllers
         /// <param name="url">New url</param>
         /// <returns>New Image</returns>
         [HttpPut, Route("api/Image/id{id}")]
-        public ImageWithoutObjectId UpdateById(String id, String name, String url)
+        public ImageWithoutObjectId UpdateById(String id, [FromBody]String name, [FromBody]String url)
         {
             return _imageLogic.UpdateById(id, name, url);
         }

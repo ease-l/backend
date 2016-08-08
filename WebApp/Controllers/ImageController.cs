@@ -38,7 +38,7 @@ namespace WebApp.Controllers
         public JsonResult GetById(String id)
         {
             try { 
-                return Json(new { Result = _imageLogic.GetById(id) }, JsonRequestBehavior.AllowGet );
+                return Json(_imageLogic.GetById(id), JsonRequestBehavior.AllowGet );
             }
             catch (Exception e)
             {
@@ -50,7 +50,7 @@ namespace WebApp.Controllers
         {
             try
             {
-                return Json(new { Result = _imageLogic.GetByIdAndVersion(id, version) }, JsonRequestBehavior.AllowGet);
+                return Json(_imageLogic.GetByIdAndVersion(id, version), JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {

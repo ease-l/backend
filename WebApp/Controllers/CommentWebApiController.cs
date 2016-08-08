@@ -19,7 +19,7 @@ namespace WebApp.Controllers
         /// <param name="name">Name</param>
         /// <returns>Return id new comment</returns>
         [HttpPost, Route("api/Comment")]
-        public String AddComment(String text, String name)
+        public String AddComment([FromBody]String text, [FromBody]String name)
         {
             return _commentLogic.AddComment(text, name);
         }
@@ -51,7 +51,7 @@ namespace WebApp.Controllers
         /// <param name="text">New text</param>
         /// <returns>New Comment</returns>
         [HttpPut, Route("api/Comment/id{id}")]
-        public CommentWithoutObjectId UpdateById(String id, String name, String text)
+        public CommentWithoutObjectId UpdateById(String id, [FromBody]String name, [FromBody]String text)
         {
             var comment = _commentLogic.UpdateById(id, name, text);            
             return comment;

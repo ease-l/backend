@@ -18,7 +18,7 @@ namespace WebApp.Controllers
         /// <param name="sprojectId">Project id</param>
         /// <returns>Id new project</returns>
         [HttpPost, Route("api/Project/id{sprojectId}/Comment")]
-        public String AddCommentToProject(String text, String name, String sprojectId)
+        public String AddCommentToProject([FromBody]String text, [FromBody]String name, String sprojectId)
         {
             return _projectLogic.AddCommentToProject(text, name, sprojectId);
         }
@@ -30,7 +30,7 @@ namespace WebApp.Controllers
         /// <param name="sprojectId">Project id</param>
         /// <returns>Id new image</returns>
         [HttpPost, Route("api/Project/id{sprojectId}/Image")]
-        public String AddImageToProject(String url, String name, String sprojectId)
+        public String AddImageToProject([FromBody]String url, [FromBody]String name, String sprojectId)
         {
             return _projectLogic.AddImageToProject(url, name, sprojectId);
         }
@@ -40,7 +40,7 @@ namespace WebApp.Controllers
         /// <param name="name">Name</param>
         /// <returns>Id new project</returns>
         [HttpPost, Route("api/Project")]
-        public String AddProject(String name)
+        public String AddProject([FromBody]String name)
         {
             return _projectLogic.AddProject(name);
         }
@@ -51,7 +51,7 @@ namespace WebApp.Controllers
         /// <param name="name">Name new project</param>
         /// <returns>Id new project</returns>
         [HttpPost, Route("api/Project/id{sidRoot}/project")]
-        public String AddProjectToProject(String sidRoot, String name)
+        public String AddProjectToProject(String sidRoot, [FromBody]String name)
         {
             return _projectLogic.AddProjectToProject(sidRoot, name);
         }
@@ -143,7 +143,7 @@ namespace WebApp.Controllers
         /// <param name="name">New name</param>
         /// <returns>New project</returns>
         [HttpPut, Route("api/Project/id{id}")]
-        public ProjectWithoutObjectId UpdateById(String id, String name)
+        public ProjectWithoutObjectId UpdateById(String id, [FromBody]String name)
         {
             return _projectLogic.UpdateById(id, name);            
         }

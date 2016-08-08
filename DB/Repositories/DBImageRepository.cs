@@ -41,11 +41,15 @@ namespace DB.Repositories
         }
         public void AddCommentToImage(ObjectId newComments, ObjectId idImage)
         {
-            var filter = Builders<Image>.Filter.Eq("_Id", idImage);
+            /*var filter = Builders<Image>.Filter.Eq("_Id", idImage);
             var update = Builders<Image>.Update
                 .AddToSet("Comments", newComments)
                 .CurrentDate("lastModified");
-            var result = _imageCollection.UpdateOne(filter, update);
+            var result = _imageCollection.UpdateOne(filter, update);*/
+            var image = GetImageById(idImage);
+            DeleteById(idImage);
+            image.Comments.Add(newComments);
+            AddImage(image);
         }
 
         public Image AddImage(Image image)

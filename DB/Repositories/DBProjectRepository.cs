@@ -77,31 +77,43 @@ namespace DB.Repositories
             return _projectCollection.AsQueryable().FirstOrDefault(p => p.Id.Equals(id));
         }
 
-        public void AddProjectToProject(ObjectId newProject, ObjectId iDRootProject)
+        public void AddProjectToProject(ObjectId newProject, ObjectId idRootProject)
         {
-            var filter = Builders<Project>.Filter.Eq("_Id", iDRootProject);
+            /*var filter = Builders<Project>.Filter.Eq("_Id", idRootProject);
             var update = Builders<Project>.Update
                 .AddToSet("Projects", newProject)
                 .CurrentDate("lastModified");
-            var result = _projectCollection.UpdateOne(filter, update);
+            var result = _projectCollection.UpdateOne(filter, update);*/
+            var project = GetProjectById(idRootProject);
+            DeleteById(idRootProject);
+            project.Projects.Add(newProject);
+            AddProject(project);
         }
 
         public void AddImageToProject(ObjectId newImage, ObjectId iDProject)
         {
-            var filter = Builders<Project>.Filter.Eq("_Id", iDProject);
+            /*var filter = Builders<Project>.Filter.Eq("_Id", iDProject);
             var update = Builders<Project>.Update
                 .AddToSet("Images", newImage)
                 .CurrentDate("lastModified");
-            var result = _projectCollection.UpdateOne(filter, update);
+            var result = _projectCollection.UpdateOne(filter, update);*/
+            var project = GetProjectById(iDProject);
+            DeleteById(iDProject);
+            project.Projects.Add(newImage);
+            AddProject(project);
         }
 
         public void AddCommentToProject(ObjectId newComment, ObjectId iDProject)
         {
-            var filter = Builders<Project>.Filter.Eq("_Id", iDProject);
+            /*var filter = Builders<Project>.Filter.Eq("_Id", iDProject);
             var update = Builders<Project>.Update
                 .AddToSet("Comments", newComment)
                 .CurrentDate("lastModified");
-            var result = _projectCollection.UpdateOne(filter, update);
+            var result = _projectCollection.UpdateOne(filter, update);*/
+            var project = GetProjectById(iDProject);
+            DeleteById(iDProject);
+            project.Projects.Add(newComment);
+            AddProject(project);
         }
 
         public List<Project> GetProjectsByIds(List<ObjectId> ids)

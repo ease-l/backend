@@ -52,7 +52,7 @@ namespace WebApp.Controllers
         {
             try
             {
-                return Json(new { Result = _projectLogic.GetById(id) }, JsonRequestBehavior.AllowGet);
+                return Json(_projectLogic.GetById(id), JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {

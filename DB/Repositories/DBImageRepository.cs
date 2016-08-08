@@ -47,7 +47,7 @@ namespace DB.Repositories
                 .CurrentDate("lastModified");
             var result = _imageCollection.UpdateOne(filter, update);*/
             var image = GetImageById(idImage);
-            DeleteById(idImage);
+            _imageCollection.DeleteOneAsync(im => im.Id.Equals(idImage));
             image.Comments.Add(newComments);
             AddImage(image);
         }

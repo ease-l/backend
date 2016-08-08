@@ -53,7 +53,7 @@ namespace WebApp.Controllers
         [HttpPut, Route("api/Comment/id{id}")]
         public CommentWithoutObjectId UpdateById(String id, [FromBody]String name, [FromBody]String text)
         {
-            var comment = _commentLogic.UpdateById(id, name, text);            
+            var comment = _commentLogic.UpdateById(id, name, text);
             return comment;
         }
     }

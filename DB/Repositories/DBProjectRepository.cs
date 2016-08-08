@@ -23,7 +23,7 @@ namespace DB.Repositories
         }
         public void DeleteById(ObjectId id)
         {
-            _projectCollection.DeleteOne(prop => true);
+            _projectCollection.DeleteOne(p => p.Id.Equals(id));
         }
         public void DeleteAll()
         {
@@ -85,33 +85,33 @@ namespace DB.Repositories
                 .CurrentDate("lastModified");
             var result = _projectCollection.UpdateOne(filter, update);*/
             var project = GetProjectById(idRootProject);
-            DeleteById(idRootProject);
+            _projectCollection.DeleteOneAsync(p => p.Id.Equals(idRootProject));
             project.Projects.Add(newProject);
             AddProject(project);
         }
 
-        public void AddImageToProject(ObjectId newImage, ObjectId iDProject)
+        public void AddImageToProject(ObjectId newImage, ObjectId idProject)
         {
             /*var filter = Builders<Project>.Filter.Eq("_Id", iDProject);
             var update = Builders<Project>.Update
                 .AddToSet("Images", newImage)
                 .CurrentDate("lastModified");
             var result = _projectCollection.UpdateOne(filter, update);*/
-            var project = GetProjectById(iDProject);
-            DeleteById(iDProject);
-            project.Projects.Add(newImage);
+            var project = GetProjectById(idProject);
+            _projectCollection.DeleteOneAsync(p => p.Id.Equals(idProject));
+            project.Images.Add(newImage);
             AddProject(project);
         }
 
-        public void AddCommentToProject(ObjectId newComment, ObjectId iDProject)
+        public void AddCommentToProject(ObjectId newComment, ObjectId idProject)
         {
             /*var filter = Builders<Project>.Filter.Eq("_Id", iDProject);
             var update = Builders<Project>.Update
                 .AddToSet("Comments", newComment)
                 .CurrentDate("lastModified");
             var result = _projectCollection.UpdateOne(filter, update);*/
-            var project = GetProjectById(iDProject);
-            DeleteById(iDProject);
+            var project = GetProjectById(idProject);
+            _projectCollection.DeleteOneAsync(p => p.Id.Equals(idProject));
             project.Projects.Add(newComment);
             AddProject(project);
         }

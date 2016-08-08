@@ -13,6 +13,7 @@ namespace DB.Models
         public ObjectId Author { get; set; }
         public uint Version { get; set; }
         public String Name { get; set; }
+        public DateTime LastModified { get; set; }
         public DateTime CreationelData { get; set; }
     }
 }

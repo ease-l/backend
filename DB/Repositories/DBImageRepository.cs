@@ -33,23 +33,17 @@ namespace DB.Repositories
         {
             var list = _imageCollection.AsQueryable().FirstOrDefault(p => p.Id.Equals(imageId)).Comments;
             list.Remove(commentId);
-            var filter = Builders<Image>.Filter.Eq("_Id", imageId);
             var update = Builders<Image>.Update
                 .Set("Comments", list)
-                .CurrentDate("lastModified");
-            var result = _imageCollection.UpdateOne(filter, update);
+                .CurrentDate("LastModified");
+            var result = _imageCollection.UpdateOne(prop => prop.Id.Equals(imageId), update);
         }
         public void AddCommentToImage(ObjectId newComments, ObjectId idImage)
         {
-            /*var filter = Builders<Image>.Filter.Eq("_Id", idImage);
             var update = Builders<Image>.Update
                 .AddToSet("Comments", newComments)
-                .CurrentDate("lastModified");
-            var result = _imageCollection.UpdateOne(filter, update);*/
-            var image = GetImageById(idImage);
-            _imageCollection.DeleteOneAsync(im => im.Id.Equals(idImage));
-            image.Comments.Add(newComments);
-            AddImage(image);
+                .CurrentDate("LastModified");
+            var result = _imageCollection.UpdateOne(p => p.Id.Equals(idImage), update);
         }
 
         public Image AddImage(Image image)

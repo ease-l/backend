@@ -34,31 +34,28 @@ namespace DB.Repositories
         {
             var list = _projectCollection.AsQueryable().FirstOrDefault(p => p.Id.Equals(projectId)).Comments;
             list.Remove(commentId);
-            var filter = Builders<Project>.Filter.Eq("_Id", projectId);
             var update = Builders<Project>.Update
                 .Set("Comments", list)
                 .CurrentDate("lastModified");
-            var result = _projectCollection.UpdateOne(filter, update);
+            var result = _projectCollection.UpdateOne(p => p.Id.Equals(projectId), update);
         }
         public void DeleteProjectFromProject(ObjectId rootProjectId, ObjectId deletedProjectId)
         {
             var list = _projectCollection.AsQueryable().FirstOrDefault(p => p.Id.Equals(rootProjectId)).Projects;
             list.Remove(deletedProjectId);
-            var filter = Builders<Project>.Filter.Eq("_Id", rootProjectId);
             var update = Builders<Project>.Update
                 .Set("Projects", list)
                 .CurrentDate("lastModified");
-            var result = _projectCollection.UpdateOne(filter, update);
+            var result = _projectCollection.UpdateOne(p => p.Id.Equals(rootProjectId), update);
         }
         public void DeleteImageFromProject(ObjectId projectId, ObjectId imageId)
         {
             var list = _projectCollection.AsQueryable().FirstOrDefault(p => p.Id.Equals(projectId)).Images;
             list.Remove(imageId);
-            var filter = Builders<Project>.Filter.Eq("_Id", projectId);
             var update = Builders<Project>.Update
                 .Set("Images", list)
                 .CurrentDate("lastModified");
-            var result = _projectCollection.UpdateOne(filter, update);
+            var result = _projectCollection.UpdateOne(p => p.Id.Equals(projectId), update);
         }
         public Project AddProject(Project project)
         {
@@ -79,41 +76,26 @@ namespace DB.Repositories
 
         public void AddProjectToProject(ObjectId newProject, ObjectId idRootProject)
         {
-            /*var filter = Builders<Project>.Filter.Eq("_Id", idRootProject);
             var update = Builders<Project>.Update
                 .AddToSet("Projects", newProject)
                 .CurrentDate("lastModified");
-            var result = _projectCollection.UpdateOne(filter, update);*/
-            var project = GetProjectById(idRootProject);
-            _projectCollection.DeleteOneAsync(p => p.Id.Equals(idRootProject));
-            project.Projects.Add(newProject);
-            AddProject(project);
+            var result = _projectCollection.UpdateOne(p => p.Id.Equals(idRootProject), update);
         }
 
         public void AddImageToProject(ObjectId newImage, ObjectId idProject)
         {
-            /*var filter = Builders<Project>.Filter.Eq("_Id", iDProject);
             var update = Builders<Project>.Update
                 .AddToSet("Images", newImage)
                 .CurrentDate("lastModified");
-            var result = _projectCollection.UpdateOne(filter, update);*/
-            var project = GetProjectById(idProject);
-            _projectCollection.DeleteOneAsync(p => p.Id.Equals(idProject));
-            project.Images.Add(newImage);
-            AddProject(project);
+            var result = _projectCollection.UpdateOne(p => p.Id.Equals(idProject), update);
         }
 
         public void AddCommentToProject(ObjectId newComment, ObjectId idProject)
         {
-            /*var filter = Builders<Project>.Filter.Eq("_Id", iDProject);
             var update = Builders<Project>.Update
                 .AddToSet("Comments", newComment)
                 .CurrentDate("lastModified");
-            var result = _projectCollection.UpdateOne(filter, update);*/
-            var project = GetProjectById(idProject);
-            _projectCollection.DeleteOneAsync(p => p.Id.Equals(idProject));
-            project.Projects.Add(newComment);
-            AddProject(project);
+            var result = _projectCollection.UpdateOne(p => p.Id.Equals(idProject), update);
         }
 
         public List<Project> GetProjectsByIds(List<ObjectId> ids)

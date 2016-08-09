@@ -8,3 +8,6 @@ before_build:
 build:
   verbosity: minimal
   publish_wap: true
+  
+cache:
+  - packages -> **\packages.config

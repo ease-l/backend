@@ -17,24 +17,14 @@ namespace WebApp.Models
             // Add custom user claims here
             return userIdentity;
         }
-        public string Id
-        {
-            get { return this.UserId.ToString(); }
-            set
-            {
-                this.UserId = new ObjectId(value);
-            }
-        }
-
-        public ObjectId UserId { get; set; }
-        public string UserName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public ApplicationDbContext()
+            : base("DefaultConnection", throwIfV1Schema: false)
+        {
+        }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

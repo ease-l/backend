@@ -237,10 +237,14 @@ namespace WebApp.Controllers
             var idRootProject = _projectRepository.AddProject(project).Id;
 
             project.Id = new ObjectId();
+            project.Comments.Clear();
+            project.Images.Clear();
+            project.Projects.Clear();
             project.Name = "Project with Image with many version";
             project.Version = 1;
             project.CreationelData = DateTime.UtcNow;
             image.Id = new ObjectId();
+            image.Comments.Clear();
             image.Name = "Version 1";
             image.Version = 1;
             image.Url = "http://veastrology.com/images/num1.jpg";

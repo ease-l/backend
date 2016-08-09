@@ -16,12 +16,12 @@ namespace WebApp.Controllers
     {
         private static ICommentLogic _commentLogic = new CommentLogic();
 
-        [HttpPost, Route("Comment")]
+        [HttpPost, Route(nameof(Comment))]
         public JsonResult AddComment(String text, String name)
         {            
             return Json(new { Result = _commentLogic.AddComment(text, name) }, JsonRequestBehavior.AllowGet);
         }
-        [HttpGet, Route("Comment/id{id}")]
+        [HttpGet, Route(nameof(Comment)+"/{id}")]
         public JsonResult GetById(String id)
         {
             try {
@@ -32,12 +32,12 @@ namespace WebApp.Controllers
                 return Json(e.ToString() , JsonRequestBehavior.AllowGet);
             }
         }
-        [HttpGet, Route("Comment")]
+        [HttpGet, Route(nameof(Comment))]
         public JsonResult Index()
         {
             return Json(_commentLogic.GetAllComment(), JsonRequestBehavior.AllowGet);
         }
-        [HttpPut, Route("Comment/id{id}")]
+        [HttpPut, Route(nameof(Comment) + "/{id}")]
         public JsonResult UpdateById(String id, String name, String text)
         {
             try

@@ -18,7 +18,7 @@ namespace WebApp.Controllers
         /// <param name="text">Text</param>
         /// <param name="name">Name</param>
         /// <returns>Return id new comment</returns>
-        [HttpPost, Route("api/Comment")]
+        [HttpPost, Route("api/"+ nameof(Comment))]
         public String AddComment([FromBody]String text, [FromBody]String name)
         {
             return _commentLogic.AddComment(text, name);
@@ -27,7 +27,7 @@ namespace WebApp.Controllers
         /// Get all comments
         /// </summary>
         /// <returns>all comments</returns>
-        [HttpGet, Route("api/Comment")]
+        [HttpGet, Route("api/"+ nameof(Comment))]
         public List<CommentWithoutObjectId> GetAllComment()
         {
             return _commentLogic.GetAllComment();
@@ -37,7 +37,7 @@ namespace WebApp.Controllers
         /// </summary>
         /// <param name="id">Id</param>
         /// <returns></returns>
-        [HttpGet, Route("api/Comment/id{id}")]
+        [HttpGet, Route("api/"+ nameof(Comment)+"/{id}")]
         public CommentWithoutObjectId GetById(String id)
         {
             var comment = _commentLogic.GetById(id);
@@ -50,7 +50,7 @@ namespace WebApp.Controllers
         /// <param name="name">New name</param>
         /// <param name="text">New text</param>
         /// <returns>New Comment</returns>
-        [HttpPut, Route("api/Comment/id{id}")]
+        [HttpPut, Route("api/"+ nameof(Comment)+"/{id}")]
         public CommentWithoutObjectId UpdateById(String id, [FromBody]String name, [FromBody]String text)
         {
             var comment = _commentLogic.UpdateById(id, name, text);

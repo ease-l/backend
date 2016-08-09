@@ -54,6 +54,9 @@ namespace ControllersLogic.Logic
             image.Name = name;
             image.CreationelData = DateTime.UtcNow;
             var imageId = _imageRepository.AddImage(image).Id;
+            image.StartId = imageId.ToString();
+            _imageRepository.DeleteByIdAsync(imageId);
+            _imageRepository.AddImage(image);
             _projectRepository.AddImageToProject(imageId, projectId);
             return imageId.ToString();
         }

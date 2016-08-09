@@ -236,6 +236,32 @@ namespace WebApp.Controllers
             project.Projects.Add(idMaps);
             var idRootProject = _projectRepository.AddProject(project).Id;
 
+            project.Id = new ObjectId();
+            project.Name = "Project with Image with many version";
+            project.Version = 1;
+            project.CreationelData = DateTime.UtcNow;
+            image.Id = new ObjectId();
+            image.Name = "Version 1";
+            image.Version = 1;
+            image.Url = "http://veastrology.com/images/num1.jpg";
+            var id = _imageRepository.AddImage(image).Id;
+            image.StartId = id.ToString();
+            await _imageRepository.DeleteByIdAsync(id);
+            _imageRepository.AddImage(image);
+
+            Image prev_image = _imageRepository.GetImageById(id);
+            _imageRepository.UpdateImage(id, "Version 2", "http://cliparts.co/cliparts/rTL/o9o/rTLo9o5kc.png", 2);
+            prev_image.Id = new ObjectId();
+            prev_image.StartId = id.ToString();
+            _imageRepository.AddImage(prev_image);
+
+            prev_image = _imageRepository.GetImageById(id);
+            _imageRepository.UpdateImage(id, "Version 3", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdLFPMkUBGXErXUE13IUmX49gSpvXYn3nOdKKkf3zYreak4Wwflg", 3);
+            prev_image.Id = new ObjectId();
+            prev_image.StartId = id.ToString();
+            _imageRepository.AddImage(prev_image);
+            project.Images.Add(id);
+            _projectRepository.AddProject(project);
             return View(new MongoDBViewModels
             {
                 IdRoot = idRootProject.ToString()

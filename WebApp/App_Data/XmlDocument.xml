@@ -580,6 +580,11 @@
             <param name="url">New url</param>
             <returns>New Image</returns>
         </member>
+        <member name="T:WebApp.Controllers.ProjectWebApiController">
+            <summary>
+            Content-Type application/json
+            </summary>
+        </member>
         <member name="M:WebApp.Controllers.ProjectWebApiController.AddCommentToProject(System.String,System.String,System.String)">
             <summary>
             Add new comment to project

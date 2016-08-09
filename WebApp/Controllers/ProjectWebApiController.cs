@@ -7,6 +7,9 @@ using System.Collections.Generic;
 
 namespace WebApp.Controllers
 {
+    /// <summary>
+    /// Content-Type application/json
+    /// </summary>
     public class ProjectWebApiController:ApiController 
     {
         private IProjectLogic _projectLogic = new ProjectLogic();
@@ -17,7 +20,7 @@ namespace WebApp.Controllers
         /// <param name="name">Name</param>
         /// <param name="sprojectId">Project id</param>
         /// <returns>Id new project</returns>
-        [HttpPost, Route("api/Project/id{sprojectId}/Comment")]
+        [HttpPost, Route("api/"+nameof(Project)+"/{sprojectId}/"+ nameof(Comment))]
         public String AddCommentToProject([FromBody]String text, [FromBody]String name, String sprojectId)
         {
             return _projectLogic.AddCommentToProject(text, name, sprojectId);
@@ -29,7 +32,7 @@ namespace WebApp.Controllers
         /// <param name="name">Name</param>
         /// <param name="sprojectId">Project id</param>
         /// <returns>Id new image</returns>
-        [HttpPost, Route("api/Project/id{sprojectId}/Image")]
+        [HttpPost, Route("api/" + nameof(Project) + "/{sprojectId}/" + nameof(Image) )]
         public String AddImageToProject([FromBody]String url, [FromBody]String name, String sprojectId)
         {
             return _projectLogic.AddImageToProject(url, name, sprojectId);
@@ -39,7 +42,7 @@ namespace WebApp.Controllers
         /// </summary>
         /// <param name="name">Name</param>
         /// <returns>Id new project</returns>
-        [HttpPost, Route("api/Project")]
+        [HttpPost, Route("api/"+nameof(Project))]
         public String AddProject([FromBody]String name)
         {
             return _projectLogic.AddProject(name);
@@ -50,7 +53,7 @@ namespace WebApp.Controllers
         /// <param name="sidRoot">Id root project</param>
         /// <param name="name">Name new project</param>
         /// <returns>Id new project</returns>
-        [HttpPost, Route("api/Project/id{sidRoot}/project")]
+        [HttpPost, Route("api/" + nameof(Project) + "/{sidRoot}/project")]
         public String AddProjectToProject(String sidRoot, [FromBody]String name)
         {
             return _projectLogic.AddProjectToProject(sidRoot, name);
@@ -60,7 +63,7 @@ namespace WebApp.Controllers
         /// </summary>
         /// <param name="id">Deleted project id</param>
         /// <returns>Result</returns>
-        [HttpDelete, Route("api/Project/id{id}")]
+        [HttpDelete, Route("api/" + nameof(Project) + "/{id}")]
         public String DeleteById(String id)
         {
             return  _projectLogic.DeleteById(id);
@@ -69,7 +72,7 @@ namespace WebApp.Controllers
         /// GetAllProject
         /// </summary>
         /// <returns>List project</returns>
-        [HttpGet, Route("api/Project")]
+        [HttpGet, Route("api/" + nameof(Project) )]
         public List<ProjectWithoutObjectId> GetAllProject()
         {
             return _projectLogic.GetAllProjects();
@@ -80,7 +83,7 @@ namespace WebApp.Controllers
         /// <param name="projectId">Project id</param>
         /// <param name="commentId">Comment id</param>
         /// <returns>Result</returns>
-        [HttpDelete, Route("api/Project/id{projectId}/comment/id{commentId}")]
+        [HttpDelete, Route("api/" + nameof(Project) + "/{projectId}/" + nameof(Comment)+"/{commentId}")]
         public String DeleteCommentFromProject(String projectId, String commentId)
         {
             return _projectLogic.DeleteCommentFromProject(projectId, commentId);
@@ -91,7 +94,7 @@ namespace WebApp.Controllers
         /// <param name="projectId">Project id</param>
         /// <param name="imageId">Image id</param>
         /// <returns>Result</returns>
-        [HttpDelete, Route("api/Project/id{projectId}/image/id{imageId}")]
+        [HttpDelete, Route("api/" + nameof(Project) + "/{projectId}/" + nameof(Image) + "/{imageId}")]
         public String DeleteImageFromProject(String projectId, String imageId)
         {
             return _projectLogic.DeleteImageFromProject(projectId, imageId);
@@ -101,7 +104,7 @@ namespace WebApp.Controllers
         /// </summary>
         /// <param name="id">Id</param>
         /// <returns>Project</returns>
-        [HttpGet, Route("api/Project/id{id}")]
+        [HttpGet, Route("api/" + nameof(Project) + "/{id}")]
         public ProjectWithoutObjectId GetById(String id)
         {
             return _projectLogic.GetById(id);            
@@ -111,7 +114,7 @@ namespace WebApp.Controllers
         /// </summary>
         /// <param name="sidRoot">Id project</param>
         /// <returns>List id comments</returns>
-        [HttpGet, Route("api/Project/id{sidRoot}/Comment")]
+        [HttpGet, Route("api/" + nameof(Project) + "/{sidRoot}/" + nameof(Comment))]
         public List<CommentWithoutObjectId> GetCommentsFormProject(String sidRoot)
         {
             return _projectLogic.GetCommentsFormProject(sidRoot);
@@ -121,7 +124,7 @@ namespace WebApp.Controllers
         /// </summary>
         /// <param name="sidRoot">Id project</param>
         /// <returns>List id images</returns>
-        [HttpGet, Route("api/Project/id{sidRoot}/Image")]
+        [HttpGet, Route("api/" + nameof(Project) + "/{sidRoot}/" + nameof(Image) )]
         public List<ImageWithoutObjectId> GetImagesFormProject(String sidRoot)
         {
             return _projectLogic.GetImagesFormProject(sidRoot);
@@ -131,7 +134,7 @@ namespace WebApp.Controllers
         /// </summary>
         /// <param name="sidRoot">Id root project</param>
         /// <returns>List id projects</returns>
-        [HttpGet, Route("api/Project/id{sidRoot}/Project")]
+        [HttpGet, Route("api/" + nameof(Project) + "/{sidRoot}/Project")]
         public List<ProjectWithoutObjectId> GetPtojectsFormProject(String sidRoot)
         {            
             return _projectLogic.GetPtojectsFormProject(sidRoot);            
@@ -142,7 +145,7 @@ namespace WebApp.Controllers
         /// <param name="id">Id</param>
         /// <param name="name">New name</param>
         /// <returns>New project</returns>
-        [HttpPut, Route("api/Project/id{id}")]
+        [HttpPut, Route("api/" + nameof(Project) + "/{id}")]
         public ProjectWithoutObjectId UpdateById(String id, [FromBody]String name)
         {
             return _projectLogic.UpdateById(id, name);            

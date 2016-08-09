@@ -19,7 +19,7 @@ namespace WebApp.Controllers
         /// <param name="text">Comment text</param>
         /// <param name="name">Comment name</param>
         /// <returns>Id new comment</returns>
-        [HttpPost, Route("api/Image/id{simageId}/comment")]
+        [HttpPost, Route("api/"+ nameof(Image) + "/{simageId}/" + nameof(Comment))]
         public String  AddCommentToImage(String simageId, [FromBody]String text, [FromBody]String name)
         {
             return _imageLogic.AddCommentToImage(simageId, text, name);
@@ -30,7 +30,7 @@ namespace WebApp.Controllers
         /// <param name="url">Image url</param>
         /// <param name="name">Name</param>
         /// <returns>Id new image</returns>
-        [HttpPost, Route("api/Image")]
+        [HttpPost, Route("api/" + nameof(Image) )]
         public async Task<string> AddImage([FromBody]String url, [FromBody]String name)
         {
             String result = await _imageLogic.AddImage(url, name);
@@ -42,7 +42,7 @@ namespace WebApp.Controllers
         /// <param name="idImage">Imgae id</param>
         /// <param name="idComment">Comment id</param>
         /// <returns>Result</returns>
-        [HttpDelete, Route("api/Image/id{idImage}/comment/id{idComment}")]
+        [HttpDelete, Route("api/" + nameof(Image) + "/{idImage}/" + nameof(Comment) + "/{idComment}")]
         public String DeleteCommentFromImage(String idImage, String idComment)
         {
             return _imageLogic.DeleteCommentFromImage(idImage, idComment);
@@ -52,7 +52,7 @@ namespace WebApp.Controllers
         /// </summary>
         /// <param name="uploadImage">Uploded image, HttpPostedFileBase </param>
         /// <returns>Image url</returns>
-        [HttpPost, Route("api/Image/Download")]
+        [HttpPost, Route("api/" + nameof(Image) + "/Download")]
         public String DownloadImage([FromBody]HttpPostedFileBase uploadImage)
         {
             return _imageLogic.DownloadImage(uploadImage);
@@ -61,7 +61,7 @@ namespace WebApp.Controllers
         /// Get all image
         /// </summary>
         /// <returns>List image</returns>
-        [HttpGet, Route("api/Image")]
+        [HttpGet, Route("api/" + nameof(Image))]
         public List<ImageWithoutObjectId> GetAllImage()
         {
             return _imageLogic.GetAllImage();
@@ -71,7 +71,7 @@ namespace WebApp.Controllers
         /// </summary>
         /// <param name="id">Id</param>
         /// <returns>Image</returns>
-        [HttpGet, Route("api/Image/id{id}")]
+        [HttpGet, Route("api/" + nameof(Image) + "/{id}")]
         public ImageWithoutObjectId GetById(String id)
         {
             return _imageLogic.GetById(id);
@@ -82,7 +82,7 @@ namespace WebApp.Controllers
         /// <param name="id">Id</param>
         /// <param name="version">Version</param>
         /// <returns>Image</returns>
-        [HttpGet, Route("api/Image/id{id}/{version}")]
+        [HttpGet, Route("api/" + nameof(Image) + "/{id}/{version}")]
         public ImageWithoutObjectId GetByIdAndVersion(String id, int version)
         {
             return _imageLogic.GetByIdAndVersion(id, version);
@@ -92,7 +92,7 @@ namespace WebApp.Controllers
         /// </summary>
         /// <param name="simageId">Image id</param>
         /// <returns>List comments</returns>
-        [HttpGet, Route("api/Image/id{simageId}/comment")]
+        [HttpGet, Route("api/" + nameof(Image) + "/{simageId}/" + nameof(Comment))]
         public List<CommentWithoutObjectId> GetCommentsFromImage(String simageId)
         {
             return _imageLogic.GetCommentFromImage(simageId);
@@ -104,7 +104,7 @@ namespace WebApp.Controllers
         /// <param name="name">New name</param>
         /// <param name="url">New url</param>
         /// <returns>New Image</returns>
-        [HttpPut, Route("api/Image/id{id}")]
+        [HttpPut, Route("api/" + nameof(Image) + "/{id}")]
         public ImageWithoutObjectId UpdateById(String id, [FromBody]String name, [FromBody]String url)
         {
             return _imageLogic.UpdateById(id, name, url);

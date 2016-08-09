@@ -15,28 +15,28 @@ namespace WebApp.Controllers
     {
         private static IImageLogic _imageLogic = new ImageLogic();
 
-        [HttpPost, Route("Image/id{simageId}/comment")]
+        [HttpPost, Route(nameof(Image) + "/{simageId}/" + nameof(Comment))]
         public JsonResult AddCommentToImage(String simageId, String text, String name)
         {            
             return Json(new { Result =  _imageLogic.AddCommentToImage(simageId, text, name) }, JsonRequestBehavior.AllowGet);
         }
-        [HttpPost, Route("Image")]
+        [HttpPost, Route(nameof(Image) )]
         public async Task<JsonResult> AddImage(String url, String name)
         {
             String result = await _imageLogic.AddImage(url, name);
             return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
         }
-        [HttpDelete, Route("Image/id{idImage}/comment/id{idComment}")]
+        [HttpDelete, Route(nameof(Image) + "/{idImage}/" + nameof(Comment)+"/{idComment}")]
         public JsonResult DeleteCommentFromImage(String idImage, String idComment)
         {
             return Json(new { Result = _imageLogic.DeleteCommentFromImage(idImage,idComment)}, JsonRequestBehavior.AllowGet);
         }
-        [HttpPost, Route("Image/Download")]
+        [HttpPost, Route(nameof(Image) + "/Download")]
         public JsonResult DownloadImage(HttpPostedFileBase uploadImage)
         {
             return Json(new { Result = _imageLogic.DownloadImage(uploadImage) }, JsonRequestBehavior.AllowGet );
         }
-        [HttpGet, Route("Image/id{id}")]
+        [HttpGet, Route(nameof(Image) + "/{id}")]
         public JsonResult GetById(String id)
         {
             try { 
@@ -47,7 +47,7 @@ namespace WebApp.Controllers
                 return Json(e.ToString(), JsonRequestBehavior.AllowGet);
             }
         }
-        [HttpGet, Route("Image/id{id}/{version}")]
+        [HttpGet, Route(nameof(Image) + "/{id}/{version}")]
         public JsonResult GetByIdAndVersion(String id, int version)
         {
             try
@@ -59,7 +59,7 @@ namespace WebApp.Controllers
                 return Json(e.ToString(), JsonRequestBehavior.AllowGet);
             }
         }
-        [HttpGet, Route("Image/id{simageId}/comment")]
+        [HttpGet, Route(nameof(Image) + "/{simageId}/" + nameof(Comment))]
         public JsonResult GetCommentFromImage(String simageId)
         {
             try { 
@@ -70,12 +70,12 @@ namespace WebApp.Controllers
                 return Json(e.ToString(), JsonRequestBehavior.AllowGet);
             }
         }
-        [HttpGet, Route("Image")]
+        [HttpGet, Route(nameof(Image) )]
         public JsonResult Index()
         {
             return Json(_imageLogic.GetAllImage(), JsonRequestBehavior.AllowGet);
         }
-        [HttpPut, Route("Image/id{id}")]
+        [HttpPut, Route(nameof(Image) + "/{id}")]
         public JsonResult UpdateById(String id, String name, String url)
         {
             try { 

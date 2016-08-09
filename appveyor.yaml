@@ -10,7 +10,4 @@ build:
   publish_wap: true
   
 cache:
-  - packages -> **\packages.config  # preserve "packages" directory in the root of build folder but will reset it if packages.config is modified
-  - projectA\libs
-  - node_modules                    # local npm modules
-  - '%LocalAppData%\NuGet\Cache'
+- packages -> **\packages.config

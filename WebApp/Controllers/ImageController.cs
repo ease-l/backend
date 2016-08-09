@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using DB.Models;
 using MongoDB.Bson;
 using System.IO;
+using System.Threading.Tasks;
 using ControllersLogic.Logic;
 using ControllersLogic.Interfaces;
 
@@ -20,9 +21,10 @@ namespace WebApp.Controllers
             return Json(new { Result =  _imageLogic.AddCommentToImage(simageId, text, name) }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost, Route("Image")]
-        public JsonResult AddImage(String url, String name)
-        {            
-            return Json(new { Result = _imageLogic.AddImage(url, name) }, JsonRequestBehavior.AllowGet);
+        public async Task<JsonResult> AddImage(String url, String name)
+        {
+            String result = await _imageLogic.AddImage(url, name);
+            return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
         }
         [HttpDelete, Route("Image/id{idImage}/comment/id{idComment}")]
         public JsonResult DeleteCommentFromImage(String idImage, String idComment)

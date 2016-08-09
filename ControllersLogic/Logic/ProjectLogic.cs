@@ -229,8 +229,7 @@ namespace ControllersLogic.Logic
             }
             project.Name = name;
             project.Version++;
-            _projectRepository.DeleteById(objectId);
-            _projectRepository.AddProject(project);
+            _projectRepository.UpdateProject(objectId, name, project.Version);
             return ProjectWithoutObjectId.ProjectToProjectWithoutObjectId(project);
         }
     }

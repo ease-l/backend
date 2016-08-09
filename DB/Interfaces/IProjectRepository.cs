@@ -22,5 +22,6 @@ namespace DB.Interfaces
         void AddImageToProject(ObjectId newImages, ObjectId iDProject);
         void AddCommentToProject(ObjectId newComments, ObjectId iDProject);
         List<Project> GetProjectsByIds(List<ObjectId> ids);
+        void UpdateProject(ObjectId id, String name, uint version);
     }
 }

@@ -3,6 +3,7 @@ using DB.Interfaces;
 using DB.Models;
 using MongoDB.Bson;
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.IO;
 using System.Web;
@@ -34,7 +35,7 @@ namespace ControllersLogic.Logic
             _imageRepository.AddCommentToImage(commentId, imageId);
             return commentId.ToString();
         }
-        public String AddImage(String url, String name)
+        public async Task<String> AddImage(String url, String name)
         {
             Image image = new Image();
             image.Url = url;
@@ -43,7 +44,7 @@ namespace ControllersLogic.Logic
             image.CreationelData = DateTime.UtcNow;
             var id = _imageRepository.AddImage(image).Id;
             image.StartId = id.ToString();
-            _imageRepository.DeleteById(id);
+            _imageRepository.DeleteByIdAsync(id);
             _imageRepository.AddImage(image);
             return id.ToString();
         }
@@ -165,8 +166,7 @@ namespace ControllersLogic.Logic
             image.Version++;
             image.Name = name;
             image.StartId = id;
-            _imageRepository.DeleteById(objectId);
-            _imageRepository.AddImage(image);
+            _imageRepository.UpdateImage(objectId, name, url, image.Version);
             prev_image.Id = new ObjectId();
             prev_image.StartId = id;
             _imageRepository.AddImage(prev_image);

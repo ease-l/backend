@@ -29,6 +29,10 @@ namespace DB.Repositories
         {
             _imageCollection.DeleteOne(prop => prop.Id.Equals(id));
         }
+        public async Task DeleteByIdAsync(ObjectId id)
+        {
+            await _imageCollection.DeleteOneAsync(prop => prop.Id.Equals(id));
+        }
         public void DeleteCommentFromImage(ObjectId imageId, ObjectId commentId)
         {
             var list = _imageCollection.AsQueryable().FirstOrDefault(p => p.Id.Equals(imageId)).Comments;
@@ -70,6 +74,16 @@ namespace DB.Repositories
         public List<Image> GetImagesByIds(List<ObjectId> ids)
         {
             return _imageCollection.AsQueryable().Where(i => ids.Contains(i.Id)).ToList();
+        }
+
+        public void UpdateImage(ObjectId id, string name, string url, uint version)
+        {
+            var update = Builders<Image>.Update
+               .Set("Version", version)
+               .Set("Name", name)
+               .Set("Url", url)
+               .CurrentDate("LastModified");
+            var result = _imageCollection.UpdateOne(p => p.Id.Equals(id), update);
         }
     }
 }

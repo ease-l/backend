@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Threading.Tasks;
 using DB.Models;
 using MongoDB.Bson;
 using WebApp.ViewModels;
@@ -26,7 +27,7 @@ namespace WebApp.Controllers
             _projectRepository.DeleteAll();
             _imageRepository.DeleteAll();
         }
-        public ActionResult MakeData()
+        public async Task<ActionResult> MakeData()
         {
             /*Make this project
             Game
@@ -58,6 +59,9 @@ namespace WebApp.Controllers
             comment = _commentRepository.AddComment(comment);
             image.Comments.Add(comment.Id);
             var idAttackingWizard = _imageRepository.AddImage(image).Id;
+            image.StartId = idAttackingWizard.ToString();
+            await _imageRepository.DeleteByIdAsync(idAttackingWizard);
+            _imageRepository.AddImage(image);
 
             image.Id = new ObjectId();
             image.Url = "http://clash-wiki.com/images/army/wizard/wizard_level6_attacks.png";
@@ -66,6 +70,9 @@ namespace WebApp.Controllers
             image.CreationelData = DateTime.UtcNow;
             image.Comments = new List<ObjectId>();
             var idStandingWizard = _imageRepository.AddImage(image).Id;
+            image.StartId = idStandingWizard.ToString();
+            await _imageRepository.DeleteByIdAsync(idStandingWizard);
+            _imageRepository.AddImage(image);
 
             image.Id = new ObjectId();
             image.Url = "http://i0.wp.com/fc09.deviantart.net/fs71/f/2014/324/3/6/_render__clash_of_clans___wizard_by_aaa13xxx-d871py5.png?w=1024&h=1024";
@@ -74,6 +81,9 @@ namespace WebApp.Controllers
             image.Comments = new List<ObjectId>();
             image.CreationelData = DateTime.UtcNow;
             var idRastingWizard = _imageRepository.AddImage(image).Id;
+            image.StartId = idRastingWizard.ToString();
+            await _imageRepository.DeleteByIdAsync(idRastingWizard);
+            _imageRepository.AddImage(image);
 
             project.Name = "Wizards";
             project.Id = new ObjectId();
@@ -99,6 +109,9 @@ namespace WebApp.Controllers
             image.CreationelData = DateTime.UtcNow;
             image.Comments = new List<ObjectId>();
             var idStandingWarrior = _imageRepository.AddImage(image).Id;
+            image.StartId = idStandingWarrior.ToString();
+            await _imageRepository.DeleteByIdAsync(idStandingWarrior);
+            _imageRepository.AddImage(image);
 
             image.Id = new ObjectId();
             image.Url = "http://cdn3.volusion.com/evkq6.5ok79/v/vspfiles/photos/NOV-4980-A1-2.jpg?1407836711";
@@ -107,6 +120,9 @@ namespace WebApp.Controllers
             image.CreationelData = DateTime.UtcNow;
             image.Comments = new List<ObjectId>();
             var idAttackingWarrior = _imageRepository.AddImage(image).Id;
+            image.StartId = idAttackingWarrior.ToString();
+            await _imageRepository.DeleteByIdAsync(idAttackingWarrior);
+            _imageRepository.AddImage(image);
 
             project = new Project();
             project.Id = new ObjectId();
@@ -154,6 +170,9 @@ namespace WebApp.Controllers
             comment = _commentRepository.AddComment(comment);
             image.Comments.Add(comment.Id);
             var idMap1 = _imageRepository.AddImage(image).Id;
+            image.StartId = idMap1.ToString();
+            await _imageRepository.DeleteByIdAsync(idMap1);
+            _imageRepository.AddImage(image);
 
             image.Id = new ObjectId();
             image.Comments = new List<ObjectId>();
@@ -162,6 +181,9 @@ namespace WebApp.Controllers
             image.Name = "For 6 People";
             image.CreationelData = DateTime.UtcNow;
             var idMap2 = _imageRepository.AddImage(image).Id;
+            image.StartId = idMap2.ToString();
+            await _imageRepository.DeleteByIdAsync(idMap2);
+            _imageRepository.AddImage(image);
 
             image.Id = new ObjectId();
             image.Comments = new List<ObjectId>();
@@ -177,6 +199,9 @@ namespace WebApp.Controllers
             comment = _commentRepository.AddComment(comment);
             image.Comments.Add(comment.Id);
             var idMap3 = _imageRepository.AddImage(image).Id;
+            image.StartId = idMap3.ToString();
+            await _imageRepository.DeleteByIdAsync(idMap3);
+            _imageRepository.AddImage(image);
 
             project = new Project();
             project.Id = new ObjectId();
@@ -209,8 +234,8 @@ namespace WebApp.Controllers
             project.Comments.Add(comment.Id);
             project.Projects.Add(idHeroes);
             project.Projects.Add(idMaps);
-            var idRootProject = _projectRepository.AddProject(project).Id;                                    
-                     
+            var idRootProject = _projectRepository.AddProject(project).Id;
+
             return View(new MongoDBViewModels
             {
                 IdRoot = idRootProject.ToString()

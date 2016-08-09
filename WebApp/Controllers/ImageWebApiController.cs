@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Http;
+using System.Threading.Tasks;
 
 namespace WebApp.Controllers
 {
@@ -30,9 +31,10 @@ namespace WebApp.Controllers
         /// <param name="name">Name</param>
         /// <returns>Id new image</returns>
         [HttpPost, Route("api/Image")]
-        public String AddImage([FromBody]String url, [FromBody]String name)
+        public async Task<string> AddImage([FromBody]String url, [FromBody]String name)
         {
-            return _imageLogic.AddImage(url, name);
+            String result = await _imageLogic.AddImage(url, name);
+            return result;
         }
         /// <summary>
         /// Delete comment from image

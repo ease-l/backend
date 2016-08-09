@@ -36,7 +36,7 @@ namespace DB.Repositories
             list.Remove(commentId);
             var update = Builders<Project>.Update
                 .Set("Comments", list)
-                .CurrentDate("lastModified");
+                .CurrentDate("LastModified");
             var result = _projectCollection.UpdateOne(p => p.Id.Equals(projectId), update);
         }
         public void DeleteProjectFromProject(ObjectId rootProjectId, ObjectId deletedProjectId)
@@ -45,7 +45,7 @@ namespace DB.Repositories
             list.Remove(deletedProjectId);
             var update = Builders<Project>.Update
                 .Set("Projects", list)
-                .CurrentDate("lastModified");
+                .CurrentDate("LastModified");
             var result = _projectCollection.UpdateOne(p => p.Id.Equals(rootProjectId), update);
         }
         public void DeleteImageFromProject(ObjectId projectId, ObjectId imageId)
@@ -54,7 +54,7 @@ namespace DB.Repositories
             list.Remove(imageId);
             var update = Builders<Project>.Update
                 .Set("Images", list)
-                .CurrentDate("lastModified");
+                .CurrentDate("LastModified");
             var result = _projectCollection.UpdateOne(p => p.Id.Equals(projectId), update);
         }
         public Project AddProject(Project project)
@@ -78,7 +78,7 @@ namespace DB.Repositories
         {
             var update = Builders<Project>.Update
                 .AddToSet("Projects", newProject)
-                .CurrentDate("lastModified");
+                .CurrentDate("LastModified");
             var result = _projectCollection.UpdateOne(p => p.Id.Equals(idRootProject), update);
         }
 
@@ -86,7 +86,7 @@ namespace DB.Repositories
         {
             var update = Builders<Project>.Update
                 .AddToSet("Images", newImage)
-                .CurrentDate("lastModified");
+                .CurrentDate("LastModified");
             var result = _projectCollection.UpdateOne(p => p.Id.Equals(idProject), update);
         }
 
@@ -94,13 +94,22 @@ namespace DB.Repositories
         {
             var update = Builders<Project>.Update
                 .AddToSet("Comments", newComment)
-                .CurrentDate("lastModified");
+                .CurrentDate("LastModified");
             var result = _projectCollection.UpdateOne(p => p.Id.Equals(idProject), update);
         }
 
         public List<Project> GetProjectsByIds(List<ObjectId> ids)
         {
             return _projectCollection.AsQueryable().Where(p => ids.Contains(p.Id)).ToList();
+        }
+
+        public void UpdateProject(ObjectId id, string name, uint version)
+        {
+            var update = Builders<Project>.Update
+                .Set("Name", name)
+                .Set("Version", version)
+                .CurrentDate("LastModified");
+            var result = _projectCollection.UpdateOne(p => p.Id.Equals(id), update);
         }
     }
 }

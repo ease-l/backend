@@ -5,6 +5,7 @@ using MongoDB.Bson;
 using DB.Models;
 using ControllersLogic.Interfaces;
 using ControllersLogic.Logic;
+using WebApp.Infrastructure;
 
 namespace WebApp.Controllers
 {    
@@ -95,6 +96,7 @@ namespace WebApp.Controllers
                 return Json(new { Result = e.ToString() }, JsonRequestBehavior.AllowGet);
             }
         }
+        [ProfileResult]
         [HttpGet, Route(nameof(Project))]
         public JsonResult Index()
         {

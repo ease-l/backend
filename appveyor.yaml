@@ -15,4 +15,4 @@ cache:
 deploy:
 - provider: Environment
   name: appvey deploy
-  site_name: www.ease-l.com
+  site_name: www.ease-l.xyz

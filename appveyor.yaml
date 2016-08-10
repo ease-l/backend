@@ -11,3 +11,8 @@ build:
   
 cache:
 - packages -> **\packages.config
+
+deploy:
+- provider: Environment
+  name: appvey deploy
+  site_name: www.ease-l.com

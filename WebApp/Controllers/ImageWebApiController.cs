@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace WebApp.Controllers
 {
-    public class ImageWebApiController:ApiController
+    public class ImageWebApiController : ApiController
     {
         private IImageLogic _imageLogic = new ImageLogic();
         /// <summary>
@@ -19,10 +19,10 @@ namespace WebApp.Controllers
         /// <param name="text">Comment text</param>
         /// <param name="name">Comment name</param>
         /// <returns>Id new comment</returns>
-        [HttpPost, Route("api/"+ nameof(Image) + "/{simageId}/" + nameof(Comment))]
-        public String  AddCommentToImage(String simageId, [FromBody]String text, [FromBody]String name)
+        [HttpPost, Route("api/" + nameof(Image) + "/{simageId}/" + nameof(Comment))]
+        public String AddCommentToImage(String simageId, [FromBody]String text, [FromBody]String name, [FromBody] int[] area)
         {
-            return _imageLogic.AddCommentToImage(simageId, text, name);
+            return _imageLogic.AddCommentToImage(simageId, text, name, area);
         }
         /// <summary>
         /// Make new image

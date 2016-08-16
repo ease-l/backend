@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MongoDB.Bson;
+using System.Collections.Generic;
 
 namespace WebApp.Models
 {
@@ -19,12 +20,19 @@ namespace WebApp.Models
             return userIdentity;
         }
 
+        public List<String> Projects { get; set; }
+        public String Password { get; set; }
+        public String Email { get; set; }
+        public String Id { get; set; }
+        public String Name { get; set; }
+
+
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("DefaultConnection")
         {
         }
         public static ApplicationDbContext Create()

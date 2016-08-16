@@ -511,7 +511,7 @@
             <param name="text">New text</param>
             <returns>New Comment</returns>
         </member>
-        <member name="M:WebApp.Controllers.ImageWebApiController.AddCommentToImage(System.String,System.String,System.String)">
+        <member name="M:WebApp.Controllers.ImageWebApiController.AddCommentToImage(System.String,System.String,System.String,System.Int32[])">
             <summary>
             Add comment to image
             </summary>

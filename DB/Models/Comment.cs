@@ -10,6 +10,7 @@ namespace DB.Models
     public class Comment : BaseEntity
     {
         public String Text { get; set; }
+        public int[] Area { get; set; }
     }
     public partial class CommentWithoutObjectId
     {
@@ -19,6 +20,7 @@ namespace DB.Models
         public String Name { get; set; }
         public DateTime CreationData { get; set; }
         public String Text { get; set; }
+        public int[] Area { get; set; }
     }
     public partial class CommentWithoutObjectId
     {
@@ -32,6 +34,7 @@ namespace DB.Models
                 Name = comment.Name,
                 Text = comment.Text,
                 Version = comment.Version,
+                Area = comment.Area
             };
             return result;
         }

@@ -60,6 +60,7 @@
     <Compile Include="Interfaces\ICommentRepository.cs" />
     <Compile Include="Interfaces\IImageRepository.cs" />
     <Compile Include="Interfaces\IProjectRepository.cs" />
+    <Compile Include="Models\Attachment.cs" />
     <Compile Include="Models\BaseEntity.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Image.cs" />

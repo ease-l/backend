@@ -11,6 +11,7 @@ namespace DB.Models
     {
         public String Text { get; set; }
         public int[] Area { get; set; }
+        public Attachment attachment { get; set; }
     }
     public partial class CommentWithoutObjectId
     {

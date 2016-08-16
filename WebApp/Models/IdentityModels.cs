@@ -6,6 +6,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MongoDB.Bson;
 using System.Collections.Generic;
+using DB;
+using MongoDB.Driver;
 
 namespace WebApp.Models
 {
@@ -32,12 +34,16 @@ namespace WebApp.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection")
+           : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
+
+
     }
+
 }

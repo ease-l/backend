@@ -56,7 +56,8 @@ namespace WebApp.Controllers
             comment.CreationelData = DateTime.UtcNow;
             comment.Name = "Beautiful";
             comment.Version = 1;
-            comment.Area = new int[4] { 0, 0, 0, 0};
+            //comment.Area = new int[4] { 0, 0, 0, 0};
+            comment.attachment = new Attachment(10, 20, 30, 40);
             comment = _commentRepository.AddComment(comment);
             image.Comments.Add(comment.Id);
             var idAttackingWizard = _imageRepository.AddImage(image).Id;
@@ -95,7 +96,8 @@ namespace WebApp.Controllers
             comment.CreationelData = DateTime.UtcNow;
             comment.Name = "Details";
             comment.Version = 1;
-            comment.Area = new int[4] { 0, 0, 0, 0 };
+            //comment.Area = new int[4] { 0, 0, 0, 0 };
+            comment.attachment = new Attachment();
             comment = _commentRepository.AddComment(comment);
             project.Comments.Add(comment.Id);
             project.Images.Add(idStandingWizard);
@@ -136,7 +138,8 @@ namespace WebApp.Controllers
             comment.CreationelData = DateTime.UtcNow;
             comment.Name = "Terrible";
             comment.Version = 1;
-            comment.Area = new int[4] { 0, 0, 0, 0 };
+            //comment.Area = new int[4] { 0, 0, 0, 0 };
+            comment.attachment = new Attachment(30, 60);
             comment = _commentRepository.AddComment(comment);
             project.Comments.Add(comment.Id);
             project.Images.Add(idAttackingWarrior);
@@ -153,7 +156,8 @@ namespace WebApp.Controllers
             comment.CreationelData = DateTime.UtcNow;
             comment.Name = "Archer";
             comment.Version = 1;
-            comment.Area = new int[4] { 0, 0, 0, 0 };
+            //comment.Area = new int[4] { 0, 0, 0, 0 };
+            comment.attachment = new Attachment(100, 20);
             comment = _commentRepository.AddComment(comment);
             project.Comments.Add(comment.Id);
             project.Projects.Add(idWarriors);
@@ -171,6 +175,7 @@ namespace WebApp.Controllers
             comment.CreationelData = DateTime.UtcNow;
             comment.Name = "Water";
             comment.Version = 1;
+            comment.attachment = new Attachment();
             comment = _commentRepository.AddComment(comment);
             image.Comments.Add(comment.Id);
             var idMap1 = _imageRepository.AddImage(image).Id;
@@ -200,7 +205,8 @@ namespace WebApp.Controllers
             comment.CreationelData = DateTime.UtcNow;
             comment.Name = "Island";
             comment.Version = 1;
-            comment.Area = new int[4] { 0, 0, 0, 0 };
+            //comment.Area = new int[4] { 0, 0, 0, 0 };
+            comment.attachment = new Attachment( 10, 10, 10, 10);
             comment = _commentRepository.AddComment(comment);
             image.Comments.Add(comment.Id);
             var idMap3 = _imageRepository.AddImage(image).Id;
@@ -218,7 +224,8 @@ namespace WebApp.Controllers
             comment.CreationelData = DateTime.UtcNow;
             comment.Name = "Map for 2";
             comment.Version = 1;
-            comment.Area = new int[4] { 0, 0, 0, 0 };
+            //comment.Area = new int[4] { 0, 0, 0, 0 };
+            comment.attachment = new Attachment(20, 20, 20, 20);
             comment = _commentRepository.AddComment(comment);
             project.Comments.Add(comment.Id);
             project.Images.Add(idMap1);
@@ -236,7 +243,8 @@ namespace WebApp.Controllers
             comment.CreationelData = DateTime.UtcNow;
             comment.Name = "Icon";
             comment.Version = 1;
-            comment.Area = new int[4] { 0, 0, 0, 0 };
+            //comment.Area = new int[4] { 0, 0, 0, 0 };
+            comment.attachment = new Attachment();
             comment = _commentRepository.AddComment(comment);
             project.Comments.Add(comment.Id);
             project.Projects.Add(idHeroes);

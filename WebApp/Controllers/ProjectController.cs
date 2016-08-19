@@ -96,7 +96,7 @@ namespace WebApp.Controllers
                 return Json(new { Result = e.ToString() }, JsonRequestBehavior.AllowGet);
             }
         }
-        [ProfileResult]
+        //[ProfileResult]
         [HttpGet, Route(nameof(Project))]
         public JsonResult Index()
         {

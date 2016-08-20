@@ -10,10 +10,11 @@ using System.Web.Http.Filters;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Net.Http.Formatting;
 
 namespace WebApp.Infrastructure
 {
-    public class ProfileResultAttribute : System.Web.Http.Filters.ActionFilterAttribute, System.Web.Http.Filters.IExceptionFilter
+    public class ProfileResultAttribute : System.Web.Http.Filters.ActionFilterAttribute//System.Web.Http.Filters.ActionFilterAttribute, System.Web.Http.Filters.IExceptionFilter
     {
 
         /*public void OnResultExecuting(ResultExecutingContext filterContext)
@@ -38,10 +39,17 @@ namespace WebApp.Infrastructure
             {
                 filterContext.HttpContext.Response.Write(add);
             }
-        }*/
+        }
         public void OnException(ExceptionContext filterContext)
         {
-            
+            if (!filterContext.ExceptionHandled &&
+                       filterContext.Exception is ArgumentOutOfRangeException)
+            {
+                filterContext.Result =
+                    new RedirectResult("~/Views/Account/Login.html");
+                filterContext.ExceptionHandled = true;
+            }
+
         }
 
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
@@ -50,15 +58,20 @@ namespace WebApp.Infrastructure
             if (objectContent != null)
             {
                 // ... тут делаем грязь с actionExecutedContext.Response.Content
+                var ourResponse = new OurResponseWrapper(objectContent.Value);
+                var newContent = new ObjectContent<OurResponseWrapper>(ourResponse, objectContent.Formatter);
+                actionExecutedContext.ActionContext.Response.Content = newContent;
             }
-        }
+
+        } 
 
         public Task ExecuteExceptionFilterAsync(HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
         {
             var exception = actionExecutedContext.Exception;
             var response = new { Error = exception };
             var message = new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
-            message.Content = new ObjectContent(response.GetType(), response, actionExecutedContext.Request.Content.Headers.ContentType.MediaType.);
-        }
+            message.Content = new ObjectContent(response.GetType(), response, actionExecutedContext.ActionContext.ControllerContext.Configuration.Formatters.JsonFormatter);
+            return Task.FromResult<object>(null);
+        }*/
     }
 }

@@ -14,9 +14,9 @@ namespace WebApp.Controllers
         private IProjectLogic _projectLogic = new ProjectLogic();
 
         [HttpPost, Route(nameof(Project) + "/{sprojectId}/" + nameof(Comment))]
-        public JsonResult AddCommentToProject(String text, String name, String sprojectId)
+        public JsonResult AddCommentToProject(String text, String name, String sprojectId, String username)
         {
-            return Json(new { Result = _projectLogic.AddCommentToProject(text, name, sprojectId) }, JsonRequestBehavior.AllowGet);
+            return Json(new { Result = _projectLogic.AddCommentToProject(text, name, sprojectId, username) }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost, Route(nameof(Project) + "/{sprojectId}/" + nameof(Image))]
         public JsonResult AddImageToProject(String url, String name, String sprojectId)

@@ -21,9 +21,9 @@ namespace WebApp.Controllers
         /// <param name="sprojectId">Project id</param>
         /// <returns>Id new project</returns>
         [HttpPost, Route("api/"+nameof(Project)+"/{sprojectId}/"+ nameof(Comment))]
-        public String AddCommentToProject([FromBody]String text, [FromBody]String name, String sprojectId)
+        public String AddCommentToProject([FromBody]String text, [FromBody]String name, String sprojectId, String username)
         {
-            return _projectLogic.AddCommentToProject(text, name, sprojectId);
+            return _projectLogic.AddCommentToProject(text, name, sprojectId, username);
         }
         /// <summary>
         /// Add new image to ptoject

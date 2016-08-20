@@ -15,7 +15,7 @@ namespace ControllersLogic.Logic
         private IImageRepository _imageRepository = new DB.Repositories.DBImageRepository();
         private ICommentRepository _commentRepository = new DB.Repositories.DBCommentRepository();
 
-        public String AddCommentToImage(String simageId, String text, String name, Attachment attachment)
+        public String AddCommentToImage(String simageId, String text, String name, Attachment attachment, String username)
         {
             Comment comment = new Comment();
             comment.Text = text;
@@ -23,6 +23,7 @@ namespace ControllersLogic.Logic
             comment.Name = name;
             comment.Version = 1;
             comment.attachment = attachment;
+            comment.UserName = username;
             var commentId = _commentRepository.AddComment(comment).Id;
             var imageId = new ObjectId();
             if (!ObjectId.TryParse(simageId, out imageId))

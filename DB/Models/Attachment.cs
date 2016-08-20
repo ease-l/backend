@@ -8,30 +8,30 @@ namespace DB.Models
 {
     public class Attachment
     {
-        public int upleft { get; set; }
-        public int upright { get; set; }
-        public int downleft { get; set; }
-        public int downright { get; set; }
+        public int x1 { get; set; }
+        public int y1 { get; set; }
+        public int x2 { get; set; }
+        public int y2 { get; set; }
 
-        public Attachment(int upright, int upleft, int downleft, int downright)
+        public Attachment(int x1, int y1, int x2, int y2)
         {
-            this.upleft = upleft;
-            this.upright = upright;
-            this.downleft = downleft;
-            this.downright = downright;
+            this.x1 = x1;
+            this.y1 = y1;
+            this.x2 = x2;
+            this.y2 = y2;
         }
 
         public Attachment()
         {
-            upleft = upright = downleft = downright = 0;
+            x1 = x2 = y1 = y2 = 0;
         }
 
         public Attachment(int x, int y)
         {
-            upright = x;
-            downleft = y;
-            upleft = 0;
-            downright = 0;
+            x1 = x;
+            y1 = y;
+            x2 = 0;
+            y2 = 0;
 
         }
     }

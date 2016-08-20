@@ -27,6 +27,12 @@ namespace WebApp.Controllers
             _projectRepository.DeleteAll();
             _imageRepository.DeleteAll();
         }
+
+        public void DeleteThis()
+        {
+         //   _projectRepository.DeleteImageFromProject(ObjectId(57b5c31303352810786dd888), 57b4eff80335270600ccb03a);
+         //   _imageRepository.DeleteById(57b4eff80335270600ccb03a);
+        }
         public async Task<ActionResult> MakeData()
         {
             /*Make this project

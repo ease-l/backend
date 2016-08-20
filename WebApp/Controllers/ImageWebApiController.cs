@@ -20,9 +20,9 @@ namespace WebApp.Controllers
         /// <param name="name">Comment name</param>
         /// <returns>Id new comment</returns>
         [HttpPost, Route("api/" + nameof(Image) + "/{simageId}/" + nameof(Comment))]
-        public String AddCommentToImage(String simageId, [FromBody]String text, [FromBody]String name, [FromBody] Attachment attachment)
+        public String AddCommentToImage(String simageId, [FromBody]String text, [FromBody]String name, [FromBody] Attachment attachment, [FromBody] String username)
         {
-            return _imageLogic.AddCommentToImage(simageId, text, name, attachment);
+            return _imageLogic.AddCommentToImage(simageId, text, name, attachment, username);
         }
         /// <summary>
         /// Make new image

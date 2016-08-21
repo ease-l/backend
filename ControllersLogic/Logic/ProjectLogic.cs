@@ -17,7 +17,7 @@ namespace ControllersLogic.Logic
         private IImageRepository _imageRepository = new DBImageRepository();
         private ICommentRepository _commentRepository = new DBCommentRepository();
 
-        public String AddCommentToProject(String text, String name, String sprojectId, String username)
+        public String AddCommentToProject(String text, String name, String sprojectId)
         {
             var projectId = new ObjectId();
             if (!ObjectId.TryParse(sprojectId, out projectId))
@@ -33,7 +33,7 @@ namespace ControllersLogic.Logic
             comment.CreationelData = DateTime.UtcNow;
             comment.Name = name;
             comment.Version = 1;
-            comment.UserName = username;
+            //comment.UserName = username;
             var commentId = _commentRepository.AddComment(comment).Id;
             _projectRepository.AddCommentToProject(commentId, projectId);
             return commentId.ToString();

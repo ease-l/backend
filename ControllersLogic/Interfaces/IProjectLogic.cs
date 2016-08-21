@@ -6,7 +6,7 @@ namespace ControllersLogic.Interfaces
 {
     public interface IProjectLogic
     {
-        String AddCommentToProject(String text, String name, String sprojectId, String username);
+        String AddCommentToProject(String text, String name, String sprojectId);
         String AddImageToProject(String url, String name, String sprojectId);
         String AddProject(String name);
         String AddProjectToProject(String sidRoot, String name);

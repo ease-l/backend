@@ -63,6 +63,7 @@ namespace WebApp.Controllers
             comment.Name = "Beautiful";
             comment.Version = 1;
             comment.attachment = new Attachment(10, 20, 30, 40);
+            //comment.UserName = "Vasya";
             comment = _commentRepository.AddComment(comment);
             image.Comments.Add(comment.Id);
             var idAttackingWizard = _imageRepository.AddImage(image).Id;
@@ -102,6 +103,7 @@ namespace WebApp.Controllers
             comment.Name = "Details";
             comment.Version = 1;
             comment.attachment = new Attachment();
+            //comment.UserName = "Vasya";
             comment = _commentRepository.AddComment(comment);
             project.Comments.Add(comment.Id);
             project.Images.Add(idStandingWizard);
@@ -143,6 +145,7 @@ namespace WebApp.Controllers
             comment.Name = "Terrible";
             comment.Version = 1;
             comment.attachment = new Attachment(30, 60);
+            //comment.UserName = "Vasya";
             comment = _commentRepository.AddComment(comment);
             project.Comments.Add(comment.Id);
             project.Images.Add(idAttackingWarrior);
@@ -160,6 +163,7 @@ namespace WebApp.Controllers
             comment.Name = "Archer";
             comment.Version = 1;
             comment.attachment = new Attachment(100, 20);
+            //comment.UserName = "Vasya";
             comment = _commentRepository.AddComment(comment);
             project.Comments.Add(comment.Id);
             project.Projects.Add(idWarriors);
@@ -179,6 +183,7 @@ namespace WebApp.Controllers
             comment.Version = 1;
             comment.attachment = new Attachment();
             comment = _commentRepository.AddComment(comment);
+            //comment.UserName = "Vasya";
             image.Comments.Add(comment.Id);
             var idMap1 = _imageRepository.AddImage(image).Id;
             image.StartId = idMap1.ToString();
@@ -208,6 +213,7 @@ namespace WebApp.Controllers
             comment.Name = "Island";
             comment.Version = 1;
             comment.attachment = new Attachment( 10, 10, 10, 10);
+            //comment.UserName = "Vasya";
             comment = _commentRepository.AddComment(comment);
             image.Comments.Add(comment.Id);
             var idMap3 = _imageRepository.AddImage(image).Id;
@@ -226,6 +232,7 @@ namespace WebApp.Controllers
             comment.Name = "Map for 2";
             comment.Version = 1;
             comment.attachment = new Attachment(20, 20, 20, 20);
+            //comment.UserName = "Vasya";
             comment = _commentRepository.AddComment(comment);
             project.Comments.Add(comment.Id);
             project.Images.Add(idMap1);
@@ -244,6 +251,7 @@ namespace WebApp.Controllers
             comment.Name = "Icon";
             comment.Version = 1;
             comment.attachment = new Attachment();
+            //comment.UserName = "Vasya";
             comment = _commentRepository.AddComment(comment);
             project.Comments.Add(comment.Id);
             project.Projects.Add(idHeroes);

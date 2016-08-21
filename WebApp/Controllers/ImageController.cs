@@ -16,9 +16,9 @@ namespace WebApp.Controllers
         private static IImageLogic _imageLogic = new ImageLogic();
 
         [HttpPost, Route(nameof(Image) + "/{simageId}/" + nameof(Comment))]
-        public JsonResult AddCommentToImage(String simageId, String text, String name, Attachment attachment, String username)
+        public JsonResult AddCommentToImage(String simageId, String text, String name, Attachment attachment)
         {            
-            return Json(new { Result =  _imageLogic.AddCommentToImage(simageId, text, name, attachment, username) }, JsonRequestBehavior.AllowGet);
+            return Json(new { Result =  _imageLogic.AddCommentToImage(simageId, text, name, attachment) }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost, Route(nameof(Image) )]
         public async Task<JsonResult> AddImage(String url, String name)

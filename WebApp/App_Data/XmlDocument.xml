@@ -511,7 +511,7 @@
             <param name="text">New text</param>
             <returns>New Comment</returns>
         </member>
-        <member name="M:WebApp.Controllers.ImageWebApiController.AddCommentToImage(System.String,System.String,System.String,DB.Models.Attachment,System.String)">
+        <member name="M:WebApp.Controllers.ImageWebApiController.AddCommentToImage(System.String,System.String,System.String,DB.Models.Attachment)">
             <summary>
             Add comment to image
             </summary>
@@ -585,7 +585,7 @@
             Content-Type application/json
             </summary>
         </member>
-        <member name="M:WebApp.Controllers.ProjectWebApiController.AddCommentToProject(System.String,System.String,System.String,System.String)">
+        <member name="M:WebApp.Controllers.ProjectWebApiController.AddCommentToProject(System.String,System.String,System.String)">
             <summary>
             Add new comment to project
             </summary>

@@ -11,7 +11,7 @@ namespace DB.Models
     {
         public String Text { get; set; }
         public Attachment attachment { get; set; }
-        public String UserName { get; set; }
+        //public String UserName { get; set; }
     }
     public partial class CommentWithoutObjectId
     {
@@ -22,7 +22,7 @@ namespace DB.Models
         public DateTime CreationData { get; set; }
         public String Text { get; set; }
         public Attachment attachment { get; set; }
-        public String UserName { get; set; }
+        //public String UserName { get; set; }
 
     }
     public partial class CommentWithoutObjectId
@@ -37,8 +37,8 @@ namespace DB.Models
                 Name = comment.Name,
                 Text = comment.Text,
                 Version = comment.Version,
-                attachment = comment.attachment,
-                UserName = comment.UserName
+                attachment = comment.attachment
+                //UserName = comment.UserName
                 
             };
             return result;

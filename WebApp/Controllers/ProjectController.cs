@@ -100,6 +100,7 @@ namespace WebApp.Controllers
         [HttpGet, Route(nameof(Project))]
         public JsonResult Index()
         {
+           
             return Json(_projectLogic.GetAllProjects(), JsonRequestBehavior.AllowGet);
         }
         [HttpPut, Route(nameof(Project) + "/{id}")]

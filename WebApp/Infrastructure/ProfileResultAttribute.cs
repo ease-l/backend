@@ -6,12 +6,12 @@ using System.Web;
 using System.Web.Mvc;
 using WebApp.Controllers;
 using WebApp.Areas.HelpPage.Controllers;
+using System.Web.Http.Filters;
 
 namespace WebApp.Infrastructure
 {
-    public class ProfileResultAttribute : FilterAttribute, IResultFilter
+    public class ProfileResultAttribute : System.Web.Http.Filters.ActionFilterAttribute, IResultFilter
     {
-
         public void OnResultExecuting(ResultExecutingContext filterContext)
         {
             String add = "{{\"value\":";
@@ -26,6 +26,7 @@ namespace WebApp.Infrastructure
 
         public void OnResultExecuted(ResultExecutedContext filterContext)
         {
+            filterContext.HttpContext.Response.AddHeader("Access-Control-Allow-Origin", "*");
             String add = "}}";
             if (!filterContext.Controller.GetType().Equals(typeof(HomeController)) &&
                 !filterContext.Controller.GetType().Equals(typeof(MongoDBController)) &&

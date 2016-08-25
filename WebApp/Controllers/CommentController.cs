@@ -9,6 +9,8 @@ using MongoDB.Bson;
 using System.Configuration;
 using ControllerLogic;
 using ControllersLogic.Interfaces;
+using System.Net.Http;
+using System.Net;
 
 namespace WebApp.Controllers
 {    
@@ -21,6 +23,13 @@ namespace WebApp.Controllers
         {            
             return Json(new { Result = _commentLogic.AddComment(text, name) }, JsonRequestBehavior.AllowGet);
         }
+        [HttpOptions, Route(nameof(Comment))]
+        public HttpResponseMessage OptionsImage()
+        {
+            var response = new HttpResponseMessage();
+            response.StatusCode = HttpStatusCode.OK;
+            return response;
+        }
         [HttpGet, Route(nameof(Comment)+"/{id}")]
         public JsonResult GetById(String id)
         {
@@ -31,6 +40,13 @@ namespace WebApp.Controllers
             {
                 return Json(e.ToString() , JsonRequestBehavior.AllowGet);
             }
+        }
+        [HttpOptions, Route(nameof(Comment) + "/{id}")]
+        public HttpResponseMessage OptionsImage(String id)
+        {
+            var response = new HttpResponseMessage();
+            response.StatusCode = HttpStatusCode.OK;
+            return response;
         }
         [HttpGet, Route(nameof(Comment))]
         public JsonResult Index()

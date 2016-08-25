@@ -66,7 +66,7 @@ namespace DB.Repositories
         public List<Project> GetAllProject()
         {
             //ToDo delete this bad method
-            return _projectCollection.AsQueryable().ToList();
+            return _projectCollection.AsQueryable().Where(p=>p.Root).ToList();
         }
 
         public Project GetProjectById(ObjectId id)

@@ -224,6 +224,7 @@ namespace WebApp.Controllers
             project.Id = new ObjectId();
             project.Name = "Game";
             project.Version = 39;
+            project.Root = true;
             project.CreationelData = DateTime.Today;
             comment.Id = new ObjectId();
             comment.Text = "Make icon!!!";

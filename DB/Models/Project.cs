@@ -12,6 +12,7 @@ namespace DB.Models
         public List<ObjectId> Projects { get; set; }
         public List<ObjectId> Images { get; set; }
         public List<ObjectId> Comments { get; set; }
+        public bool Root { get; set; }
         public Project()
         {
             this.Projects = new List<ObjectId>();

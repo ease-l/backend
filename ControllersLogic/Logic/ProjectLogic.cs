@@ -65,6 +65,7 @@ namespace ControllersLogic.Logic
             Project project = new Project();
             project.Name = name;
             project.Version = 1;
+            project.Root = true;
             project.CreationelData = DateTime.UtcNow;
             var id = _projectRepository.AddProject(project).Id;
             return id.ToString();

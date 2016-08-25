@@ -8,13 +8,15 @@ using System.IO;
 using System.Threading.Tasks;
 using ControllersLogic.Logic;
 using ControllersLogic.Interfaces;
+using System.Net.Http;
+using System.Net;
 
 namespace WebApp.Controllers
 {    
     public class ImageController:Controller
     {
         private static IImageLogic _imageLogic = new ImageLogic();
-
+        
         [HttpPost, Route(nameof(Image) + "/{simageId}/" + nameof(Comment))]
         public JsonResult AddCommentToImage(String simageId, String text, String name)
         {            
@@ -26,10 +28,24 @@ namespace WebApp.Controllers
             String result = await _imageLogic.AddImage(url, name);
             return Json(new { Result = result }, JsonRequestBehavior.AllowGet);
         }
+        [HttpOptions, Route(nameof(Image) + "/{idImage}/" + nameof(Comment) + "/{idComment}")]
+        public HttpResponseMessage OptionsImageCommentDel(String idImage, String idComment)
+        {
+            var response = new HttpResponseMessage();
+            response.StatusCode = HttpStatusCode.OK;
+            return response;
+        }
         [HttpDelete, Route(nameof(Image) + "/{idImage}/" + nameof(Comment)+"/{idComment}")]
         public JsonResult DeleteCommentFromImage(String idImage, String idComment)
         {
             return Json(new { Result = _imageLogic.DeleteCommentFromImage(idImage,idComment)}, JsonRequestBehavior.AllowGet);
+        }
+        [HttpOptions, Route(nameof(Image) + "/Download")]
+        public HttpResponseMessage OptionsImageDownload()
+        {
+            var response = new HttpResponseMessage();
+            response.StatusCode = HttpStatusCode.OK;
+            return response;
         }
         [HttpPost, Route(nameof(Image) + "/Download")]
         public JsonResult DownloadImage(HttpPostedFileBase uploadImage)
@@ -47,6 +63,13 @@ namespace WebApp.Controllers
                 return Json(e.ToString(), JsonRequestBehavior.AllowGet);
             }
         }
+        [HttpOptions, Route(nameof(Image) + "/{id}/{version}")]
+        public HttpResponseMessage OptionsImageComment(String id, int version)
+        {
+            var response = new HttpResponseMessage();
+            response.StatusCode = HttpStatusCode.OK;
+            return response;
+        }
         [HttpGet, Route(nameof(Image) + "/{id}/{version}")]
         public JsonResult GetByIdAndVersion(String id, int version)
         {
@@ -59,6 +82,13 @@ namespace WebApp.Controllers
                 return Json(e.ToString(), JsonRequestBehavior.AllowGet);
             }
         }
+        [HttpOptions, Route(nameof(Image) + "/{simageId}/" + nameof(Comment))]
+        public HttpResponseMessage OptionsImageComment(String simageId)
+        {
+            var response = new HttpResponseMessage();
+            response.StatusCode = HttpStatusCode.OK;
+            return response;
+        }
         [HttpGet, Route(nameof(Image) + "/{simageId}/" + nameof(Comment))]
         public JsonResult GetCommentFromImage(String simageId)
         {
@@ -70,10 +100,24 @@ namespace WebApp.Controllers
                 return Json(e.ToString(), JsonRequestBehavior.AllowGet);
             }
         }
+        [HttpOptions, Route(nameof(Image))]
+        public HttpResponseMessage OptionsImage()
+        {
+            var response = new HttpResponseMessage();
+            response.StatusCode = HttpStatusCode.OK;
+            return response;
+        }
         [HttpGet, Route(nameof(Image) )]
         public JsonResult Index()
         {
             return Json(_imageLogic.GetAllImage(), JsonRequestBehavior.AllowGet);
+        }
+        [HttpOptions, Route(nameof(Image) + "/{id}")]
+        public HttpResponseMessage OptionsImageId(String id)
+        {
+            var response = new HttpResponseMessage();
+            response.StatusCode = HttpStatusCode.OK;
+            return response;
         }
         [HttpPut, Route(nameof(Image) + "/{id}")]
         public JsonResult UpdateById(String id, String name, String url)

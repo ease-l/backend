@@ -3,7 +3,7 @@
 }
 @model WebApp.ViewModels.MongoDBViewModels
 <h3>Выберите файл для загрузки</h3>
-@using (Html.BeginForm("Download", "Image", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("", "Download", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <input type="file" name="uploadImage" /><br>
     <input type="submit" value="Загрузить" />

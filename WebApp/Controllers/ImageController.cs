@@ -40,17 +40,22 @@ namespace WebApp.Controllers
         {
             return Json(new { Result = _imageLogic.DeleteCommentFromImage(idImage,idComment)}, JsonRequestBehavior.AllowGet);
         }
-        [HttpOptions, Route(nameof(Image) + "/Download")]
+        [HttpOptions, Route("Download")]
         public HttpResponseMessage OptionsImageDownload()
         {
             var response = new HttpResponseMessage();
             response.StatusCode = HttpStatusCode.OK;
             return response;
         }
-        [HttpPost, Route(nameof(Image) + "/Download")]
+        [HttpPut, Route("Download")]
         public JsonResult DownloadImage(HttpPostedFileBase uploadImage)
         {
             return Json(new { Result = _imageLogic.DownloadImage(uploadImage) }, JsonRequestBehavior.AllowGet );
+        }
+        [HttpPost, Route("Download")]
+        public JsonResult DownloadImagePost(HttpPostedFileBase uploadImage)
+        {
+            return Json(new { Result = _imageLogic.DownloadImage(uploadImage) }, JsonRequestBehavior.AllowGet);
         }
         [HttpGet, Route(nameof(Image) + "/{id}")]
         public JsonResult GetById(String id)

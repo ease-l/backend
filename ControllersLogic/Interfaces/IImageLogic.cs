@@ -10,7 +10,7 @@ namespace ControllersLogic.Interfaces
 {
     public interface IImageLogic
     {
-        String AddCommentToImage(String simageId, String text, String name);
+        String AddCommentToImage(String simageId, String text, String name, int x, int y);
         Task<String> AddImage(String url, String name);
         String DeleteCommentFromImage(String idImage, String idComment);
         String DownloadImage(HttpPostedFileBase uploadImage);

@@ -9,7 +9,7 @@ namespace ControllersLogic.Interfaces
 {
     public interface ICommentLogic
     {
-        String AddComment(String text, String name);
+        String AddComment(String text, String name, int x, int y);
         List<CommentWithoutObjectId> GetAllComment();
         CommentWithoutObjectId GetById(String id);
         CommentWithoutObjectId UpdateById(String id, String name, String text);

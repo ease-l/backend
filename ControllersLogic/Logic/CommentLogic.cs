@@ -13,13 +13,15 @@ namespace ControllerLogic
     public class CommentLogic: ICommentLogic
     {
         private static ICommentRepository _commentRepository = new DB.Repositories.DBCommentRepository();
-        public String AddComment(String text, String name)
+        public String AddComment(String text, String name, int x, int y)
         {
             Comment comment = new Comment();
             comment.Text = text;
             comment.CreationelData = DateTime.UtcNow;
             comment.Name = name;
             comment.Version = 1;
+            comment.x = x;
+            comment.y = y;
             var id = _commentRepository.AddComment(comment).Id.ToString();
             return id;
         }

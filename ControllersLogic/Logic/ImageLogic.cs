@@ -15,13 +15,15 @@ namespace ControllersLogic.Logic
         private IImageRepository _imageRepository = new DB.Repositories.DBImageRepository();
         private ICommentRepository _commentRepository = new DB.Repositories.DBCommentRepository();
 
-        public String AddCommentToImage(String simageId, String text, String name)
+        public String AddCommentToImage(String simageId, String text, String name, int x, int y)
         {
             Comment comment = new Comment();
             comment.Text = text;
             comment.CreationelData = DateTime.UtcNow;
             comment.Name = name;
             comment.Version = 1;
+            comment.x = x;
+            comment.y = y; 
             var commentId = _commentRepository.AddComment(comment).Id;
             var imageId = new ObjectId();
             if (!ObjectId.TryParse(simageId, out imageId))

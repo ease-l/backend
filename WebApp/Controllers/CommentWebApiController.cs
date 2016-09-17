@@ -19,9 +19,9 @@ namespace WebApp.Controllers
         /// <param name="name">Name</param>
         /// <returns>Return id new comment</returns>
         [HttpPost, Route("api/"+ nameof(Comment))]
-        public String AddComment([FromBody]String text, [FromBody]String name)
+        public String AddComment([FromBody]String text, [FromBody]String name, [FromBody]int x, [FromBody]int y)
         {
-            return _commentLogic.AddComment(text, name);
+            return _commentLogic.AddComment(text, name, x, y);
         }
         /// <summary>
         /// Get all comments

@@ -481,7 +481,7 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
-        <member name="M:WebApp.Controllers.CommentWebApiController.AddComment(System.String,System.String)">
+        <member name="M:WebApp.Controllers.CommentWebApiController.AddComment(System.String,System.String,System.Int32,System.Int32)">
             <summary>
             Make new comment.
             </summary>
@@ -511,7 +511,7 @@
             <param name="text">New text</param>
             <returns>New Comment</returns>
         </member>
-        <member name="M:WebApp.Controllers.ImageWebApiController.AddCommentToImage(System.String,System.String,System.String)">
+        <member name="M:WebApp.Controllers.ImageWebApiController.AddCommentToImage(System.String,System.String,System.String,System.Int32,System.Int32)">
             <summary>
             Add comment to image
             </summary>

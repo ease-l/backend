@@ -19,9 +19,9 @@ namespace WebApp.Controllers
         private static ICommentLogic _commentLogic = new CommentLogic();
 
         [HttpPost, Route(nameof(Comment))]
-        public JsonResult AddComment(String text, String name)
+        public JsonResult AddComment(String text, String name, int x, int y)
         {            
-            return Json(new { Result = _commentLogic.AddComment(text, name) }, JsonRequestBehavior.AllowGet);
+            return Json(new { Result = _commentLogic.AddComment(text, name, x, y) }, JsonRequestBehavior.AllowGet);
         }
         [HttpOptions, Route(nameof(Comment))]
         public HttpResponseMessage OptionsImage()
